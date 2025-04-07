@@ -1,1 +1,10 @@
+title: Oscar Talavera
+description: Sitio personal de Oscar Talavera
+baseurl: ""
+url: "https://oscartalavera.com"
 
+theme: minima
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
