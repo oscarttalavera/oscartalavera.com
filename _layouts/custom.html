@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ page.title }}</title>
+  <link rel="icon" type="image/png" href="/assets/img/OT logo ngo.png">
+  <style>
+    body {
+      background-color: #121212;
+      color: #f0f0f0;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #1a1a1a;
+    }
+
+    header img {
+      max-width: 120px;
+      filter: drop-shadow(0 0 6px red);
+      margin-right: 1rem;
+    }
+
+    header h1 {
+      color: #ff4b4b;
+      font-size: 1.8rem;
+      margin: 0;
+    }
+
+    main {
+      padding: 2rem;
+    }
+
+    h2, h3 {
+      color: #ff4b4b;
+    }
+
+    blockquote {
+      font-style: italic;
+      color: #ccc;
+      border-left: 4px solid #ff4b4b;
+      padding-left: 1rem;
+      margin: 1rem 0;
+    }
+
+    a {
+      color: #ff4b4b;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    li {
+      margin: 1rem 0;
+      padding-left: 1rem;
+      border-left: 3px solid #ff4b4b;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      padding: 2rem 0;
+      font-size: 0.9rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="/assets/img/OT logo bco.png" alt="OT logo">
+    <h1>Oscar Talavera</h1>
+  </header>
+
+  <main>
+    {{ content }}
+  </main>
+
+  <footer>
+    <p>© 2025 · Hecho con cariño.</p>
+  </footer>
+</body>
+</html>
