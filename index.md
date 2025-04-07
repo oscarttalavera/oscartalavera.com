@@ -1,73 +1,14 @@
 ---
-layout: default
+layout: custom
 title: Oscar Talavera
 ---
 
-<style>
-  body {
-    background-color: #121212;
-    color: #f0f0f0;
-    font-family: 'Segoe UI', sans-serif;
-    margin: 0;
-    padding: 2rem;
-  }
+<p style="text-align: right; margin-bottom: 2rem;"><a href="/blog">→ Ir al blog</a></p>
 
-  header {
-    text-align: center;
-    padding: 2rem 0;
-  }
-
-  header img {
-    max-width: 150px;
-    filter: drop-shadow(0 0 10px red);
-  }
-
-  h1, h2, h3 {
-    color: #ff4b4b;
-  }
-
-  blockquote {
-    font-style: italic;
-    color: #ccc;
-    border-left: 4px solid #ff4b4b;
-    padding-left: 1rem;
-    margin: 1rem 0;
-  }
-
-  a {
-    color: #ff4b4b;
-    text-decoration: none;
-  }
-
-  a:hover {
-    text-decoration: underline;
-  }
-
-  ul {
-    list-style: none;
-    padding-left: 0;
-  }
-
-  li {
-    margin: 1rem 0;
-    padding-left: 1rem;
-    border-left: 3px solid #ff4b4b;
-  }
-
-  footer {
-    text-align: center;
-    margin-top: 4rem;
-    padding: 2rem 0;
-    font-size: 0.9rem;
-    color: #888;
-  }
-</style>
-
-<header>
-  <img src="OT logo bco.png" alt="OT logo">
-  <h1>¿Qué hay aquí?</h1>
+<section>
+  <h2>¿Qué hay aquí?</h2>
   <p>Ideas, aficiones, hobbies, creaciones, etc etc</p>
-</header>
+</section>
 
 <section>
   <h2>Citas / Ideas random / Meditaciones</h2>
@@ -108,7 +49,3 @@ title: Oscar Talavera
     <li><strong>DJ y audiófilo</strong> — Fan de la música desde chavalito, fui productor en "mis tiempos" y DJ hasta la fecha. Me gusta escuchar mucha música y no me gusta escucharla en "bocina de compu".</li>
   </ul>
 </section>
-
-<footer>
-  <p>© 2025 · Hecho con cariño.</p>
-</footer>
