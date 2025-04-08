@@ -3,7 +3,7 @@ layout: custom
 title: Oscar Talavera
 ---
 
-<p style="text-align: right; margin-bottom: 2rem;"><a href="/blog">→ Ir al blog</a></p>
+<p style="text-align: right; margin-bottom: 2rem;"><a href="/blog">→ Textos</a></p>
 
 <section>
   <h2>¿Qué hay aquí?</h2>
@@ -49,3 +49,17 @@ title: Oscar Talavera
     <li><strong>DJ y audiófilo</strong> — Fan de la música desde chavalito, fui productor en "mis tiempos" y DJ hasta la fecha. Me gusta escuchar mucha música y no me gusta escucharla en "bocina de compu".</li>
   </ul>
 </section>
+
+
+<h2>Textos</h2>
+<ul>
+  {% for post in site.posts limit:3 %}
+    <li>
+      <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+      <p>{{ post.date | date: "%d %b %Y" }}</p>
+      <p>{{ post.excerpt }}</p>
+    </li>
+  {% endfor %}
+</ul>
+<a href="/textos/">Ver todos los textos</a>
+
