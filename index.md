@@ -3,7 +3,7 @@ layout: custom
 title: Oscar Talavera
 ---
 
-<p style="text-align: right; margin-bottom: 2rem;"><a href="/blog">→ Textos</a></p>
+<p style="text-align: right; margin-bottom: 2rem;"><a href="/textos">→ Textos</a></p>
 
 <section>
   <h2>¿Qué hay aquí?</h2>
