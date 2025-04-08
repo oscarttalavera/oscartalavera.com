@@ -53,7 +53,7 @@ layout: custom
 
 <h2>Textos recientes</h2>
 <ul class="posts">
-  {% for post in site.posts limit:3 %}
+  {% for post in site.posts limit:5 %}
     <li class="post-preview">
       <a href="{{ post.url }}">
         {% if post.featured_image %}
