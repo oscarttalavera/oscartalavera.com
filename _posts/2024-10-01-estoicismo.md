@@ -3,6 +3,9 @@ layout: post
 title: "Estoicismo"
 date: 2024-10-01
 tags: [Estoicismo, Filosofía]
+featured_image: /assets/img/estoicismo.jpg
+author: Oscar Talavera
+description: Estoicismo.
 ---
 
 Imagina despertar cada mañana con una calma interior, incluso cuando el mundo a tu alrededor parece estar fuera de control.
