@@ -51,15 +51,18 @@ title: Oscar Talavera
 </section>
 
 
-<h2>Textos</h2>
-<ul>
+<h2>Textos recientes</h2>
+<ul class="posts">
   {% for post in site.posts limit:3 %}
-    <li>
-      <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
-      <p>{{ post.date | date: "%d %b %Y" }}</p>
-      <p>{{ post.excerpt }}</p>
+    <li class="post-preview">
+      <a href="{{ post.url }}">
+        {% if post.featured_image %}
+          <img src="{{ post.featured_image }}" alt="Imagen de {{ post.title }}" class="post-image">
+        {% endif %}
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.date | date: "%d %b %Y" }}</p>
+      </a>
     </li>
   {% endfor %}
 </ul>
 <a href="/textos/">Ver todos los textos</a>
-
