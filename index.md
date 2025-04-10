@@ -1,6 +1,6 @@
 ---
 layout: custom
-
+title: Oscar Talavera
 ---
 
 <p style="text-align: right; margin-bottom: 2rem;"><a href="/textos">→ Textos</a></p>
