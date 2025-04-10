@@ -3,7 +3,7 @@ layout: post
 title: "Estoicismo"
 date: 2024-10-01
 tags: [Estoicismo, Filosofía]
-featured_image: /assets/img/estoicismo.jpg
+image: /assets/img/estoicismo.jpg
 author: Oscar Talavera
 description: Estoicismo.
 ---
