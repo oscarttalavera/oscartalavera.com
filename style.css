@@ -71,3 +71,47 @@ ul {
   color: #888;
   text-decoration: none;
 }
+
+.post-card {
+  flex: 0 0 auto;
+  width: 250px;
+  height: 160px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  scroll-snap-align: start;
+}
+
+.post-card a {
+  display: block;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+.post-card .overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+  color: #fff;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.post-card h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.post-card p {
+  margin: 0.25rem 0 0;
+  font-size: 0.8rem;
+  color: #ccc;
+}
