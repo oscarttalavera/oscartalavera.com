@@ -1,39 +1,41 @@
 body {
-  font-family: system-ui, sans-serif;
-  margin: 2rem auto;
-  max-width: 700px;
-  padding: 0 1rem;
-  background-color: #fdfdfd;
-  color: #333;
-  line-height: 1.6;
+  background-color: #000;
+  color: #ccc;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-header, section, footer {
-  margin-bottom: 2.5rem;
+.logo-container {
+  text-align: center;
+  padding: 4rem 1rem 2rem;
 }
 
-h1 {
-  font-size: 2rem;
-  margin-bottom: 0.2rem;
+.logo {
+  max-width: 200px;
 }
 
-h2 {
-  margin-top: 2rem;
-  color: #2c3e50;
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem 4rem;
 }
 
-blockquote {
-  border-left: 4px solid #ccc;
-  padding-left: 1rem;
-  margin: 1rem 0;
+.section {
+  margin-bottom: 4rem;
+}
+
+.section h2 {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.quotes li {
+  margin-bottom: 0.5rem;
   font-style: italic;
-}
-
-cite {
-  display: block;
-  margin-top: 0.3rem;
-  color: #777;
-  font-size: 0.9rem;
+  color: #aaa;
 }
 
 ul {
@@ -41,19 +43,31 @@ ul {
   padding: 0;
 }
 
-ul li {
-  margin-bottom: 0.8rem;
+.post-carousel {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
 }
 
-.post-preview {
-  list-style: none;
-  margin-bottom: 2em;
+.post-card {
+  flex: 0 0 auto;
+  background-color: #111;
+  padding: 1rem;
+  border-radius: 10px;
+  scroll-snap-align: start;
+  width: 250px;
 }
 
-.post-image {
-  width: 100%;
-  max-width: 600px;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 0.5em;
+.post-card h3 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.ver-todos {
+  display: block;
+  margin-top: 1rem;
+  text-align: right;
+  color: #888;
+  text-decoration: none;
 }
