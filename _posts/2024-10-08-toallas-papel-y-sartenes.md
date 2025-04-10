@@ -2,7 +2,7 @@
 layout: post
 title: "Toallas de papel y sartenes: La conspiración revelada"
 date: 2024-10-08
-featured_image: /assets/img/sartenes.jpg
+image: /assets/img/sartenes.jpg
 tags: [Cocina, Ficción, Sátira, Cast iron]
 author: Oscar Talavera
 description: Una historia corta sobre Pepe Navarro y su experiencia con los sartenes de hierro.
