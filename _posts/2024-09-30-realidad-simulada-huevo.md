@@ -2,7 +2,7 @@
 layout: post
 title: "El Enigma de la Realidad Simulada y la Teoría del Huevo: Una Exploración de la Conciencia, la Ética y la Evolución Universal"
 date: 2024-09-30
-featured_image: /assets/img/huevo-simulacion.jpg
+image: /assets/img/huevo-simulacion.jpg
 tags: [Simulación, Filosofía, Andy Weir, Simulation theory]
 author: Oscar Talavera
 description: Una exploración filosófica que conecta la teoría del huevo de Andy Weir con la hipótesis de la simulación y el propósito de la conciencia humana.
