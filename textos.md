@@ -1,20 +1,25 @@
 ---
 layout: custom
 title: Textos
-permalink: /textos/
 ---
 
-<h2>Todos los textos</h2>
-<ul class="posts">
-  {% for post in site.posts %}
-    <li class="post-preview">
-      <a href="{{ post.url }}">
-        {% if post.featured_image %}
-          <img src="{{ post.featured_image }}" alt="Imagen de {{ post.title }}" class="post-image">
+# Textos
+
+Una colección de ideas, reflexiones y otras notas escritas. Algunas cortas, otras no tanto.
+
+<div class="grid-posts">
+{% for post in site.posts %}
+  <div class="post-item">
+    <a href="{{ post.url }}">
+      <div class="post-thumb" style="background-image: url('{{ post.image }}');"></div>
+      <div class="post-content">
+        <h2>{{ post.title }}</h2>
+        <p class="date">{{ post.date | date: "%d %b %Y" }}</p>
+        {% if post.excerpt %}
+          <p class="excerpt">{{ post.excerpt | strip_html | truncatewords: 20 }}</p>
         {% endif %}
-        <h3>{{ post.title }}</h3>
-        <p>{{ post.date | date: "%d %b %Y" }}</p>
-      </a>
-    </li>
-  {% endfor %}
-</ul>
+      </div>
+    </a>
+  </div>
+{% endfor %}
+</div>
