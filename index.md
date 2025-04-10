@@ -20,10 +20,6 @@ title: Inicio
       <cite>— Autor desconocido</cite>
     </blockquote>
     <blockquote>
-      <p>Alguien de un país en desarrollo que puede viajar a un país de primer mundo es más rico que alguien de un país de primer mundo que no se puede permitir viajar a un país en desarrollo.</p>
-      <cite>— OT (Idea de regadera)</cite>
-    </blockquote>
-    <blockquote>
       <p>Cuando entiendes que toda opinión es una visión cargada de historia personal, entenderás que todo juicio es una confesión.</p>
       <cite>— Nikola Tesla</cite>
     </blockquote>
@@ -42,6 +38,10 @@ title: Inicio
     <blockquote>
       <p>Ningún viento es favorable para el que no sabe a dónde se dirige.</p>
       <cite>— Séneca</cite>
+    </blockquote>
+    <blockquote>
+      <p>Alguien de un país en desarrollo que puede viajar a un país de primer mundo es más rico que alguien de un país de primer mundo que no se puede permitir viajar a un país en desarrollo.</p>
+      <cite>— OT (Idea de regadera)</cite>
     </blockquote>
   </div>
 </section>
