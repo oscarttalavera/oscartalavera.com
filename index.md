@@ -49,7 +49,7 @@ title: Inicio
 <section class="section bio-section">
   <h2>Bio</h2>
   <ul class="bio-list">
-    <li><strong>Ingeniero</strong> — Egresado del ITCH en 2018-19, con experiencia en las industrias aeroespacial y automotriz, hasta que emprendí mi propio camino fundando Tritic, basado en soluciones creativas de ingeniería y fabricación.</li>
+    <li><strong>Ingeniero</strong> — Egresado del ITCH en 2018-19, con experiencia en las industrias aeroespacial y automotriz, hasta que emprendí mi propio camino fundando <a href="https://www.tritic3d.com" target="_blank">Tritic</a>, basado en soluciones creativas de ingeniería y fabricación.</li>
     <li><strong>Hobbista del MMA</strong> — Aficionado a las artes marciales desde niño. Hoy disfruto el deporte del MMA, desde el sillón frente a la tele, hasta el tatami y la jaula.</li>
     <li><strong>Home barista</strong> — Disfruto el café, pero creo que disfruto más de preparar café.</li>
     <li><strong>Coleccionista</strong> — Mi colección favorita y más grande es de autos a escala (Hot Wheels sobre todo), pero tengo otras pequeñas colecciones como cuchillos-navajas, herramienta y cosas para cocinar.</li>
