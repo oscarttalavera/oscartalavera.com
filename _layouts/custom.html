@@ -3,83 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Oscar Talavera</title>
+  <meta name="description" content="Sitio personal de Oscar Talavera - Ideas, textos y proyectos">
+  <title>{% if page.title %}{{ page.title }} | Oscar Talavera{% else %}Oscar Talavera{% endif %}</title>
   <link rel="stylesheet" href="/style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="logo-container">
-    <a href="/">
-      <img src="/assets/img/OT logo bco.png" alt="Oscar Talavera Logo" class="logo" />
-    </a>
+  <header class="header">
+    <div class="logo-container">
+      <a href="/" class="logo-link">
+        <img src="/assets/img/OT logo bco.png" alt="Oscar Talavera Logo" class="logo" />
+      </a>
+    </div>
+    <nav class="nav-main">
+      <a href="/" class="nav-link">Inicio</a>
+      <a href="/textos" class="nav-link">Textos</a>
+    </nav>
   </header>
 
   <main class="content">
-    {% if page.title == "Textos" %}
-      <!-- Vista exclusiva para la página /textos -->
-      <section class="section">
-        <h2>Textos</h2>
-        <div class="post-grid">
-          {% for post in site.posts %}
-          <div class="post-card" style="background-image: url('{{ post.image }}');">
-            <a href="{{ post.url }}">
-              <div class="overlay">
-                <h3>{{ post.title }}</h3>
-                <p>{{ post.date | date: "%d %b %Y" }}</p>
-              </div>
-            </a>
-          </div>
-          {% endfor %}
-        </div>
-      </section>
-
-    {% else %}
-      <!-- Contenido de la página principal -->
-      <section class="section">
-        <h2>¿Qué hay aquí?</h2>
-        <p>Ideas, aficiones, hobbies, creaciones, etc.</p>
-      </section>
-
-      <section class="section">
-        <h2>Citas / Ideas random / Meditaciones</h2>
-        <ul class="quotes">
-          <li>Ningún hombre puede cruzar el mismo río dos veces, porque no será el mismo río y él no será el mismo hombre. — Heráclito </li>
-          <li>Always have something to look forward to. — Autor desconocido</li>
-          <li>Alguien de un país en desarrollo que puede viajar a un país de primer mundo es más rico que alguien de un país de primer mundo que no se puede permitir viajar a un país en desarrollo. — OT (Idea de regadera)</li>
-          <li>Cuando entiendes que toda opinión es una visión cargada de historia personal, entenderás que todo juicio es una confesión. — Nikola Tesla </li>
-          <li>Cooking is a feeling, baking is a science, grilling is an art. — Alguien en Reddit </li>
-          <li>La pobreza cobra intereses. — Lo escuché en un podcast (creo) </li>
-        </ul>
-      </section>
-
-      <section class="section">
-        <h2>Bio</h2>
-        <ul>
-          <li><strong>Ingeniero</strong> — Egresado del ITCH...</li>
-          <li><strong>Hobbista del MMA</strong> — Aficionado a las artes marciales...</li>
-          <li><strong>Home barista</strong> — Disfruto el café...</li>
-          <li><strong>Coleccionista</strong> — Mi colección favorita...</li>
-          <li><strong>DJ y audiófilo</strong> — Fan de la música...</li>
-        </ul>
-      </section>
-
-      <section class="section">
-        <h2>Textos recientes</h2>
-        <div class="post-carousel">
-          {% for post in site.posts limit:5 %}
-          <div class="post-card" style="background-image: url('{{ post.image }}');">
-            <a href="{{ post.url }}">
-              <div class="overlay">
-                <h3>{{ post.title }}</h3>
-                <p>{{ post.date | date: "%d %b %Y" }}</p>
-              </div>
-            </a>
-          </div>
-          {% endfor %}
-        </div>
-        <a class="ver-todos" href="/textos">Ver todos los textos</a>
-      </section>
-    {% endif %}
+    {{ content }}
   </main>
+
+  <footer class="footer">
+    <p>© {{ 'now' | date: "%Y" }} Oscar Talavera</p>
+  </footer>
 </body>
 </html>
