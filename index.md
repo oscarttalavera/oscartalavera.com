@@ -32,8 +32,16 @@ title: Inicio
       <cite>— Alguien en Reddit</cite>
     </blockquote>
     <blockquote>
+      <p>Es imposible aprender lo que crees que ya sabes.</p>
+      <cite>— Epicteto</cite>
+    </blockquote>
+    <blockquote>
       <p>La pobreza cobra intereses.</p>
       <cite>— Lo escuché en un podcast (creo)</cite>
+    </blockquote>
+    <blockquote>
+      <p>Ningún viento es favorable para el que no sabe a dónde se dirige.</p>
+      <cite>— Séneca</cite>
     </blockquote>
   </div>
 </section>
@@ -45,7 +53,7 @@ title: Inicio
     <li><strong>Hobbista del MMA</strong> — Aficionado a las artes marciales desde niño. Hoy disfruto el deporte del MMA, desde el sillón frente a la tele, hasta el tatami y la jaula.</li>
     <li><strong>Home barista</strong> — Disfruto el café, pero creo que disfruto más de preparar café.</li>
     <li><strong>Coleccionista</strong> — Mi colección favorita y más grande es de autos a escala (Hot Wheels sobre todo), pero tengo otras pequeñas colecciones como cuchillos-navajas, herramienta y cosas para cocinar.</li>
-    <li><strong>DJ y audiófilo</strong> — Fan de la música desde chavalito, fui productor en "mis tiempos" y DJ hasta la fecha. Me gusta escuchar mucha música en buena calidad.</li>
+    <li><strong>DJ y audiófilo</strong> — Fan de la música desde chavalito, fui productor en "mis tiempos" y DJ hasta la fecha. Me gusta escuchar mucha música y mejor si es en Hi-Fi.</li>
   </ul>
 </section>
 
