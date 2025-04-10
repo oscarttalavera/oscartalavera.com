@@ -1,7 +1,11 @@
 ---
-
-El Tiempo No Fue Uno
-
+layout: post
+title: "El Tiempo No Fue Uno"
+date: 2025-04-09
+image: /assets/img/tiempouno.jpg
+tags: [Ciencia ficción, Historia, Filosofía]
+author: Oscar Talavera
+description: "Una historia de ciencia ficción que entrelaza filosofía, memoria e historia en un archivo imposible. Cuando Caelus accede a simulaciones de grandes mentes del pasado, descubre que el tiempo no es lineal, ni neutral... y que narrar puede ser un acto de creación tan poderoso como el tiempo mismo."
 ---
 
 Año 2367. En la Biblioteca Lunar de Clío —una catedral de datos suspendida entre la materia y la memoria—, Caelus archivaba el pasado como quien transcribe sueños antiguos. No por vocación, sino por herencia: su familia llevaba generaciones cuidando registros que nadie consultaba. Lo que para muchos era historia muerta, para él era un campo de silencio con potencial infinito.
