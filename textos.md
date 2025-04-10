@@ -7,6 +7,7 @@ permalink: /textos
 <section class="section">
   <h1>Textos</h1>
   <p class="intro-text">Una colección de ideas, reflexiones y otras notas escritas. Algunas cortas, otras no tanto.</p>
+  <p class="ai-note"><em>Nota: Los textos en este sitio están inspirados por mí y escritos con asistencia de inteligencia artificial.</em></p>
 
   <div class="grid-posts">
     {% for post in site.posts %}
