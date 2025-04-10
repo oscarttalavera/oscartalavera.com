@@ -2,7 +2,7 @@
 layout: post
 title: "El café de las mañanas"
 date: 2024-10-04
-featured_image: /assets/img/cafemanana.jpg
+image: /assets/img/cafemanana.jpg
 tags: [Café]
 author: Oscar Talavera
 description: Un recorrido por el ritual del café.
