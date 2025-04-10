@@ -1,7 +1,9 @@
 ---
 layout: custom
 title: Textos
+permalink: /textos
 ---
+
 
 # Textos
 
