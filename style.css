@@ -335,3 +335,13 @@ h2::after {
     height: 160px;
   }
 }
+
+/* Estilo para la nota de IA en la página de textos */
+.ai-note {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px dashed var(--accent-color);
+  max-width: 700px;
+}
