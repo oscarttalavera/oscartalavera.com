@@ -46,7 +46,7 @@
     <section class="section">
       <h2>Textos recientes</h2>
       <div class="post-carousel">
-        {% for post in site.posts limit:4 %}
+        {% for post in site.posts limit:5 %}
         <div class="post-card" style="background-image: url('{{ post.image }}');">
           <a href="{{ post.url }}">
             <div class="overlay">
@@ -57,7 +57,7 @@
         </div>
         {% endfor %}
       </div>
-      <a class="ver-todos" href="/textos">Ver todos los textos →</a>
+      <a class="ver-todos" href="/textos">Ver todos los textos</a>
     </section>
   </main>
 </body>
