@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Eres Imparable: El Día Que Decidas Serlo"
-date: 2025-04-10
+date: 2025-04-11
 image: /assets/img/eres-imparable.jpg
 tags: [Motivación, Filosofía, Psicología]
 author: Oscar Talavera
