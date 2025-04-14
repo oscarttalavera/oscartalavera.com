@@ -3,7 +3,7 @@ layout: post
 title: "Guía maestra de cultura general y conocimientos esenciales para la vida moderna"
 date: 2025-04-20
 tags: [Ciencia, Filosofía, Saber]
-image: /assets/img/conocimiento.jpg
+image: /assets/img/conocimiento.png
 author: Oscar Talavera
 description: Guía maestra de cultura general y conocimientos esenciales para la vida moderna.
 ---
