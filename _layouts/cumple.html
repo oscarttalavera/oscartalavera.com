@@ -6,80 +6,615 @@
   <meta name="description" content="Festival de asado, humo y campamento por los 30 años de Oscar Talavera">
   <title>{% if page.title %}{{ page.title }} | Oscar Talavera{% else %}Oscar Talavera{% endif %}</title>
   <link rel="icon" href="/assets/img/OT logo ngo.png" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    body {
-      background: #121212;
-      color: #eaeaea;
-      font-family: 'Nunito', sans-serif;
+    :root {
+      --color-primary: #f26a4b;
+      --color-primary-light: #ff8b6e;
+      --color-primary-dark: #d15a3f;
+      --color-accent: #ffb74d;
+      --color-bg-dark: #121212;
+      --color-bg-card: #1e1e1e;
+      --color-bg-light: #252525;
+      --color-text: #eaeaea;
+      --color-text-muted: #999;
+      --border-radius: 12px;
+      --spacing-xs: 0.5rem;
+      --spacing-sm: 1rem;
+      --spacing-md: 1.5rem;
+      --spacing-lg: 2rem;
+      --spacing-xl: 3rem;
+      --transition-speed: 0.3s;
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
     }
 
-    .content {
-      max-width: 760px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-
-    h1, h2 {
+    body {
+      background: var(--color-bg-dark);
+      color: var(--color-text);
       font-family: 'Nunito', sans-serif;
-      color: #f26a4b;
-      margin-bottom: 0.5em;
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Background elements */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f26a4b' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      z-index: -1;
+    }
+
+    /* Fire embers effect */
+    @keyframes float-up {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.5; }
+      90% { opacity: 0.2; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+
+    .ember {
+      position: fixed;
+      bottom: -10px;
+      width: 4px;
+      height: 4px;
+      background-color: var(--color-accent);
+      border-radius: 50%;
+      box-shadow: 0 0 6px 2px rgba(255, 183, 77, 0.6);
+      z-index: -1;
+      animation: float-up 8s ease-in infinite;
+    }
+
+    /* Content layout */
+    .content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: var(--spacing-sm);
+      position: relative;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      color: var(--color-primary);
+      margin-bottom: var(--spacing-sm);
+      line-height: 1.3;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      letter-spacing: -0.5px;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-top: var(--spacing-lg);
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      color: var(--color-accent);
     }
 
     p, li {
       font-size: 1.05rem;
       line-height: 1.7;
+      margin-bottom: var(--spacing-sm);
     }
 
-    ul {
-      padding-left: 1.2em;
-      margin-bottom: 2em;
+    .accent {
+      color: var(--color-accent);
+      font-style: italic;
     }
 
-    .hero {
-      background-color: #1e1e1e;
-      padding: 2rem;
-      border-radius: 12px;
-      margin-bottom: 2rem;
-      text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    }
-
-    iframe {
-      width: 100%;
-      border: none;
-      border-radius: 12px;
-      margin-top: 1em;
-      filter: grayscale(20%) brightness(90%) contrast(110%);
-    }
-
-    a {
-      color: #f26a4b;
-      text-decoration: underline;
-    }
-
-    .footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 0.9rem;
-      color: #999;
-    }
-
+    /* Header */
     .header {
-      background-color: #000;
-      padding: 1rem;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: var(--spacing-sm);
       display: flex;
       justify-content: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(5px);
+      transition: all var(--transition-speed) ease;
+    }
+
+    .header.scrolled {
+      padding: 0.5rem var(--spacing-sm);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo-link {
+      transition: transform 0.3s ease;
+    }
+
+    .logo-link:hover {
+      transform: scale(1.05);
     }
 
     .logo {
       height: 40px;
     }
+
+    /* Hero section */
+    .hero {
+      background-color: var(--color-bg-card);
+      background-image: linear-gradient(to bottom, rgba(30, 30, 30, 0.9), rgba(18, 18, 18, 0.95)), 
+                        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23f26a4b' fill-opacity='0.1'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      padding: var(--spacing-xl) var(--spacing-md);
+      border-radius: var(--border-radius);
+      margin-top: var(--spacing-lg);
+      margin-bottom: var(--spacing-lg);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      background-size: cover;
+      text-align: center;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    }
+
+    .hero-title {
+      margin-bottom: var(--spacing-md);
+      font-size: 2.8rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-details {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-sm);
+    }
+
+    .detail-item i {
+      color: var(--color-accent);
+      font-size: 1.2rem;
+    }
+
+    /* Countdown */
+    .countdown-container {
+      margin-top: var(--spacing-lg);
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: var(--spacing-md);
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .countdown-title {
+      font-size: 1.2rem;
+      margin-bottom: var(--spacing-sm);
+      color: var(--color-accent);
+      font-weight: 600;
+    }
+
+    #countdown {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-md);
+    }
+
+    .countdown-segment {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .countdown-segment span:first-child {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--color-primary);
+    }
+
+    .countdown-label {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+    }
+
+    /* Map section */
+    .map-section {
+      position: relative;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      margin-bottom: var(--spacing-lg);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    iframe {
+      width: 100%;
+      border: none;
+      border-radius: var(--border-radius);
+      filter: grayscale(30%) brightness(90%) contrast(110%);
+      transition: filter var(--transition-speed) ease;
+    }
+
+    iframe:hover {
+      filter: grayscale(0%) brightness(100%) contrast(100%);
+    }
+
+    .map-overlay {
+      position: absolute;
+      bottom: var(--spacing-md);
+      right: var(--spacing-md);
+      z-index: 10;
+    }
+
+    /* Section cards */
+    .section-card {
+      background-color: var(--color-bg-card);
+      border-radius: var(--border-radius);
+      padding: var(--spacing-lg);
+      margin-bottom: var(--spacing-lg);
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    }
+
+    .section-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    .section-icon {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--color-primary);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 1.2rem;
+      box-shadow: 0 2px 8px rgba(242, 106, 75, 0.4);
+    }
+
+    /* Two column layout */
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    @media (max-width: 768px) {
+      .two-column {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      margin: var(--spacing-lg) 0;
+      padding-left: 30px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 10px;
+      width: 2px;
+      background-color: rgba(242, 106, 75, 0.3);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .timeline-point {
+      position: absolute;
+      top: 6px;
+      left: -30px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: var(--color-primary);
+      border: 3px solid var(--color-bg-card);
+    }
+
+    .timeline-content h3 {
+      margin: 0 0 5px 0;
+      color: var(--color-primary);
+    }
+
+    /* Checklist */
+    .checklist {
+      margin: var(--spacing-md) 0;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .checklist-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-right: var(--spacing-sm);
+      accent-color: var(--color-primary);
+      cursor: pointer;
+    }
+
+    .checklist-item label {
+      cursor: pointer;
+      font-size: 1.05rem;
+    }
+
+    /* RSVP Form */
+    .rsvp-section {
+      background-color: var(--color-bg-card);
+      padding: var(--spacing-lg);
+      border-radius: var(--border-radius);
+      margin-top: var(--spacing-xl);
+      margin-bottom: var(--spacing-lg);
+      border: 1px solid rgba(242, 106, 75, 0.2);
+    }
+
+    .rsvp-form {
+      margin-top: var(--spacing-md);
+    }
+
+    .form-group {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: var(--spacing-xs);
+      font-weight: 600;
+      color: var(--color-primary-light);
+    }
+
+    .form-group input, 
+    .form-group select, 
+    .form-group textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      background-color: var(--color-bg-light);
+      color: var(--color-text);
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    }
+
+    .form-group input:focus, 
+    .form-group select:focus, 
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px rgba(242, 106, 75, 0.2);
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 20px;
+      background-color: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease;
+    }
+
+    .btn:hover {
+      background-color: var(--color-primary-light);
+      transform: translateY(-2px);
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn i {
+      margin-left: var(--spacing-xs);
+    }
+
+    .btn-primary {
+      background-color: var(--color-primary);
+      padding: 12px 24px;
+      font-size: 1.1rem;
+    }
+
+    /* Weather section */
+    .weather-section {
+      background-color: var(--color-bg-card);
+      padding: var(--spacing-lg);
+      border-radius: var(--border-radius);
+      margin-bottom: var(--spacing-lg);
+      text-align: center;
+    }
+
+    .weather-info {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-xl);
+      margin: var(--spacing-md) 0;
+    }
+
+    .weather-day {
+      text-align: center;
+    }
+
+    .weather-icon {
+      font-size: 2rem;
+      color: var(--color-accent);
+      margin: var(--spacing-sm) 0;
+    }
+
+    .weather-temp {
+      font-size: 1.1rem;
+    }
+
+    .temp-max {
+      color: var(--color-primary-light);
+      font-weight: bold;
+    }
+
+    .temp-min {
+      color: var(--color-text-muted);
+    }
+
+    .weather-note {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      margin-top: var(--spacing-sm);
+    }
+
+    /* Share section */
+    .share-section {
+      text-align: center;
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .share-buttons {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-sm);
+      margin-top: var(--spacing-sm);
+    }
+
+    .share-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      color: white;
+      font-size: 1.5rem;
+      text-decoration: none;
+      transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    }
+
+    .share-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .whatsapp {
+      background-color: #25D366;
+    }
+
+    .facebook {
+      background-color: #3b5998;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: var(--spacing-lg);
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      margin-top: var(--spacing-xl);
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    /* Icons using Font Awesome */
+    .icon-calendar:before { content: '\f133'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
+    .icon-location:before { content: '\f3c5'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
+    .icon-fire:before { content: '\f06d'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
+    .icon-clock:before { content: '\f017'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
+    .icon-food:before { content: '\f2e7'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
+    .icon-music:before { content: '\f001'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
+    .icon-backpack:before { content: '\f5d0'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
+    .icon-check:before { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
+    .icon-arrow-right:before { content: '\f061'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
+    .icon-sun:before { content: '\f185'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
+    .icon-whatsapp:before { content: '\f232'; font-family: 'Font Awesome 6 Brands'; font-weight: 400; }
+    .icon-facebook:before { content: '\f09a'; font-family: 'Font Awesome 6 Brands'; font-weight: 400; }
+
+    /* Mobile adjustments */
+    @media (max-width: 768px) {
+      :root {
+        --spacing-lg: 1.5rem;
+        --spacing-xl: 2rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+      }
+
+      .hero {
+        padding: var(--spacing-lg) var(--spacing-sm);
+      }
+
+      .hero-title {
+        font-size: 2.2rem;
+      }
+
+      #countdown {
+        gap: var(--spacing-sm);
+      }
+
+      .countdown-segment span:first-child {
+        font-size: 1.5rem;
+      }
+
+      .weather-info {
+        gap: var(--spacing-lg);
+      }
+    }
   </style>
 </head>
 <body>
-  <header class="header">
+  <!-- Create dynamic embers for the fire effect -->
+  <div id="embers-container"></div>
+
+  <header class="header" id="navbar">
     <a href="/" class="logo-link">
       <img src="/assets/img/OT logo bco.png" alt="Oscar Talavera Logo" class="logo" />
     </a>
@@ -92,5 +627,117 @@
   <footer class="footer">
     <p>© {{ 'now' | date: "%Y" }} Oscar Talavera</p>
   </footer>
+
+  <script>
+    // Create fire embers effect
+    function createEmbers() {
+      const emberContainer = document.getElementById('embers-container');
+      const emberCount = 20;
+      
+      for (let i = 0; i < emberCount; i++) {
+        const ember = document.createElement('div');
+        ember.classList.add('ember');
+        ember.style.left = `${Math.random() * 100}%`;
+        ember.style.width = `${2 + Math.random() * 4}px`;
+        ember.style.height = ember.style.width;
+        ember.style.opacity = Math.random() * 0.7;
+        ember.style.animationDuration = `${5 + Math.random() * 10}s`;
+        ember.style.animationDelay = `${Math.random() * 5}s`;
+        emberContainer.appendChild(ember);
+      }
+    }
+
+    // Sticky header effect
+    function handleScroll() {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    }
+
+    // Countdown function
+    function updateCountdown() {
+      const eventDate = new Date('April 26, 2025 10:00:00').getTime();
+      const now = new Date().getTime();
+      const timeLeft = eventDate - now;
+      
+      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      
+      document.getElementById('days').innerText = days < 10 ? `0${days}` : days;
+      document.getElementById('hours').innerText = hours < 10 ? `0${hours}` : hours;
+      document.getElementById('minutes').innerText = minutes < 10 ? `0${minutes}` : minutes;
+      
+      if (timeLeft < 0) {
+        document.getElementById('countdown').innerHTML = '<p>¡El evento ha comenzado!</p>';
+      }
+    }
+
+    // Handle form submission
+    function setupForm() {
+      const form = document.getElementById('rsvp-form');
+      const guestSelect = document.getElementById('guests');
+      const guestDetail = document.getElementById('guests-detail');
+      
+      if (guestSelect) {
+        guestSelect.addEventListener('change', function() {
+          if (this.value === '4') {
+            guestDetail.style.display = 'block';
+          } else {
+            guestDetail.style.display = 'none';
+          }
+        });
+      }
+      
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          // Here you would normally send the form data to a server
+          // For demo purposes, just show success message
+          document.getElementById('rsvp-form').style.display = 'none';
+          document.getElementById('form-success').style.display = 'block';
+          
+          // You could add code to send form data via email or to a server
+          // const formData = new FormData(form);
+          // fetch('/submit-rsvp', { method: 'POST', body: formData });
+        });
+      }
+    }
+
+    // Handle checklist items local storage
+    function setupChecklist() {
+      const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+      
+      // Load saved state
+      checkboxes.forEach(checkbox => {
+        const savedState = localStorage.getItem(`checkbox_${checkbox.id}`);
+        if (savedState === 'true') {
+          checkbox.checked = true;
+        }
+        
+        // Save state on change
+        checkbox.addEventListener('change', function() {
+          localStorage.setItem(`checkbox_${this.id}`, this.checked);
+        });
+      });
+    }
+
+    // Initialize everything when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      createEmbers();
+      window.addEventListener('scroll', handleScroll);
+      
+      if (document.getElementById('countdown')) {
+        updateCountdown();
+        setInterval(updateCountdown, 60000); // Update every minute
+      }
+      
+      setupForm();
+      setupChecklist();
+    });
+  </script>
 </body>
 </html>
