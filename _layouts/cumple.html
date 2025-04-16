@@ -80,6 +80,7 @@
     p, li {
       font-size: 1.1rem;
       line-height: 1.7;
+      font-weight: 400;
     }
 
     /* Lists */
@@ -329,16 +330,17 @@
       transform: translateY(0);
     }
 
-    /* Add some animation */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* Additional styling for the festival logo */
+    .festival-logo {
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.6));
+      border-radius: 40px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+    
+    .festival-logo:hover {
+      transform: scale(1.03);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.5);
     }
 
     section {
