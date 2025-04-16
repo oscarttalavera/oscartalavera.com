@@ -3,618 +3,403 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Festival de asado, humo y campamento por los 30 años de Oscar Talavera">
+  <meta name="description" content="Festival de asado, humo y campamento por los 30 años de Oscar Talavera en Cárdenas, Chihuahua. 26-27 de abril.">
+  <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}Oscar Talavera{% endif %}">
+  <meta property="og:description" content="Festival de asado, humo y campamento por los 30 años de Oscar Talavera">
+  <meta property="og:image" content="/assets/img/asado-bg.jpg">
+  <meta property="og:url" content="https://oscartalavera.com/cumple30/">
   <title>{% if page.title %}{{ page.title }} | Oscar Talavera{% else %}Oscar Talavera{% endif %}</title>
   <link rel="icon" href="/assets/img/OT logo ngo.png" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
     :root {
-      --color-primary: #f26a4b;
-      --color-primary-light: #ff8b6e;
-      --color-primary-dark: #d15a3f;
-      --color-accent: #ffb74d;
-      --color-bg-dark: #121212;
-      --color-bg-card: #1e1e1e;
-      --color-bg-light: #252525;
-      --color-text: #eaeaea;
-      --color-text-muted: #999;
-      --border-radius: 12px;
-      --spacing-xs: 0.5rem;
-      --spacing-sm: 1rem;
-      --spacing-md: 1.5rem;
-      --spacing-lg: 2rem;
-      --spacing-xl: 3rem;
-      --transition-speed: 0.3s;
+      --primary-color: #f26a4b;
+      --primary-dark: #d85a3b;
+      --primary-light: #ff7a5b;
+      --dark-bg: #121212;
+      --section-bg: #1e1e1e;
+      --text-color: #eaeaea;
+      --text-secondary: #bbb;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    
+    /* Base Styles */
     body {
-      background: var(--color-bg-dark);
-      color: var(--color-text);
+      background-color: var(--dark-bg);
+      background-image: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+                         url('/assets/img/asado-bg.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      color: var(--text-color);
       font-family: 'Nunito', sans-serif;
+      margin: 0;
       line-height: 1.6;
       position: relative;
-      overflow-x: hidden;
     }
 
-    /* Background elements */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f26a4b' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      z-index: -1;
-    }
-
-    /* Fire embers effect */
-    @keyframes float-up {
-      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-      10% { opacity: 0.5; }
-      90% { opacity: 0.2; }
-      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-    }
-
-    .ember {
-      position: fixed;
-      bottom: -10px;
-      width: 4px;
-      height: 4px;
-      background-color: var(--color-accent);
-      border-radius: 50%;
-      box-shadow: 0 0 6px 2px rgba(255, 183, 77, 0.6);
-      z-index: -1;
-      animation: float-up 8s ease-in infinite;
-    }
-
-    /* Content layout */
     .content {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: var(--spacing-sm);
-      position: relative;
+      max-width: 760px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
     }
 
     /* Typography */
-    h1, h2, h3, h4 {
+    h1, h2 {
       font-family: 'Nunito', sans-serif;
-      font-weight: 800;
-      color: var(--color-primary);
-      margin-bottom: var(--spacing-sm);
-      line-height: 1.3;
+      color: var(--primary-color);
+      margin-bottom: 0.5em;
+      position: relative;
     }
 
     h1 {
       font-size: 2.5rem;
-      letter-spacing: -0.5px;
+      margin-top: 0;
     }
 
     h2 {
       font-size: 1.8rem;
-      margin-top: var(--spacing-lg);
+      padding-bottom: 0.3em;
     }
 
-    h3 {
-      font-size: 1.3rem;
-      color: var(--color-accent);
+    h2::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background-color: var(--primary-color);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      border-radius: 2px;
     }
 
     p, li {
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       line-height: 1.7;
-      margin-bottom: var(--spacing-sm);
     }
 
-    .accent {
-      color: var(--color-accent);
-      font-style: italic;
+    /* Lists */
+    ul {
+      padding-left: 0.5em;
+      margin-bottom: 2em;
+      list-style: none;
     }
 
-    /* Header */
+    li {
+      margin-bottom: 0.5em;
+      position: relative;
+      padding-left: 1.8em;
+    }
+
+    li i {
+      position: absolute;
+      left: 0;
+      top: 0.3em;
+      color: var(--primary-color);
+    }
+
+    /* Sections */
+    section {
+      background-color: rgba(30, 30, 30, 0.85);
+      padding: 2rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      border-left: 3px solid var(--primary-color);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+    }
+
+    .hero {
+      text-align: center;
+      background-color: rgba(30, 30, 30, 0.9);
+      background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                         url('/assets/img/campfire.jpg');
+      background-size: cover;
+      background-position: center;
+      padding: 3rem 2rem;
+      border-left: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero h1 {
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+    }
+
+    /* Maps and Media */
+    iframe {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      margin-top: 1.5em;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+
+    iframe:hover {
+      filter: grayscale(0%) brightness(100%) contrast(110%);
+      transform: scale(1.01);
+    }
+
+    /* Links & Buttons */
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    a:hover {
+      color: var(--primary-light);
+      text-decoration: underline;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.8em 1.5em;
+      border-radius: 50px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      margin: 1rem 0;
+      box-shadow: 0 2px 8px rgba(242, 106, 75, 0.4);
+    }
+
+    .btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(242, 106, 75, 0.6);
+      color: white;
+      text-decoration: none;
+    }
+
+    /* Header & Footer */
     .header {
       background-color: rgba(0, 0, 0, 0.8);
-      padding: var(--spacing-sm);
+      padding: 1rem;
       display: flex;
       justify-content: center;
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(5px);
-      transition: all var(--transition-speed) ease;
-    }
-
-    .header.scrolled {
-      padding: 0.5rem var(--spacing-sm);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .logo-link {
-      transition: transform 0.3s ease;
-    }
-
-    .logo-link:hover {
-      transform: scale(1.05);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
     }
 
     .logo {
       height: 40px;
+      transition: transform 0.3s ease;
     }
 
-    /* Hero section */
-    .hero {
-      background-color: var(--color-bg-card);
-      background-image: linear-gradient(to bottom, rgba(30, 30, 30, 0.9), rgba(18, 18, 18, 0.95)), 
-                        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23f26a4b' fill-opacity='0.1'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      padding: var(--spacing-xl) var(--spacing-md);
-      border-radius: var(--border-radius);
-      margin-top: var(--spacing-lg);
-      margin-bottom: var(--spacing-lg);
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-      background-size: cover;
+    .logo:hover {
+      transform: scale(1.1);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      background-color: rgba(0, 0, 0, 0.7);
+      margin-top: 3rem;
+    }
+
+    /* Utilities */
+    .text-center {
       text-align: center;
     }
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
-    }
-
-    .hero-title {
-      margin-bottom: var(--spacing-md);
-      font-size: 2.8rem;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .hero-details {
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing-sm);
-      margin-bottom: var(--spacing-lg);
-    }
-
-    .detail-item {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--spacing-sm);
-    }
-
-    .detail-item i {
-      color: var(--color-accent);
-      font-size: 1.2rem;
-    }
-
-    /* Countdown */
-    .countdown-container {
-      margin-top: var(--spacing-lg);
-      background-color: rgba(0, 0, 0, 0.3);
-      padding: var(--spacing-md);
-      border-radius: var(--border-radius);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .countdown-title {
-      font-size: 1.2rem;
-      margin-bottom: var(--spacing-sm);
-      color: var(--color-accent);
-      font-weight: 600;
-    }
-
-    #countdown {
+    .countdown {
       display: flex;
       justify-content: center;
-      gap: var(--spacing-md);
+      gap: 15px;
+      margin: 1.5rem 0;
     }
 
-    .countdown-segment {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    .countdown-item {
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      border-radius: 8px;
+      min-width: 60px;
+      text-align: center;
+      border: 1px solid rgba(242, 106, 75, 0.3);
     }
 
-    .countdown-segment span:first-child {
-      font-size: 2rem;
+    .countdown-number {
+      font-size: 1.8rem;
       font-weight: bold;
-      color: var(--color-primary);
+      color: var(--primary-color);
     }
 
     .countdown-label {
       font-size: 0.8rem;
-      color: var(--color-text-muted);
+      color: var(--text-secondary);
     }
 
-    /* Map section */
-    .map-section {
-      position: relative;
-      border-radius: var(--border-radius);
-      overflow: hidden;
-      margin-bottom: var(--spacing-lg);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    iframe {
-      width: 100%;
-      border: none;
-      border-radius: var(--border-radius);
-      filter: grayscale(30%) brightness(90%) contrast(110%);
-      transition: filter var(--transition-speed) ease;
-    }
-
-    iframe:hover {
-      filter: grayscale(0%) brightness(100%) contrast(100%);
-    }
-
-    .map-overlay {
-      position: absolute;
-      bottom: var(--spacing-md);
-      right: var(--spacing-md);
-      z-index: 10;
-    }
-
-    /* Section cards */
-    .section-card {
-      background-color: var(--color-bg-card);
-      border-radius: var(--border-radius);
-      padding: var(--spacing-lg);
-      margin-bottom: var(--spacing-lg);
-      position: relative;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-    }
-
-    .section-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-    }
-
-    .section-icon {
-      position: absolute;
-      top: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: var(--color-primary);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
+    .weather-forecast {
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 15px;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: white;
-      font-size: 1.2rem;
-      box-shadow: 0 2px 8px rgba(242, 106, 75, 0.4);
-    }
-
-    /* Two column layout */
-    .two-column {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--spacing-lg);
-      margin-bottom: var(--spacing-lg);
-    }
-
-    @media (max-width: 768px) {
-      .two-column {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Timeline */
-    .timeline {
-      position: relative;
-      margin: var(--spacing-lg) 0;
-      padding-left: 30px;
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 10px;
-      width: 2px;
-      background-color: rgba(242, 106, 75, 0.3);
-    }
-
-    .timeline-item {
-      position: relative;
-      margin-bottom: var(--spacing-md);
-    }
-
-    .timeline-point {
-      position: absolute;
-      top: 6px;
-      left: -30px;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background-color: var(--color-primary);
-      border: 3px solid var(--color-bg-card);
-    }
-
-    .timeline-content h3 {
-      margin: 0 0 5px 0;
-      color: var(--color-primary);
-    }
-
-    /* Checklist */
-    .checklist {
-      margin: var(--spacing-md) 0;
-    }
-
-    .checklist-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: var(--spacing-sm);
-    }
-
-    .checklist-item input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
-      margin-right: var(--spacing-sm);
-      accent-color: var(--color-primary);
-      cursor: pointer;
-    }
-
-    .checklist-item label {
-      cursor: pointer;
-      font-size: 1.05rem;
-    }
-
-    /* RSVP Form */
-    .rsvp-section {
-      background-color: var(--color-bg-card);
-      padding: var(--spacing-lg);
-      border-radius: var(--border-radius);
-      margin-top: var(--spacing-xl);
-      margin-bottom: var(--spacing-lg);
-      border: 1px solid rgba(242, 106, 75, 0.2);
-    }
-
-    .rsvp-form {
-      margin-top: var(--spacing-md);
-    }
-
-    .form-group {
-      margin-bottom: var(--spacing-md);
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: var(--spacing-xs);
-      font-weight: 600;
-      color: var(--color-primary-light);
-    }
-
-    .form-group input, 
-    .form-group select, 
-    .form-group textarea {
-      width: 100%;
-      padding: 10px 12px;
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      border-radius: var(--border-radius);
-      background-color: var(--color-bg-light);
-      color: var(--color-text);
-      font-family: 'Nunito', sans-serif;
-      font-size: 1rem;
-      transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-    }
-
-    .form-group input:focus, 
-    .form-group select:focus, 
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--color-primary);
-      box-shadow: 0 0 0 2px rgba(242, 106, 75, 0.2);
-    }
-
-    .form-group textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    /* Buttons */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 20px;
-      background-color: var(--color-primary);
-      color: white;
-      border: none;
-      border-radius: var(--border-radius);
-      font-family: 'Nunito', sans-serif;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease;
-    }
-
-    .btn:hover {
-      background-color: var(--color-primary-light);
-      transform: translateY(-2px);
-    }
-
-    .btn:active {
-      transform: translateY(1px);
-    }
-
-    .btn i {
-      margin-left: var(--spacing-xs);
-    }
-
-    .btn-primary {
-      background-color: var(--color-primary);
-      padding: 12px 24px;
-      font-size: 1.1rem;
-    }
-
-    /* Weather section */
-    .weather-section {
-      background-color: var(--color-bg-card);
-      padding: var(--spacing-lg);
-      border-radius: var(--border-radius);
-      margin-bottom: var(--spacing-lg);
-      text-align: center;
-    }
-
-    .weather-info {
-      display: flex;
-      justify-content: center;
-      gap: var(--spacing-xl);
-      margin: var(--spacing-md) 0;
+      flex-wrap: wrap;
+      gap: 20px;
     }
 
     .weather-day {
       text-align: center;
+      padding: 10px;
     }
 
     .weather-icon {
       font-size: 2rem;
-      color: var(--color-accent);
-      margin: var(--spacing-sm) 0;
+      color: var(--primary-color);
+      margin-bottom: 5px;
     }
 
-    .weather-temp {
-      font-size: 1.1rem;
-    }
-
-    .temp-max {
-      color: var(--color-primary-light);
-      font-weight: bold;
-    }
-
-    .temp-min {
-      color: var(--color-text-muted);
-    }
-
-    .weather-note {
-      font-size: 0.85rem;
-      color: var(--color-text-muted);
-      margin-top: var(--spacing-sm);
-    }
-
-    /* Share section */
-    .share-section {
-      text-align: center;
-      margin-bottom: var(--spacing-xl);
-    }
-
-    .share-buttons {
-      display: flex;
-      justify-content: center;
-      gap: var(--spacing-sm);
-      margin-top: var(--spacing-sm);
-    }
-
-    .share-btn {
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--primary-color);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      color: white;
-      font-size: 1.5rem;
       text-decoration: none;
-      transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+      opacity: 0;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      z-index: 99;
     }
 
-    .share-btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    .back-to-top.visible {
+      opacity: 1;
     }
 
-    .whatsapp {
-      background-color: #25D366;
+    .back-to-top:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-3px);
     }
 
-    .facebook {
-      background-color: #3b5998;
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: rgba(30, 30, 30, 0.9);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      border-left: 4px solid var(--primary-color);
+      z-index: 1000;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.3s ease;
     }
 
-    /* Footer */
-    .footer {
-      text-align: center;
-      padding: var(--spacing-lg);
-      font-size: 0.9rem;
-      color: var(--color-text-muted);
-      margin-top: var(--spacing-xl);
-      background-color: rgba(0, 0, 0, 0.3);
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    /* Icons using Font Awesome */
-    .icon-calendar:before { content: '\f133'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
-    .icon-location:before { content: '\f3c5'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
-    .icon-fire:before { content: '\f06d'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
-    .icon-clock:before { content: '\f017'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
-    .icon-food:before { content: '\f2e7'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
-    .icon-music:before { content: '\f001'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
-    .icon-backpack:before { content: '\f5d0'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
-    .icon-check:before { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
-    .icon-arrow-right:before { content: '\f061'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
-    .icon-sun:before { content: '\f185'; font-family: 'Font Awesome 6 Free'; font-weight: 900; }
-    .icon-whatsapp:before { content: '\f232'; font-family: 'Font Awesome 6 Brands'; font-weight: 400; }
-    .icon-facebook:before { content: '\f09a'; font-family: 'Font Awesome 6 Brands'; font-weight: 400; }
-
-    /* Mobile adjustments */
-    @media (max-width: 768px) {
-      :root {
-        --spacing-lg: 1.5rem;
-        --spacing-xl: 2rem;
+    /* Add some animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
       }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
+    section {
+      animation: fadeIn 0.5s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    section:nth-child(1) { animation-delay: 0.1s; }
+    section:nth-child(2) { animation-delay: 0.2s; }
+    section:nth-child(3) { animation-delay: 0.3s; }
+    section:nth-child(4) { animation-delay: 0.4s; }
+    section:nth-child(5) { animation-delay: 0.5s; }
+    section:nth-child(6) { animation-delay: 0.6s; }
+    section:nth-child(7) { animation-delay: 0.7s; }
+    section:nth-child(8) { animation-delay: 0.8s; }
+
+    /* Responsive Media Queries */
+    @media (max-width: 768px) {
       h1 {
         font-size: 2rem;
       }
-
-      h2 {
-        font-size: 1.6rem;
+      
+      .countdown {
+        flex-wrap: wrap;
       }
-
+      
+      .countdown-item {
+        min-width: 50px;
+      }
+      
       .hero {
-        padding: var(--spacing-lg) var(--spacing-sm);
+        padding: 2rem 1rem;
       }
-
-      .hero-title {
-        font-size: 2.2rem;
+      
+      section {
+        padding: 1.5rem;
       }
+    }
 
-      #countdown {
-        gap: var(--spacing-sm);
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8rem;
       }
-
-      .countdown-segment span:first-child {
+      
+      h2 {
         font-size: 1.5rem;
       }
-
-      .weather-info {
-        gap: var(--spacing-lg);
+      
+      p, li {
+        font-size: 1rem;
+      }
+      
+      .countdown-item {
+        min-width: 40px;
+      }
+      
+      .countdown-number {
+        font-size: 1.5rem;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Create dynamic embers for the fire effect -->
-  <div id="embers-container"></div>
-
-  <header class="header" id="navbar">
+  <header class="header">
     <a href="/" class="logo-link">
       <img src="/assets/img/OT logo bco.png" alt="Oscar Talavera Logo" class="logo" />
     </a>
@@ -626,118 +411,179 @@
 
   <footer class="footer">
     <p>© {{ 'now' | date: "%Y" }} Oscar Talavera</p>
+    <p>
+      <a href="https://wa.me/+526393995814?text=Hola%20Oscar%2C%20me%20apunto%20al%20asado%20de%20cumple" target="_blank">
+        <i class="fab fa-whatsapp"></i> Confirmar asistencia
+      </a>
+    </p>
   </footer>
 
+  <a href="#" class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </a>
+
+  <div class="toast" id="shareToast">
+    ¡Enlace copiado! Ya puedes compartirlo
+  </div>
+
   <script>
-    // Create fire embers effect
-    function createEmbers() {
-      const emberContainer = document.getElementById('embers-container');
-      const emberCount = 20;
-      
-      for (let i = 0; i < emberCount; i++) {
-        const ember = document.createElement('div');
-        ember.classList.add('ember');
-        ember.style.left = `${Math.random() * 100}%`;
-        ember.style.width = `${2 + Math.random() * 4}px`;
-        ember.style.height = ember.style.width;
-        ember.style.opacity = Math.random() * 0.7;
-        ember.style.animationDuration = `${5 + Math.random() * 10}s`;
-        ember.style.animationDelay = `${Math.random() * 5}s`;
-        emberContainer.appendChild(ember);
-      }
-    }
-
-    // Sticky header effect
-    function handleScroll() {
-      const navbar = document.getElementById('navbar');
-      if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
-    }
-
-    // Countdown function
+    // Countdown timer
     function updateCountdown() {
       const eventDate = new Date('April 26, 2025 10:00:00').getTime();
       const now = new Date().getTime();
       const timeLeft = eventDate - now;
       
+      if (timeLeft <= 0) {
+        document.getElementById('countdown').innerHTML = '<p>¡El evento ya comenzó!</p>';
+        return;
+      }
+      
       const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
       const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
       
-      document.getElementById('days').innerText = days < 10 ? `0${days}` : days;
-      document.getElementById('hours').innerText = hours < 10 ? `0${hours}` : hours;
-      document.getElementById('minutes').innerText = minutes < 10 ? `0${minutes}` : minutes;
-      
-      if (timeLeft < 0) {
-        document.getElementById('countdown').innerHTML = '<p>¡El evento ha comenzado!</p>';
-      }
+      document.getElementById('days').innerHTML = days;
+      document.getElementById('hours').innerHTML = hours;
+      document.getElementById('minutes').innerHTML = minutes;
+      document.getElementById('seconds').innerHTML = seconds;
     }
-
-    // Handle form submission
-    function setupForm() {
-      const form = document.getElementById('rsvp-form');
-      const guestSelect = document.getElementById('guests');
-      const guestDetail = document.getElementById('guests-detail');
-      
-      if (guestSelect) {
-        guestSelect.addEventListener('change', function() {
-          if (this.value === '4') {
-            guestDetail.style.display = 'block';
-          } else {
-            guestDetail.style.display = 'none';
-          }
-        });
+    
+    // Back to top button
+    window.addEventListener('scroll', function() {
+      const backToTopButton = document.getElementById('backToTop');
+      if (window.scrollY > 300) {
+        backToTopButton.classList.add('visible');
+      } else {
+        backToTopButton.classList.remove('visible');
       }
-      
-      if (form) {
-        form.addEventListener('submit', function(e) {
-          e.preventDefault();
-          // Here you would normally send the form data to a server
-          // For demo purposes, just show success message
-          document.getElementById('rsvp-form').style.display = 'none';
-          document.getElementById('form-success').style.display = 'block';
-          
-          // You could add code to send form data via email or to a server
-          // const formData = new FormData(form);
-          // fetch('/submit-rsvp', { method: 'POST', body: formData });
-        });
-      }
-    }
-
-    // Handle checklist items local storage
-    function setupChecklist() {
-      const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
-      
-      // Load saved state
-      checkboxes.forEach(checkbox => {
-        const savedState = localStorage.getItem(`checkbox_${checkbox.id}`);
-        if (savedState === 'true') {
-          checkbox.checked = true;
-        }
-        
-        // Save state on change
-        checkbox.addEventListener('change', function() {
-          localStorage.setItem(`checkbox_${this.id}`, this.checked);
-        });
-      });
-    }
-
-    // Initialize everything when the page loads
-    document.addEventListener('DOMContentLoaded', function() {
-      createEmbers();
-      window.addEventListener('scroll', handleScroll);
-      
-      if (document.getElementById('countdown')) {
-        updateCountdown();
-        setInterval(updateCountdown, 60000); // Update every minute
-      }
-      
-      setupForm();
-      setupChecklist();
     });
+    
+    document.getElementById('backToTop').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Initialize countdown if element exists
+    if (document.getElementById('countdown')) {
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    }
+
+    // Copy share link functionality
+    function copyToClipboard(text) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      
+      const toast = document.getElementById('shareToast');
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    // Add share functionality to any share buttons
+    document.querySelectorAll('.share-btn').forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        copyToClipboard(window.location.href);
+      });
+    });
+    
+    // RSVP form submission to Google Sheets
+    window.submitToSheet = function(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
+      const confirmado = document.getElementById('rsvpStatus');
+      const form = e.target;
+      
+      // Cambiar estado del botón
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+      
+      // Obtener los datos del formulario
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const guests = document.getElementById('guests').value;
+      const day = document.getElementById('day').value;
+      const message = document.getElementById('message').value;
+      const date = new Date().toISOString();
+      
+      // Opción 1: Enviar a Google Sheets usando Apps Script
+      const scriptURL = 'SCRIPT_URL'; // Reemplazar con URL del script de Google Apps
+      
+      // Crear objeto de datos para enviar
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('guests', guests);
+      formData.append('day', day);
+      formData.append('message', message);
+      formData.append('date', date);
+      
+      // Intentar enviar a Google Sheets
+      fetch(scriptURL, { 
+        method: 'POST', 
+        body: formData 
+      })
+      .then(response => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Confirmar';
+        confirmado.innerHTML = `¡Gracias ${name}! Tu asistencia ha sido confirmada.`;
+        confirmado.style.display = 'block';
+        form.reset();
+      })
+      .catch(error => {
+        console.error('Error al enviar a Google Sheets:', error);
+        // Fallback: Enviar por correo electrónico
+        sendByEmail(name, email, guests, day, message);
+      });
+    };
+    
+    // Función alternativa para enviar por correo electrónico
+    function sendByEmail(name, email, guests, day, message) {
+      const submitBtn = document.getElementById('submitBtn');
+      const confirmado = document.getElementById('rsvpStatus');
+      
+      // Construir enlace para correo
+      const subject = encodeURIComponent(`Confirmación asistencia asado de cumple - ${name}`);
+      const body = encodeURIComponent(
+        `Nombre: ${name}\n` +
+        `Email: ${email}\n` +
+        `Invitados: ${guests}\n` +
+        `Días: ${day}\n` +
+        `Mensaje: ${message}\n`
+      );
+      
+      // Abrir cliente de correo con los datos
+      window.location.href = `mailto:oscartalavera95@gmail.com?subject=${subject}&body=${body}`;
+      
+      // Actualizar estado
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Confirmar';
+      confirmado.innerHTML = `¡Gracias ${name}! Por favor envía el correo abierto para confirmar tu asistencia.`;
+      confirmado.style.display = 'block';
+    }
+
+    // Get weather forecast if the API key is provided
+    function fetchWeatherForecast() {
+      // This would need a proper weather API key and implementation
+      // This is a placeholder that would be replaced with actual API call
+      console.log('Weather forecast would be fetched here');
+    }
+
+    // Call weather forecast function if the element exists
+    if (document.getElementById('weather-forecast')) {
+      fetchWeatherForecast();
+    }
   </script>
 </body>
 </html>
