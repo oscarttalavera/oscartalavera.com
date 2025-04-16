@@ -10,7 +10,7 @@
   <meta property="og:url" content="https://oscartalavera.com/cumple30/">
   <title>{% if page.title %}{{ page.title }} | Oscar Talavera{% else %}Oscar Talavera{% endif %}</title>
   <link rel="icon" href="/assets/img/OT logo ngo.png" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
     :root {
@@ -31,7 +31,7 @@
       background-size: cover;
       background-attachment: fixed;
       color: var(--text-color);
-      font-family: 'Nunito', sans-serif;
+      font-family: 'Baloo 2', sans-serif;
       margin: 0;
       line-height: 1.6;
       position: relative;
@@ -45,20 +45,24 @@
 
     /* Typography */
     h1, h2 {
-      font-family: 'Nunito', sans-serif;
+      font-family: 'Bebas Neue', sans-serif;
       color: var(--primary-color);
       margin-bottom: 0.5em;
       position: relative;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 3.2rem;
       margin-top: 0;
+      line-height: 1.1;
     }
 
     h2 {
-      font-size: 1.8rem;
+      font-size: 2.2rem;
       padding-bottom: 0.3em;
+      line-height: 1.2;
     }
 
     h2::after {
@@ -498,80 +502,7 @@
       });
     });
     
-    // RSVP form submission to Google Sheets
-    window.submitToSheet = function(e) {
-      e.preventDefault();
-      const submitBtn = document.getElementById('submitBtn');
-      const confirmado = document.getElementById('rsvpStatus');
-      const form = e.target;
-      
-      // Cambiar estado del botón
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-      
-      // Obtener los datos del formulario
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const guests = document.getElementById('guests').value;
-      const day = document.getElementById('day').value;
-      const message = document.getElementById('message').value;
-      const date = new Date().toISOString();
-      
-      // Opción 1: Enviar a Google Sheets usando Apps Script
-      const scriptURL = 'SCRIPT_URL'; // Reemplazar con URL del script de Google Apps
-      
-      // Crear objeto de datos para enviar
-      const formData = new FormData();
-      formData.append('name', name);
-      formData.append('email', email);
-      formData.append('guests', guests);
-      formData.append('day', day);
-      formData.append('message', message);
-      formData.append('date', date);
-      
-      // Intentar enviar a Google Sheets
-      fetch(scriptURL, { 
-        method: 'POST', 
-        body: formData 
-      })
-      .then(response => {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Confirmar';
-        confirmado.innerHTML = `¡Gracias ${name}! Tu asistencia ha sido confirmada.`;
-        confirmado.style.display = 'block';
-        form.reset();
-      })
-      .catch(error => {
-        console.error('Error al enviar a Google Sheets:', error);
-        // Fallback: Enviar por correo electrónico
-        sendByEmail(name, email, guests, day, message);
-      });
-    };
-    
-    // Función alternativa para enviar por correo electrónico
-    function sendByEmail(name, email, guests, day, message) {
-      const submitBtn = document.getElementById('submitBtn');
-      const confirmado = document.getElementById('rsvpStatus');
-      
-      // Construir enlace para correo
-      const subject = encodeURIComponent(`Confirmación asistencia asado de cumple - ${name}`);
-      const body = encodeURIComponent(
-        `Nombre: ${name}\n` +
-        `Email: ${email}\n` +
-        `Invitados: ${guests}\n` +
-        `Días: ${day}\n` +
-        `Mensaje: ${message}\n`
-      );
-      
-      // Abrir cliente de correo con los datos
-      window.location.href = `mailto:oscartalavera95@gmail.com?subject=${subject}&body=${body}`;
-      
-      // Actualizar estado
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Confirmar';
-      confirmado.innerHTML = `¡Gracias ${name}! Por favor envía el correo abierto para confirmar tu asistencia.`;
-      confirmado.style.display = 'block';
-    }
+    // No se necesita el código de envío de formulario ya que usaremos solo WhatsApp
 
     // Get weather forecast if the API key is provided
     function fetchWeatherForecast() {
