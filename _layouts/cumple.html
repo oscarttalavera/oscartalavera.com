@@ -424,206 +424,25 @@
     section:nth-child(7) { animation-delay: 0.7s; }
     section:nth-child(8) { animation-delay: 0.8s; }
     
-    /* Asado Animation */
-    .asado-animation {
-      position: relative;
-      height: 220px;
-      margin: 30px auto;
-      max-width: 300px;
-      perspective: 800px;
+    /* Custom styles for added elements */
+    .day-title {
+      font-family: 'Anton', sans-serif;
+      color: var(--primary-light);
+      font-size: 1.3rem;
+      margin: 1.5rem 0 0.5rem;
     }
-
-    .fire {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 160px;
-      height: 140px;
-      z-index: 1;
+    
+    .menu-list li {
+      margin-bottom: 0.8em;
     }
-
-    .flames {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 100px;
-    }
-
-    .flame {
-      position: absolute;
-      bottom: 0;
-      width: 20px;
-      height: 50px;
-      background: linear-gradient(to top, #ff6600, #ffcc00);
-      border-radius: 50% 50% 20% 20%;
-      transform-origin: 50% 100%;
-      animation: flicker 0.5s infinite alternate;
-      opacity: 0.9;
-      box-shadow: 0 0 10px 5px rgba(255, 102, 0, 0.4);
-    }
-
-    .flame:nth-child(1) {
-      left: 15%;
-      height: 65px;
-      animation-delay: 0.1s;
-    }
-
-    .flame:nth-child(2) {
-      left: 35%;
-      height: 80px;
-      animation-delay: 0.2s;
-    }
-
-    .flame:nth-child(3) {
-      left: 55%;
-      height: 70px;
-      animation-delay: 0.15s;
-    }
-
-    .flame:nth-child(4) {
-      left: 75%;
-      height: 60px;
-      animation-delay: 0.3s;
-    }
-
-    @keyframes flicker {
-      0% {
-        height: 50px;
-        opacity: 0.8;
-      }
-      25% {
-        height: 60px;
-        opacity: 0.9;
-      }
-      50% {
-        height: 55px;
-        opacity: 0.8;
-      }
-      75% {
-        height: 65px;
-        opacity: 1;
-      }
-      100% {
-        height: 70px;
-        opacity: 0.9;
-      }
-    }
-
-    .logs {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 140px;
-      height: 40px;
-      background: linear-gradient(to bottom, #8B4513, #3E2723);
-      border-radius: 10px;
-      box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3) inset;
-      overflow: hidden;
-    }
-
-    .logs:before {
-      content: '';
-      position: absolute;
-      top: 10px;
-      left: 20px;
-      width: 100px;
-      height: 15px;
-      background: #5D4037;
+    
+    .tip {
+      background-color: rgba(242, 106, 75, 0.1);
+      border-left: 3px solid var(--primary-color);
+      padding: 10px 15px;
       border-radius: 5px;
-      transform: rotate(-5deg);
-      box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2) inset;
-    }
-
-    .grill {
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%) rotateX(45deg);
-      width: 200px;
-      height: 120px;
-      z-index: 2;
-    }
-
-    .grill-bars {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 5px,
-        #999 5px,
-        #999 7px
-      );
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    }
-
-    .meat {
-      position: absolute;
-      top: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 120px;
-      height: 60px;
-      background: linear-gradient(to bottom, #A52A2A, #8B0000);
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      z-index: 3;
-      animation: sizzle 3s infinite;
-    }
-
-    @keyframes sizzle {
-      0% {
-        box-shadow: 0 0 5px rgba(255, 102, 0, 0.8);
-      }
-      50% {
-        box-shadow: 0 0 15px rgba(255, 102, 0, 0.8), 
-                    0 0 5px 2px rgba(255, 255, 0, 0.5);
-      }
-      100% {
-        box-shadow: 0 0 5px rgba(255, 102, 0, 0.8);
-      }
-    }
-    
-    /* Small smoke particles */
-    .meat:before, .meat:after {
-      content: '';
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.5);
-      animation: smoke 4s infinite;
-      opacity: 0;
-    }
-    
-    .meat:before {
-      left: 30%;
-      animation-delay: 0.5s;
-    }
-    
-    .meat:after {
-      left: 70%;
-      animation-delay: 1.5s;
-    }
-    
-    @keyframes smoke {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 0;
-      }
-      25% {
-        opacity: 0.5;
-      }
-      100% {
-        transform: translateY(-80px) scale(3);
-        opacity: 0;
-      }
+      margin-top: 20px;
+      font-style: italic;
     }
 
     /* Responsive Media Queries */
