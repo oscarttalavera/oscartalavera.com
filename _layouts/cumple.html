@@ -10,7 +10,7 @@
   <meta property="og:url" content="https://oscartalavera.com/cumple30/">
   <title>{% if page.title %}{{ page.title }} | Oscar Talavera{% else %}Oscar Talavera{% endif %}</title>
   <link rel="icon" href="/assets/img/OT logo ngo.png" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
     :root {
@@ -31,7 +31,7 @@
       background-size: cover;
       background-attachment: fixed;
       color: var(--text-color);
-      font-family: 'Baloo 2', sans-serif;
+      font-family: 'Outfit', sans-serif;
       margin: 0;
       line-height: 1.6;
       position: relative;
@@ -45,11 +45,11 @@
 
     /* Typography */
     h1, h2 {
-      font-family: 'Bebas Neue', sans-serif;
+      font-family: 'Anton', sans-serif;
       color: var(--primary-color);
       margin-bottom: 0.5em;
       position: relative;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
     }
 
@@ -80,6 +80,7 @@
     p, li {
       font-size: 1.1rem;
       line-height: 1.7;
+      font-weight: 400;
     }
 
     /* Lists */
@@ -329,16 +330,14 @@
       transform: translateY(0);
     }
 
-    /* Add some animation */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* Additional styling for the festival logo */
+    .festival-logo {
+      transition: transform 0.5s ease;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+    }
+    
+    .festival-logo:hover {
+      transform: scale(1.05);
     }
 
     section {
