@@ -104,49 +104,13 @@ permalink: /cumple30/
 
 <section>
   <h2><i class="fas fa-check-circle"></i> ¿Te apuntas?</h2>
-  <p>Para ayudarme a organizarme mejor, por favor confirma tu asistencia:</p>
+  <p>Avísame por WhatsApp si te animas (y si vienes con alguien). No es obligatorio confirmar, pero me ayuda saber más o menos cuántos seremos.</p>
   
-  <form id="rsvpForm" class="text-center" onsubmit="submitToSheet(event)">
-    <div style="margin-bottom: 15px;">
-      <input type="text" name="name" id="name" placeholder="Tu nombre" required 
-             style="padding: 10px; border-radius: 4px; border: none; width: 100%; max-width: 300px;">
-    </div>
-    <div style="margin-bottom: 15px;">
-      <input type="email" name="email" id="email" placeholder="Tu correo (opcional)" 
-             style="padding: 10px; border-radius: 4px; border: none; width: 100%; max-width: 300px;">
-    </div>
-    <div style="margin-bottom: 15px;">
-      <select name="guests" id="guests" required
-              style="padding: 10px; border-radius: 4px; border: none; width: 100%; max-width: 300px;">
-        <option value="" disabled selected>¿Vienes con alguien más?</option>
-        <option value="0">Solo yo</option>
-        <option value="1">Yo + 1 persona</option>
-        <option value="2">Yo + 2 personas</option>
-        <option value="3+">Yo + 3 o más (te contactaré)</option>
-      </select>
-    </div>
-    <div style="margin-bottom: 15px;">
-      <select name="day" id="day" required
-              style="padding: 10px; border-radius: 4px; border: none; width: 100%; max-width: 300px;">
-        <option value="" disabled selected>¿Qué día(s) asistirás?</option>
-        <option value="both">Todo el fin de semana</option>
-        <option value="saturday">Solo el sábado</option>
-        <option value="sunday">Solo el domingo</option>
-      </select>
-    </div>
-    <div style="margin-bottom: 15px;">
-      <textarea name="message" id="message" placeholder="¿Algo que quieras comentar? (opcional)" 
-                style="padding: 10px; border-radius: 4px; border: none; width: 100%; max-width: 300px; height: 80px;"></textarea>
-    </div>
-    <button type="submit" class="btn" id="submitBtn">
-      <i class="fas fa-paper-plane"></i> Confirmar
-    </button>
-  </form>
+  <div class="text-center" style="margin: 30px 0;">
+    <a href="https://wa.me/+526393995814?text=Hola%20Oscar%2C%20me%20apunto%20al%20asado%20de%20cumple" target="_blank" class="btn">
+      <i class="fab fa-whatsapp"></i> Confirmar por WhatsApp
+    </a>
+  </div>
   
-  <div id="rsvpStatus" style="display: none; margin-top: 15px; background-color: rgba(242, 106, 75, 0.2); padding: 10px; border-radius: 8px;"></div>
-  
-  <p style="margin-top: 20px;">También puedes avisar directamente por WhatsApp si prefieres.</p>
-  <a href="https://wa.me/+526393995814?text=Hola%20Oscar%2C%20me%20apunto%20al%20asado%20de%20cumple" target="_blank" class="btn">
-    <i class="fab fa-whatsapp"></i> Confirmar por WhatsApp
-  </a>
+  <p class="text-center">También puedes avisarme en persona o por cualquier otro medio. ¡Lo importante es que vengas!</p>
 </section>
