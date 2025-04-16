@@ -1,3 +1,4 @@
+<!-- Este es el archivo cumple-30.html mejorado -->
 ---
 layout: cumple
 title: Festival de Asado - Cumple 30
@@ -5,63 +6,234 @@ permalink: /cumple30/
 ---
 
 <section class="hero">
-  <h1>¡Cumplo 30! Vente al fuego</h1>
-  <p>
-    <strong>Cuándo:</strong> Sábado 26 y domingo 27 de abril<br>
-    <strong>Dónde:</strong> En las afueras de Cárdenas, Chihuahua.
-  </p>
+  <div class="hero-content">
+    <h1 class="hero-title">¡Cumplo 30! <span class="accent">Vente al fuego</span></h1>
+    <div class="hero-details">
+      <div class="detail-item">
+        <i class="icon-calendar"></i>
+        <p><strong>Cuándo:</strong> Sábado 26 y domingo 27 de abril</p>
+      </div>
+      <div class="detail-item">
+        <i class="icon-location"></i>
+        <p><strong>Dónde:</strong> En las afueras de Cárdenas, Chihuahua.</p>
+      </div>
+    </div>
+    
+    <div class="countdown-container">
+      <div class="countdown-title">Cuenta regresiva</div>
+      <div id="countdown">
+        <div class="countdown-segment">
+          <span id="days">00</span>
+          <span class="countdown-label">Días</span>
+        </div>
+        <div class="countdown-segment">
+          <span id="hours">00</span>
+          <span class="countdown-label">Horas</span>
+        </div>
+        <div class="countdown-segment">
+          <span id="minutes">00</span>
+          <span class="countdown-label">Minutos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<section class="map-section">
   <iframe 
     src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14466.5201681057!2d-105.5976365!3d28.4140736!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDI0JzUwLjciTiAxMDXCsDM1JzUxLjUiVw!5e0!3m2!1ses!2smx!4v1713110450000!5m2!1ses!2smx" 
-    width="100%" 
     height="300" 
     allowfullscreen="" 
     loading="lazy" 
     referrerpolicy="no-referrer-when-downgrade">
   </iframe>
+  <div class="map-overlay">
+    <a href="https://maps.app.goo.gl/4mGvQw5ZpE8U3Hkk6" target="_blank" class="btn">
+      Cómo llegar <i class="icon-arrow-right"></i>
+    </a>
+  </div>
 </section>
 
-<section>
+<section class="section-card">
+  <div class="section-icon"><i class="icon-fire"></i></div>
   <h2>¿De qué se trata?</h2>
-  <p>Es mi cumpleaños 30 y quiero celebrarlo con un fin de semana al aire libre: humo, brasas, carne, música, estrellas y la gente que quiero.  
-  No hay cuota ni exigencias, solo buena vibra y ganas de disfrutar el fuego.</p>
+  <p>Es mi cumpleaños 30 y quiero celebrarlo con un fin de semana al aire libre: humo, brasas, carne, música, estrellas y la gente que quiero. No hay cuota ni exigencias, solo buena vibra y ganas de disfrutar el fuego.</p>
 </section>
 
-<section>
-  <h2>Programa general</h2>
-  <ul>
-    <li><strong>Sábado 10:00 a.m.:</strong> Llegada y armado del campamento</li>
-    <li><strong>12:00 p.m.:</strong> Primera ronda de asado</li>
-    <li><strong>Tarde:</strong> Se prende el fuego para la cena</li>
-    <li><strong>Noche:</strong> Cena principal, música, charla y fogata</li>
-    <li><strong>Domingo:</strong> Café, desayuno, cotorreo, carne de despedida</li>
-  </ul>
+<section class="section-card">
+  <div class="section-icon"><i class="icon-clock"></i></div>
+  <h2>Programa</h2>
+  
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-point"></div>
+      <div class="timeline-content">
+        <h3>Sábado 10:00 a.m.</h3>
+        <p>Llegada y armado del campamento</p>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-point"></div>
+      <div class="timeline-content">
+        <h3>12:00 p.m.</h3>
+        <p>Primera ronda de asado</p>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-point"></div>
+      <div class="timeline-content">
+        <h3>Tarde</h3>
+        <p>Se prende el fuego para la cena</p>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-point"></div>
+      <div class="timeline-content">
+        <h3>Noche</h3>
+        <p>Cena principal, música, charla y fogata</p>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-point"></div>
+      <div class="timeline-content">
+        <h3>Domingo</h3>
+        <p>Café, desayuno, cotorreo, carne de despedida</p>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section>
-  <h2>Comida y bebida</h2>
-  <p>Yo me encargo de la proteína. Si quieres traer algo para sumar (salsas, pan, ensalada, postre, desechables, etc.), eres bienvenido.  
-  Cada quien lleva lo que quiera tomar: agua, cheve, vino, etc.</p>
-</section>
+<div class="two-column">
+  <section class="section-card">
+    <div class="section-icon"><i class="icon-food"></i></div>
+    <h2>Comida y bebida</h2>
+    <p>Yo me encargo de la proteína. Si quieres traer algo para sumar (salsas, pan, ensalada, postre, desechables, etc.), eres bienvenido.</p>
+    <p>Cada quien lleva lo que quiera tomar: agua, cheve, vino, etc.</p>
+  </section>
 
-<section>
+  <section class="section-card">
+    <div class="section-icon"><i class="icon-music"></i></div>
+    <h2>Extras</h2>
+    <p>Tendremos asadores suficientes para hacer toda la carne y algún extra.</p>
+    <p>Habrá playlist, puestas de sol y lo que se arme en buena compañía.</p>
+  </section>
+</div>
+
+<section class="section-card">
+  <div class="section-icon"><i class="icon-backpack"></i></div>
   <h2>¿Qué llevar?</h2>
-  <ul>
-    <li>Casita de campaña, sleeping bag y lo que necesites para acampar</li>
-    <li>Agua personal (mínimo 5 litros por persona)</li>
-    <li>Ropa para calor de día y frío de noche, gorra, bloqueador</li>
-    <li>Hielera y tus bebidas favoritas</li>
-  </ul>
+  
+  <div class="checklist">
+    <div class="checklist-item">
+      <input type="checkbox" id="item1">
+      <label for="item1">Casita de campaña y sleeping bag</label>
+    </div>
+    
+    <div class="checklist-item">
+      <input type="checkbox" id="item2">
+      <label for="item2">Agua personal (mínimo 5 litros por persona)</label>
+    </div>
+    
+    <div class="checklist-item">
+      <input type="checkbox" id="item3">
+      <label for="item3">Ropa para calor de día y frío de noche</label>
+    </div>
+    
+    <div class="checklist-item">
+      <input type="checkbox" id="item4">
+      <label for="item4">Gorra y bloqueador solar</label>
+    </div>
+    
+    <div class="checklist-item">
+      <input type="checkbox" id="item5">
+      <label for="item5">Hielera y tus bebidas favoritas</label>
+    </div>
+  </div>
 </section>
 
-<section>
-  <h2>Extras</h2>
-  <p>Tendremos asadores suficientes para hacer toda la carne y algún extra.  
-  Habrá playlist, puestas de sol y lo que se arme en buena compañía.</p>
-</section>
-
-<section>
+<section class="rsvp-section section-card">
+  <div class="section-icon"><i class="icon-check"></i></div>
   <h2>¿Te apuntas?</h2>
-  <p>Avísame por WhatsApp si te animas (y si vienes con alguien).  
-  No es obligatorio confirmar, pero me ayuda saber más o menos cuántos seremos.</p>
+  
+  <form id="rsvp-form" class="rsvp-form">
+    <div class="form-group">
+      <label for="name">Nombre completo</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="phone">WhatsApp</label>
+      <input type="tel" id="phone" name="phone" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="guests">¿Vienes con alguien?</label>
+      <select id="guests" name="guests">
+        <option value="0">Solo yo</option>
+        <option value="1">Con 1 persona</option>
+        <option value="2">Con 2 personas</option>
+        <option value="3">Con 3 personas</option>
+        <option value="4">Con 4+ personas (especificar)</option>
+      </select>
+    </div>
+    
+    <div class="form-group" id="guests-detail" style="display: none;">
+      <label for="guests-info">Especifica con quién vienes</label>
+      <textarea id="guests-info" name="guests-info"></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label for="comments">¿Algo que quieras agregar?</label>
+      <textarea id="comments" name="comments" placeholder="Comentarios, preguntas, sugerencias..."></textarea>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">¡Me apunto!</button>
+  </form>
+  
+  <div id="form-success" style="display: none;">
+    <h3>¡Gracias por confirmar!</h3>
+    <p>He recibido tu confirmación. Nos vemos en el asado.</p>
+  </div>
 </section>
+
+<div class="weather-section">
+  <h3>Pronóstico del tiempo para Cárdenas, Chihuahua</h3>
+  <div class="weather-info">
+    <div class="weather-day">
+      <h4>Sábado 26</h4>
+      <div class="weather-icon">
+        <i class="icon-sun"></i>
+      </div>
+      <div class="weather-temp">
+        <span class="temp-max">32°C</span> / <span class="temp-min">17°C</span>
+      </div>
+    </div>
+    
+    <div class="weather-day">
+      <h4>Domingo 27</h4>
+      <div class="weather-icon">
+        <i class="icon-sun"></i>
+      </div>
+      <div class="weather-temp">
+        <span class="temp-max">30°C</span> / <span class="temp-min">15°C</span>
+      </div>
+    </div>
+  </div>
+  <p class="weather-note">Datos estimados basados en promedios históricos. Verificar antes del evento.</p>
+</div>
+
+<div class="share-section">
+  <h3>Comparte este evento</h3>
+  <div class="share-buttons">
+    <a href="https://wa.me/?text=Me%20voy%20al%20Festival%20de%20Asado%20de%20Oscar%20Talavera:%20https://midominio.com/cumple30/" target="_blank" class="share-btn whatsapp">
+      <i class="icon-whatsapp"></i>
+    </a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://midominio.com/cumple30/" target="_blank" class="share-btn facebook">
+      <i class="icon-facebook"></i>
+    </a>
+  </div>
+</div>
