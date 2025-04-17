@@ -10,7 +10,7 @@
   <meta property="og:url" content="https://oscartalavera.com/cumple30/">
   <title>{% if page.title %}{{ page.title }} | Oscar Talavera{% else %}Oscar Talavera{% endif %}</title>
   <link rel="icon" href="/assets/img/OT logo ngo.png" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
     :root {
@@ -21,35 +21,45 @@
       --section-bg: #1e1e1e;
       --text-color: #eaeaea;
       --text-secondary: #bbb;
+      --section-spacing: 6rem;  /* Aumentado para más espacio negativo */
+      --content-max-width: 820px;  /* Aumentado para mejor lectura */
     }
     
-    /* Base Styles */
+    /* Reset y Base Styles */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+    
     body {
       background-color: var(--dark-bg);
       color: var(--text-color);
       font-family: 'Outfit', sans-serif;
       margin: 0;
       line-height: 1.6;
-      position: relative;
       overflow-x: hidden;
+      padding: 0;
     }
 
-    /* Animated Background */
-    body:before {
-      content: "";
+    /* Efecto de paralaje para el fondo */
+    .parallax-bg {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: -1;
+      z-index: -2;
       background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.85)), 
                   url('/assets/img/asado-bg.jpg');
       background-size: cover;
       background-attachment: fixed;
     }
     
-    /* Mejorar efecto de brasas y partículas */
+    /* Animación de brasas optimizada para rendimiento */
     .bg-animation {
       position: fixed;
       top: 0;
@@ -58,6 +68,7 @@
       height: 100%;
       overflow: hidden;
       z-index: -1;
+      pointer-events: none;
     }
     
     .ember {
@@ -67,80 +78,29 @@
       opacity: 0;
     }
 
-    /* Brasas que suben alto */
     .ember.high {
-      animation: floatHigh 15s infinite;
+      animation: floatHigh 20s infinite; /* Más lento para mejor rendimiento */
     }
     
-    /* Brasas que se quedan abajo */
     .ember.low {
-      animation: floatLow 15s infinite;
+      animation: floatLow 20s infinite; /* Más lento para mejor rendimiento */
     }
 
     .ember-large {
       background: radial-gradient(circle at center, rgba(255, 140, 50, 0.9) 0%, rgba(255, 120, 50, 0) 80%);
       box-shadow: 0 0 20px 10px rgba(255, 90, 30, 0.3);
-      filter: blur(4px);
     }
 
     .ember-medium {
       background: radial-gradient(circle at center, rgba(255, 180, 60, 0.85) 0%, rgba(255, 150, 40, 0) 75%);
       box-shadow: 0 0 15px 8px rgba(255, 120, 40, 0.25);
-      filter: blur(3px);
     }
 
     .ember-small {
       background: radial-gradient(circle at center, rgba(255, 220, 70, 0.9) 0%, rgba(255, 170, 30, 0) 70%);
-      filter: blur(2px);
     }
 
-    .spark {
-      position: absolute;
-      background: radial-gradient(circle at center, rgba(255, 255, 200, 0.95) 0%, rgba(255, 220, 100, 0.7) 30%, rgba(255, 180, 50, 0) 70%);
-      border-radius: 50%;
-      box-shadow: 0 0 8px 4px rgba(255, 220, 100, 0.5);
-      animation: spark 5s infinite;
-      opacity: 0;
-      filter: blur(1px);
-    }
-    
-    /* Nuevos elementos: humo y cenizas */
-    .smoke {
-      position: absolute;
-      background: radial-gradient(circle at center, 
-                  rgba(200, 200, 200, 0.6) 0%, 
-                  rgba(180, 180, 180, 0.4) 30%, 
-                  rgba(150, 150, 150, 0) 70%);
-      border-radius: 50%;
-      filter: blur(8px);
-      animation: smokeRise 20s infinite;
-      opacity: 0;
-      transform-origin: center bottom;
-    }
-    
-    .ash {
-      position: absolute;
-      width: 2px !important;
-      height: 2px !important;
-      background: rgba(200, 200, 200, 0.9);
-      border-radius: 50%;
-      filter: blur(0.5px);
-      animation: ashRise 7s linear infinite;
-      opacity: 0;
-    }
-    
-    .micro-spark {
-      position: absolute;
-      width: 1px !important;
-      height: 1px !important;
-      background: rgba(255, 200, 50, 1);
-      border-radius: 50%;
-      box-shadow: 0 0 3px 2px rgba(255, 200, 50, 0.7);
-      animation: microSparkRise 5s linear infinite; /* Más lento que antes */
-      opacity: 0;
-    }
-
-    /* Brasas que suben bastante */
+    /* Animaciones de partículas (reducidas para mejor rendimiento) */
     @keyframes floatHigh {
       0% {
         transform: translateY(100vh) translateX(0) scale(0);
@@ -149,25 +109,15 @@
       10% {
         opacity: 0.8;
       }
-      20% {
-        opacity: 0.7;
-      }
-      40% {
-        opacity: 0.9;
-      }
-      60% {
-        opacity: 0.6;
-      }
       80% {
         opacity: 0.4;
       }
       100% {
-        transform: translateY(-80vh) translateX(var(--tx)) scale(var(--scale));
+        transform: translateY(-100vh) translateX(var(--tx)) scale(var(--scale));
         opacity: 0;
       }
     }
     
-    /* Brasas que se quedan más abajo */
     @keyframes floatLow {
       0% {
         transform: translateY(100vh) translateX(0) scale(0);
@@ -176,161 +126,53 @@
       10% {
         opacity: 0.8;
       }
-      30% {
-        opacity: 0.9;
-      }
-      70% {
-        opacity: 0.6;
-      }
       90% {
         opacity: 0.3;
       }
       100% {
-        transform: translateY(-30vh) translateX(var(--tx)) scale(var(--scale));
-        opacity: 0;
-      }
-    }
-
-    @keyframes spark {
-      0% {
-        transform: translateY(100vh) translateX(var(--spark-start)) scale(0.2);
-        opacity: 0;
-      }
-      5% {
-        opacity: 0.9;
-      }
-      15% {
-        opacity: 1;
-      }
-      80% {
-        opacity: 0.7;
-      }
-      100% {
-        transform: translateY(-100vh) translateX(var(--spark-end)) scale(0.1);
+        transform: translateY(-40vh) translateX(var(--tx)) scale(var(--scale));
         opacity: 0;
       }
     }
     
-    @keyframes smokeRise {
-      0% {
-        transform: translateY(100vh) translateX(0) scale(0.5) rotate(0deg);
-        opacity: 0;
-      }
-      10% {
-        opacity: 0.4;
-      }
-      30% {
-        opacity: 0.5;
-        transform: translateY(30vh) translateX(var(--smoke-x)) scale(1.2) rotate(var(--smoke-rotate-mid));
-      }
-      70% {
-        opacity: 0.3;
-        transform: translateY(-50vh) translateX(calc(var(--smoke-x) * 2)) scale(2) rotate(var(--smoke-rotate-end));
-      }
-      100% {
-        transform: translateY(-120vh) translateX(calc(var(--smoke-x) * 3)) scale(2.5) rotate(calc(var(--smoke-rotate-end) * 1.5));
-        opacity: 0;
-      }
-    }
-    
-    @keyframes ashRise {
-      0% {
-        transform: translateY(100vh) translateX(var(--ash-x-start)) rotate(0deg);
-        opacity: 0;
-      }
-      5% {
-        opacity: 0.7;
-      }
-      30% {
-        opacity: 0.9;
-      }
-      70% {
-        opacity: 0.5;
-      }
-      100% {
-        transform: translateY(-100vh) translateX(var(--ash-x-end)) rotate(360deg);
-        opacity: 0;
-      }
-    }
-    
-    @keyframes microSparkRise {
-      0% {
-        transform: translateY(100vh) translateX(var(--micro-x-start));
-        opacity: 0;
-      }
-      5% {
-        opacity: 1;
-      }
-      20% {
-        opacity: 1;
-      }
-      90% {
-        opacity: 0.7;
-      }
-      100% {
-        transform: translateY(-120vh) translateX(var(--micro-x-end));
-        opacity: 0;
-      }
-    }
-
-    @keyframes pulse {
-      0% {
-        transform: scale(1);
-        opacity: var(--base-opacity);
-      }
-      50% {
-        transform: scale(1.1);
-        opacity: calc(var(--base-opacity) * 1.5);
-      }
-      100% {
-        transform: scale(1);
-        opacity: var(--base-opacity);
-      }
-    }
-
-    .ember.pulsate {
-      animation: floatHigh 15s infinite, pulse 3s infinite;
-    }
-    
-    .ember.low.pulsate {
-      animation: floatLow 15s infinite, pulse 3s infinite;
-    }
-
+    /* Contenedor principal */
     .content {
-      max-width: 760px;
-      margin: 2rem auto;
+      max-width: var(--content-max-width);
+      margin: 0 auto;
       padding: 0 1.5rem;
       position: relative;
       z-index: 1;
     }
 
-    /* Typography */
-    h1, h2 {
+    /* Tipografía mejorada */
+    h1, h2, h3 {
       font-family: 'Anton', sans-serif;
       color: var(--primary-color);
-      margin-bottom: 0.5em;
-      position: relative;
-      letter-spacing: 1.5px;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
+      line-height: 1.1;
+      margin: 0 0 1rem;
     }
 
     h1 {
-      font-size: 3.2rem;
-      margin-top: 0;
-      line-height: 1.1;
+      font-size: clamp(3.5rem, 15vw, 8rem); /* Tipografía enorme y responsiva */
+      margin-bottom: 1rem;
+      text-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.7);
     }
 
     h2 {
-      font-size: 2.2rem;
-      padding-bottom: 0.3em;
-      line-height: 1.2;
+      font-size: clamp(2.2rem, 8vw, 3.5rem);
+      margin-top: 2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.5rem;
     }
 
     h2::after {
       content: '';
       display: block;
-      width: 60px;
-      height: 3px;
+      width: 80px;
+      height: 4px;
       background-color: var(--primary-color);
       position: absolute;
       bottom: 0;
@@ -338,136 +180,335 @@
       border-radius: 2px;
     }
 
-    p, li {
-      font-size: 1.1rem;
-      line-height: 1.7;
-      font-weight: 400;
+    h3 {
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      margin-top: 2.5rem;
     }
 
-    /* Lists */
+    p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      font-weight: 300;
+      margin: 0 0 1.5rem;
+      max-width: 40em; /* Mejora la legibilidad para líneas de texto */
+    }
+
+    /* Secciones con más espacio y efectos de scroll */
+    section {
+      background-color: rgba(30, 30, 30, 0.85);
+      padding: 4rem 3rem; /* Más padding interno */
+      border-radius: 1rem;
+      margin-bottom: var(--section-spacing); /* Mayor espacio negativo entre secciones */
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+      border-left: 4px solid var(--primary-color);
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      opacity: 0;
+      transform: translateY(50px);
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Diseño hero mejorado (pantalla completa) */
+    .hero-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 3rem;
+    }
+
+    .hero {
+      width: 100%;
+      max-width: var(--content-max-width);
+      text-align: center;
+      background: rgba(18, 18, 18, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      padding: 4rem 2rem;
+      margin-bottom: 0;
+      border: none;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('/assets/img/campfire.jpg');
+      background-size: cover;
+      background-position: center;
+      z-index: -1;
+      transform: scale(1.1); /* Para efecto de zoom al hacer scroll */
+      transition: transform 0.5s ease;
+    }
+
+    /* Logo mejorado */
+    .festival-logo-container {
+      margin: 2rem auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .festival-logo {
+      max-width: 90%;
+      height: auto;
+      max-height: 240px;
+      border-radius: 2.5rem;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+    }
+    
+    .festival-logo:hover {
+      transform: scale(1.03) translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+    }
+
+    /* Contador mejorado */
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+
+    .countdown-item {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      min-width: 90px;
+      text-align: center;
+      border: 2px solid rgba(242, 106, 75, 0.3);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .countdown-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .countdown-label {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-top: 0.5rem;
+    }
+
+    /* Listas mejoradas */
     ul {
-      padding-left: 0.5em;
-      margin-bottom: 2em;
+      padding-left: 0;
+      margin-bottom: 2.5rem;
       list-style: none;
     }
 
     li {
-      margin-bottom: 0.5em;
+      margin-bottom: 1rem;
       position: relative;
-      padding-left: 1.8em;
+      padding-left: 2.2rem;
+      font-size: 1.1rem;
+      line-height: 1.7;
     }
 
     li i {
       position: absolute;
       left: 0;
-      top: 0.3em;
+      top: 0.4em;
       color: var(--primary-color);
     }
 
-    /* Sections */
-    section {
-      background-color: rgba(30, 30, 30, 0.85);
-      padding: 2rem;
-      border-radius: 12px;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-      border-left: 3px solid var(--primary-color);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      position: relative;
-      z-index: 1;
-    }
-
-    section:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 25px rgba(0,0,0,0.4);
-    }
-
-    .hero {
-      text-align: center;
-      background-color: rgba(30, 30, 30, 0.9);
-      background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                         url('/assets/img/campfire.jpg');
-      background-size: cover;
-      background-position: center;
-      padding: 3rem 2rem;
-      border-left: none;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero h1 {
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-      font-size: 2.8rem;
-      margin-bottom: 1rem;
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      max-width: 600px;
-      margin: 0 auto 1.5rem;
-    }
-
-    /* Maps and Media */
-    iframe {
-      width: 100%;
-      border: none;
-      border-radius: 12px;
-      margin-top: 1.5em;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      transition: all 0.3s ease;
-    }
-
-    iframe:hover {
-      filter: grayscale(0%) brightness(100%) contrast(110%);
-      transform: scale(1.01);
-    }
-
-    /* Links & Buttons */
-    a {
-      color: var(--primary-color);
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-
-    a:hover {
-      color: var(--primary-light);
-      text-decoration: underline;
-    }
-
+    /* Botones mejorados */
     .btn {
       display: inline-block;
       background-color: var(--primary-color);
       color: white;
-      padding: 0.8em 1.5em;
+      padding: 1em 2em;
       border-radius: 50px;
       font-weight: 700;
+      font-size: 1.1rem;
       text-decoration: none;
       transition: all 0.3s ease;
       border: none;
       cursor: pointer;
       margin: 1rem 0.5rem;
-      box-shadow: 0 2px 8px rgba(242, 106, 75, 0.4);
+      box-shadow: 0 4px 15px rgba(242, 106, 75, 0.4);
     }
 
     .btn:hover {
       background-color: var(--primary-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(242, 106, 75, 0.6);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(242, 106, 75, 0.6);
       color: white;
       text-decoration: none;
     }
 
-    /* Header & Footer */
-    .header {
-      background-color: rgba(0, 0, 0, 0.8);
-      padding: 1rem;
+    /* Mapa y clima mejorados */
+    iframe {
+      width: 100%;
+      border: none;
+      border-radius: 1rem;
+      margin: 2.5rem 0;
+      height: 350px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      transition: all 0.5s ease;
+    }
+
+    iframe:hover {
+      transform: scale(1.02);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    }
+
+    .weather-forecast {
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin: 2.5rem 0;
       display: flex;
       justify-content: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      gap: 3rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    .weather-day {
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .weather-icon {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Efecto scroll to top */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: var(--primary-color);
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      z-index: 99;
+      font-size: 1.2rem;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+
+    /* Toast mejorado */
+    .toast {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      background-color: rgba(30, 30, 30, 0.95);
+      color: white;
+      padding: 1.2rem 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      border-left: 4px solid var(--primary-color);
+      z-index: 1000;
+      opacity: 0;
+      transform: translateY(-30px);
+      transition: all 0.5s ease;
+      font-size: 1.1rem;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Elementos adicionales */
+    .day-title {
+      display: flex;
+      align-items: center;
+      font-family: 'Anton', sans-serif;
+      color: var(--primary-light);
+      font-size: 1.8rem;
+      margin: 2.5rem 0 1.5rem;
+    }
+    
+    .day-title i {
+      margin-right: 1rem;
+    }
+    
+    .tip {
+      background-color: rgba(242, 106, 75, 0.1);
+      border-left: 4px solid var(--primary-color);
+      padding: 1.5rem 2rem;
+      border-radius: 10px;
+      margin: 2.5rem 0;
+      font-style: italic;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    }
+
+    /* Footer mejorado */
+    .footer {
+      text-align: center;
+      padding: 4rem 2rem;
+      background-color: rgba(0, 0, 0, 0.8);
+      margin-top: 5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer p {
+      margin: 0.5rem auto;
+      max-width: 500px;
+      font-size: 1rem;
+    }
+
+    /* Header mejorado */
+    .header {
+      background-color: rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(10px);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      transition: background-color 0.3s ease, padding 0.3s ease;
+    }
+
+    .header.scrolled {
+      background-color: rgba(0, 0, 0, 0.9);
+      padding: 0.7rem 1rem;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
     }
 
     .logo {
@@ -479,223 +520,98 @@
       transform: scale(1.1);
     }
 
-    .footer {
-      text-align: center;
-      padding: 2rem;
+    /* Nuevos componentes y mejoras */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
       font-size: 0.9rem;
-      color: var(--text-secondary);
-      background-color: rgba(0, 0, 0, 0.7);
-      margin-top: 3rem;
-      position: relative;
-      z-index: 1;
+      opacity: 0.8;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
     }
 
-    /* Utilities */
+    .scroll-indicator:hover {
+      opacity: 1;
+      transform: translateX(-50%) translateY(5px);
+    }
+
+    .scroll-indicator i {
+      font-size: 2rem;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+      40% {transform: translateY(-15px);}
+      60% {transform: translateY(-7px);}
+    }
+
+    /* Utilidades */
     .text-center {
       text-align: center;
     }
 
-    .countdown {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin: 1.5rem 0;
-    }
-
-    .countdown-item {
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 10px;
-      border-radius: 8px;
-      min-width: 60px;
-      text-align: center;
-      border: 1px solid rgba(242, 106, 75, 0.3);
-    }
-
-    .countdown-number {
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: var(--primary-color);
-    }
-
-    .countdown-label {
-      font-size: 0.8rem;
+    .hero-subtitle {
+      font-size: 1.5rem;
       color: var(--text-secondary);
+      margin-bottom: 2rem;
     }
 
-    .weather-forecast {
-      background-color: rgba(0, 0, 0, 0.3);
-      border-radius: 8px;
-      padding: 15px;
-      margin-top: 15px;
+    .cta-buttons {
       display: flex;
-      justify-content: center;
-      align-items: center;
       flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .weather-day {
-      text-align: center;
-      padding: 10px;
-    }
-
-    .weather-icon {
-      font-size: 2rem;
-      color: var(--primary-color);
-      margin-bottom: 5px;
-    }
-
-    .back-to-top {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: var(--primary-color);
-      color: white;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
       justify-content: center;
-      text-decoration: none;
-      opacity: 0;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-      z-index: 99;
+      gap: 1rem;
+      margin: 2rem 0;
     }
 
-    .back-to-top.visible {
-      opacity: 1;
-    }
-
-    .back-to-top:hover {
-      background-color: var(--primary-dark);
-      transform: translateY(-3px);
-    }
-
-    /* Toast notification */
-    .toast {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background-color: rgba(30, 30, 30, 0.9);
-      color: white;
-      padding: 15px 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      border-left: 4px solid var(--primary-color);
-      z-index: 1000;
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: all 0.3s ease;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Additional styling for the festival logo */
-    .festival-logo {
-      transition: transform 0.5s ease, box-shadow 0.5s ease;
-      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.6));
-      border-radius: 40px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-    }
-    
-    .festival-logo:hover {
-      transform: scale(1.03);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.5);
-    }
-
-    /* Add some animation */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    section {
-      animation: fadeIn 0.5s ease forwards;
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    section:nth-child(1) { animation-delay: 0.1s; }
-    section:nth-child(2) { animation-delay: 0.2s; }
-    section:nth-child(3) { animation-delay: 0.3s; }
-    section:nth-child(4) { animation-delay: 0.4s; }
-    section:nth-child(5) { animation-delay: 0.5s; }
-    section:nth-child(6) { animation-delay: 0.6s; }
-    section:nth-child(7) { animation-delay: 0.7s; }
-    section:nth-child(8) { animation-delay: 0.8s; }
-    
-    /* Custom styles for added elements */
-    .day-title {
-      font-family: 'Anton', sans-serif;
-      color: var(--primary-light);
-      font-size: 1.3rem;
-      margin: 1.5rem 0 0.5rem;
-    }
-    
-    .menu-list li {
-      margin-bottom: 0.8em;
-    }
-    
-    .secondary-items li {
-      color: var(--text-secondary);
-      margin-bottom: 0.5em;
-    }
-    
-    .secondary-items i {
-      color: var(--primary-color);
-      opacity: 0.8;
-    }
-    
-    .tip {
-      background-color: rgba(242, 106, 75, 0.1);
-      border-left: 3px solid var(--primary-color);
-      padding: 10px 15px;
-      border-radius: 5px;
-      margin-top: 20px;
-      font-style: italic;
-    }
-
-    /* Responsive Media Queries */
+    /* Media queries - diseño responsivo */
     @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
+      :root {
+        --section-spacing: 4rem;
+      }
+      
+      section {
+        padding: 2.5rem 1.5rem;
+      }
+      
+      .hero {
+        padding: 3rem 1.5rem;
       }
       
       .countdown {
         flex-wrap: wrap;
+        gap: 1rem;
       }
       
       .countdown-item {
-        min-width: 50px;
+        min-width: 70px;
+        padding: 1rem;
       }
       
-      .hero {
-        padding: 2rem 1rem;
+      .countdown-number {
+        font-size: 1.8rem;
       }
       
-      section {
-        padding: 1.5rem;
+      .weather-forecast {
+        flex-direction: column;
+        gap: 1rem;
       }
     }
 
     @media (max-width: 480px) {
       h1 {
-        font-size: 1.8rem;
+        font-size: clamp(2.5rem, 15vw, 3.5rem);
       }
       
       h2 {
-        font-size: 1.5rem;
+        font-size: clamp(1.8rem, 8vw, 2.2rem);
       }
       
       p, li {
@@ -703,19 +619,33 @@
       }
       
       .countdown-item {
-        min-width: 40px;
+        min-width: 60px;
+        padding: 0.8rem;
       }
       
       .countdown-number {
         font-size: 1.5rem;
       }
+      
+      .btn {
+        padding: 0.8em 1.5em;
+        font-size: 1rem;
+        margin: 0.5rem;
+        display: block;
+        width: calc(100% - 1rem);
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="parallax-bg"></div>
   <div class="bg-animation" id="bgAnimation"></div>
   
-  <header class="header">
+  <header class="header" id="mainHeader">
     <a href="/" class="logo-link">
       <img src="/assets/img/OT logo bco.png" alt="Oscar Talavera Logo" class="logo" />
     </a>
@@ -743,92 +673,62 @@
   </div>
 
   <script>
-    // Crear animación de fondo mejorada
+    // Variables para mayor rendimiento
+    const emberCount = 25; // Reducido para mejor rendimiento
+    const smokeCount = 8;  // Reducido para mejor rendimiento
+    
+    // Elementos DOM
+    const container = document.getElementById('bgAnimation');
+    const backToTopButton = document.getElementById('backToTop');
+    const sections = document.querySelectorAll('section:not(.hero)');
+    const header = document.getElementById('mainHeader');
+    const heroBackground = document.getElementById('heroBackground');
+    const scrollIndicator = document.getElementById('scrollIndicator');
+    
+    // Crear animación de fondo optimizada
     function createBackgroundAnimation() {
-      const container = document.getElementById('bgAnimation');
-      const emberHighCount = 15; // Brasas que suben alto
-      const emberLowCount = 20;  // Brasas que se quedan abajo
-      const sparkCount = 20;     // Chispas regulares
-      const smokeCount = 12;     // Columnas de humo
-      const ashCount = 40;       // Cenizas flotantes
-      const microSparkCount = 30; // Micro chispas
-      
-      // Limpiar contenedor por si acaso
+      // Limpiar contenedor
       container.innerHTML = '';
       
-      // Crear brasas que suben alto
-      for (let i = 0; i < emberHighCount; i++) {
-        createEmber(container, i, true);
-      }
-      
-      // Crear brasas que se quedan abajo
-      for (let i = 0; i < emberLowCount; i++) {
-        createEmber(container, i, false);
-      }
-      
-      // Crear chispas regulares
-      for (let i = 0; i < sparkCount; i++) {
-        createSpark(container, i);
+      // Crear brasas que suben
+      for (let i = 0; i < emberCount; i++) {
+        createEmber(container, i, Math.random() > 0.5);
       }
       
       // Crear humo
       for (let i = 0; i < smokeCount; i++) {
         createSmoke(container, i);
       }
-      
-      // Crear cenizas
-      for (let i = 0; i < ashCount; i++) {
-        createAsh(container, i);
-      }
-      
-      // Crear micro-chispas
-      for (let i = 0; i < microSparkCount; i++) {
-        createMicroSpark(container, i);
-      }
     }
     
     function createEmber(container, index, isHigh) {
       const ember = document.createElement('div');
-      ember.className = 'ember';
-      
-      // Agregar la clase según la altura a la que debe subir
-      if (isHigh) {
-        ember.classList.add('high');
-      } else {
-        ember.classList.add('low');
-      }
+      ember.className = isHigh ? 'ember high' : 'ember low';
       
       // Determinar tipo de brasa
       const randomType = Math.random();
       if (randomType < 0.3) {
         ember.classList.add('ember-large');
-        // Algunas brasas grandes pueden pulsar
-        if (Math.random() < 0.7) {
-          ember.classList.add('pulsate');
-          ember.style.setProperty('--base-opacity', (Math.random() * 0.3 + 0.5).toString());
-        }
       } else if (randomType < 0.7) {
         ember.classList.add('ember-medium');
       } else {
         ember.classList.add('ember-small');
       }
       
-      // Establecer propiedades aleatorias
+      // Propiedades aleatorias
       const size = randomType < 0.3 ? 
-                  Math.random() * 150 + 100 : // Brasas grandes
-                  Math.random() * 80 + 40;    // Brasas medianas y pequeñas
+                  Math.random() * 120 + 80 : 
+                  Math.random() * 60 + 30;
       
-      const startPositionX = Math.random() * 110 - 5; // Algunas brasas pueden empezar fuera de la pantalla
-      const moveX = (Math.random() - 0.5) * 60; // Mayor movimiento horizontal
-      const duration = Math.random() * 10 + 15; // Duración más larga
-      const delay = Math.random() * 20; // Retraso más variable
-      const scale = Math.random() * 1.8 + 0.8; // Mayor escala
+      const startPositionX = Math.random() * 100;
+      const moveX = (Math.random() - 0.5) * 40;
+      const delay = Math.random() * 15;
+      const scale = Math.random() * 1.5 + 0.5;
       
       ember.style.width = `${size}px`;
       ember.style.height = `${size}px`;
       ember.style.left = `${startPositionX}%`;
       ember.style.bottom = `-${size}px`;
-      ember.style.animationDuration = `${duration}s`;
       ember.style.animationDelay = `${delay}s`;
       ember.style.setProperty('--tx', `${moveX}vw`);
       ember.style.setProperty('--scale', scale);
@@ -836,161 +736,41 @@
       container.appendChild(ember);
     }
     
-    function createSpark(container, index) {
-      const spark = document.createElement('div');
-      spark.className = 'spark';
-      
-      // Propiedades de las chispas (más visibles y rápidas)
-      const size = Math.random() * 20 + 10; // Mayores para ser más visibles
-      const startPositionX = Math.random() * 100;
-      const endPositionX = startPositionX + (Math.random() - 0.5) * 100;
-      const duration = Math.random() * 4 + 3; // Un poco más lentas que antes
-      const delay = Math.random() * 10;
-      
-      spark.style.width = `${size}px`;
-      spark.style.height = `${size}px`;
-      spark.style.left = `${startPositionX}%`;
-      spark.style.bottom = `-${size}px`;
-      spark.style.animationDuration = `${duration}s`;
-      spark.style.animationDelay = `${delay}s`;
-      spark.style.setProperty('--spark-start', `0vw`);
-      spark.style.setProperty('--spark-end', `${(Math.random() - 0.5) * 40}vw`);
-      
-      container.appendChild(spark);
-      
-      // Hacer que las chispas se regeneren al terminar su animación
-      setTimeout(() => {
-        spark.remove();
-        createSpark(container, index);
-      }, (duration + delay) * 1000);
-    }
-    
     function createSmoke(container, index) {
       const smoke = document.createElement('div');
-      smoke.className = 'smoke';
+      smoke.className = 'ember high';
+      smoke.style.filter = 'blur(10px)';
+      smoke.style.backgroundColor = 'rgba(200, 200, 200, 0.2)';
       
       // Propiedades del humo
-      const size = Math.random() * 120 + 80;
-      const startPositionX = Math.random() * 100; 
-      const smokeX = (Math.random() - 0.5) * 40;
-      const duration = Math.random() * 15 + 15; // Humo lento
-      const delay = Math.random() * 15;
-      const rotateMid = Math.random() * 180 - 90;
-      const rotateEnd = Math.random() * 360 - 180;
+      const size = Math.random() * 150 + 100;
+      const startPositionX = Math.random() * 100;
+      const moveX = (Math.random() - 0.5) * 50;
+      const delay = Math.random() * 10;
+      const scale = Math.random() * 2 + 1;
       
       smoke.style.width = `${size}px`;
       smoke.style.height = `${size}px`;
       smoke.style.left = `${startPositionX}%`;
       smoke.style.bottom = `-${size}px`;
-      smoke.style.animationDuration = `${duration}s`;
       smoke.style.animationDelay = `${delay}s`;
-      smoke.style.setProperty('--smoke-x', `${smokeX}vw`);
-      smoke.style.setProperty('--smoke-rotate-mid', `${rotateMid}deg`);
-      smoke.style.setProperty('--smoke-rotate-end', `${rotateEnd}deg`);
+      smoke.style.setProperty('--tx', `${moveX}vw`);
+      smoke.style.setProperty('--scale', scale);
       
       container.appendChild(smoke);
-      
-      // Regenerar el humo
-      setTimeout(() => {
-        smoke.remove();
-        createSmoke(container, index);
-      }, (duration + delay) * 1000);
-    }
-    
-    function createAsh(container, index) {
-      const ash = document.createElement('div');
-      ash.className = 'ash';
-      
-      // Propiedades de las cenizas
-      const startPositionX = Math.random() * 100;
-      const xStart = (Math.random() - 0.5) * 10;
-      const xEnd = (Math.random() - 0.5) * 80;
-      const duration = Math.random() * 5 + 4; // Sin cambios
-      const delay = Math.random() * 10;
-      
-      ash.style.left = `${startPositionX}%`;
-      ash.style.bottom = "0";
-      ash.style.animationDuration = `${duration}s`;
-      ash.style.animationDelay = `${delay}s`;
-      ash.style.setProperty('--ash-x-start', `${xStart}vw`);
-      ash.style.setProperty('--ash-x-end', `${xEnd}vw`);
-      
-      container.appendChild(ash);
-      
-      // Regenerar cenizas
-      setTimeout(() => {
-        ash.remove();
-        createAsh(container, index);
-      }, (duration + delay) * 1000);
-    }
-    
-    function createMicroSpark(container, index) {
-      const microSpark = document.createElement('div');
-      microSpark.className = 'micro-spark';
-      
-      // Propiedades de micro-chispas (ahora más lentas)
-      const startPositionX = Math.random() * 100;
-      const xStart = (Math.random() - 0.5) * 5;
-      const xEnd = (Math.random() - 0.5) * 30;
-      const duration = Math.random() * 3 + 3; // Más lentas que antes
-      const delay = Math.random() * 5;
-      
-      microSpark.style.left = `${startPositionX}%`;
-      microSpark.style.bottom = "0";
-      microSpark.style.animationDuration = `${duration}s`;
-      microSpark.style.animationDelay = `${delay}s`;
-      microSpark.style.setProperty('--micro-x-start', `${xStart}vw`);
-      microSpark.style.setProperty('--micro-x-end', `${xEnd}vw`);
-      
-      container.appendChild(microSpark);
-      
-      // Regenerar micro-chispas
-      setTimeout(() => {
-        microSpark.remove();
-        createMicroSpark(container, index);
-      }, (duration + delay) * 1000);
     }
 
-    // Iniciar y mantener la animación
-    function startAndMaintainAnimation() {
-      createBackgroundAnimation();
-      
-      // Regenerar partículas periódicamente para mantener la animación fresca
-      setInterval(() => {
-        const container = document.getElementById('bgAnimation');
-        
-        // Mantener una cantidad óptima de partículas
-        if (container.childElementCount < 120) {
-          // Agregar diferentes tipos de partículas aleatoriamente
-          const randomParticle = Math.random();
-          
-          if (randomParticle < 0.15) {
-            // Crear brasa que sube alto
-            createEmber(container, Math.random(), true);
-          } else if (randomParticle < 0.35) {
-            // Crear brasa que se queda abajo
-            createEmber(container, Math.random(), false);
-          } else if (randomParticle < 0.5) {
-            createSpark(container, Math.random());
-          } else if (randomParticle < 0.6) {
-            createSmoke(container, Math.random());
-          } else if (randomParticle < 0.8) {
-            createAsh(container, Math.random());
-          } else {
-            createMicroSpark(container, Math.random());
-          }
-        }
-      }, 1000); // Más frecuente para mantener partículas constantes
-    }
-
-    // Countdown timer
+    // Contador regresivo
     function updateCountdown() {
+      const countdownElement = document.getElementById('countdown');
+      if (!countdownElement) return;
+      
       const eventDate = new Date('April 26, 2025 10:00:00').getTime();
       const now = new Date().getTime();
       const timeLeft = eventDate - now;
       
       if (timeLeft <= 0) {
-        document.getElementById('countdown').innerHTML = '<p>¡El evento ya comenzó!</p>';
+        countdownElement.innerHTML = '<p>¡El evento ya comenzó!</p>';
         return;
       }
       
@@ -999,37 +779,63 @@
       const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
       
-      document.getElementById('days').innerHTML = days;
-      document.getElementById('hours').innerHTML = hours;
-      document.getElementById('minutes').innerHTML = minutes;
-      document.getElementById('seconds').innerHTML = seconds;
+      const daysElement = document.getElementById('days');
+      const hoursElement = document.getElementById('hours');
+      const minutesElement = document.getElementById('minutes');
+      const secondsElement = document.getElementById('seconds');
+      
+      if (daysElement) daysElement.innerHTML = days;
+      if (hoursElement) hoursElement.innerHTML = hours;
+      if (minutesElement) minutesElement.innerHTML = minutes;
+      if (secondsElement) secondsElement.innerHTML = seconds;
     }
     
-    // Back to top button
-    window.addEventListener('scroll', function() {
-      const backToTopButton = document.getElementById('backToTop');
-      if (window.scrollY > 300) {
+    // Efecto de revelación al hacer scroll
+    function revealSections() {
+      const windowHeight = window.innerHeight;
+      const revealPoint = 150;
+      
+      sections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        
+        if (sectionTop < windowHeight - revealPoint) {
+          section.classList.add('visible');
+        }
+      });
+    }
+    
+    // Efecto de parallax en el encabezado
+    function handleScroll() {
+      const scrollPosition = window.scrollY;
+      
+      // Header efecto al hacer scroll
+      if (scrollPosition > 50) {
+        header.classList.add('scrolled');
         backToTopButton.classList.add('visible');
       } else {
+        header.classList.remove('scrolled');
         backToTopButton.classList.remove('visible');
       }
-    });
-    
-    document.getElementById('backToTop').addEventListener('click', function(e) {
-      e.preventDefault();
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    });
-
-    // Initialize countdown if element exists
-    if (document.getElementById('countdown')) {
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
+      
+      // Efecto de parallax para el fondo del hero
+      if (heroBackground) {
+        heroBackground.style.transform = `scale(1.1) translateY(${scrollPosition * 0.2}px)`;
+      }
+      
+      // Actualizar scroll indicator
+      if (scrollIndicator) {
+        if (scrollPosition > 100) {
+          scrollIndicator.style.opacity = '0';
+        } else {
+          scrollIndicator.style.opacity = '0.8';
+        }
+      }
+      
+      // Revelar secciones
+      revealSections();
     }
-
-    // Copy share link functionality
+    
+    // Copy to clipboard function
     function copyToClipboard(text) {
       const textarea = document.createElement('textarea');
       textarea.value = text;
@@ -1046,17 +852,60 @@
       }, 3000);
     }
 
-    // Add share functionality to any share buttons
-    document.querySelectorAll('.share-btn').forEach(button => {
-      button.addEventListener('click', function(e) {
-        e.preventDefault();
-        copyToClipboard(window.location.href);
+    // Event listeners
+    window.addEventListener('load', function() {
+      createBackgroundAnimation();
+      updateCountdown();
+      revealSections();
+      
+      // Hacer la sección hero visible inmediatamente
+      const heroSection = document.querySelector('.hero');
+      if (heroSection) {
+        heroSection.classList.add('visible');
+      }
+      
+      // Iniciar contador
+      setInterval(updateCountdown, 1000);
+      
+      // Regenerar partículas ocasionalmente para mantener animación
+      setInterval(() => {
+        if (container.childElementCount < 35) {
+          if (Math.random() > 0.5) {
+            createEmber(container, Math.random(), Math.random() > 0.5);
+          } else {
+            createSmoke(container, Math.random());
+          }
+        }
+      }, 5000);
+      
+      // Configurar listener para botones de compartir
+      document.querySelectorAll('.share-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          copyToClipboard(window.location.href);
+        });
       });
+      
+      // Configurar listener para scroll indicator
+      if (scrollIndicator) {
+        scrollIndicator.addEventListener('click', function() {
+          const firstSection = document.querySelector('section:not(.hero)');
+          if (firstSection) {
+            firstSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      }
     });
     
-    // Iniciar animación de fondo mejorada al cargar la página
-    window.addEventListener('load', function() {
-      startAndMaintainAnimation();
+    window.addEventListener('scroll', handleScroll);
+    
+    // Back to top button
+    backToTopButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     });
   </script>
 </body>
