@@ -43,13 +43,13 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+      background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.85)), 
                   url('/assets/img/asado-bg.jpg');
       background-size: cover;
       background-attachment: fixed;
     }
     
-    /* Abstract animated fire particles */
+    /* Mejorar efecto de brasas y partículas */
     .bg-animation {
       position: fixed;
       top: 0;
@@ -62,27 +62,102 @@
     
     .ember {
       position: absolute;
-      background: radial-gradient(circle at center, rgba(255, 120, 50, 0.8) 0%, rgba(255, 120, 50, 0) 70%);
       border-radius: 50%;
+      filter: blur(6px);
       animation: float 15s infinite;
       opacity: 0;
     }
-    
+
+    .ember-large {
+      background: radial-gradient(circle at center, rgba(255, 140, 50, 0.9) 0%, rgba(255, 120, 50, 0) 80%);
+      box-shadow: 0 0 20px 10px rgba(255, 90, 30, 0.3);
+      filter: blur(4px);
+    }
+
+    .ember-medium {
+      background: radial-gradient(circle at center, rgba(255, 180, 60, 0.85) 0%, rgba(255, 150, 40, 0) 75%);
+      box-shadow: 0 0 15px 8px rgba(255, 120, 40, 0.25);
+      filter: blur(3px);
+    }
+
+    .ember-small {
+      background: radial-gradient(circle at center, rgba(255, 220, 70, 0.9) 0%, rgba(255, 170, 30, 0) 70%);
+      filter: blur(2px);
+    }
+
+    .spark {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(255, 255, 200, 0.95) 0%, rgba(255, 220, 100, 0.7) 30%, rgba(255, 180, 50, 0) 70%);
+      border-radius: 50%;
+      box-shadow: 0 0 8px 4px rgba(255, 220, 100, 0.5);
+      animation: spark 5s infinite;
+      opacity: 0;
+      filter: blur(1px);
+    }
+
     @keyframes float {
       0% {
         transform: translateY(100vh) translateX(0) scale(0);
         opacity: 0;
       }
+      15% {
+        opacity: 0.8;
+      }
       20% {
+        opacity: 0.7;
+      }
+      40% {
+        opacity: 0.9;
+      }
+      60% {
         opacity: 0.6;
       }
       80% {
-        opacity: 0.3;
+        opacity: 0.4;
       }
       100% {
         transform: translateY(-20vh) translateX(var(--tx)) scale(var(--scale));
         opacity: 0;
       }
+    }
+
+    @keyframes spark {
+      0% {
+        transform: translateY(100vh) translateX(var(--spark-start)) scale(0.2);
+        opacity: 0;
+      }
+      5% {
+        opacity: 0.9;
+      }
+      15% {
+        opacity: 1;
+      }
+      80% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-10vh) translateX(var(--spark-end)) scale(0.1);
+        opacity: 0;
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: var(--base-opacity);
+      }
+      50% {
+        transform: scale(1.1);
+        opacity: calc(var(--base-opacity) * 1.5);
+      }
+      100% {
+        transform: scale(1);
+        opacity: var(--base-opacity);
+      }
+    }
+
+    .ember.pulsate {
+      animation: float 15s infinite, pulse 3s infinite;
     }
 
     .content {
@@ -532,13 +607,23 @@
   </div>
 
   <script>
-    // Crear animación de fondo
+    // Crear animación de fondo mejorada
     function createBackgroundAnimation() {
       const container = document.getElementById('bgAnimation');
-      const emberCount = 15;
+      const emberCount = 30; // Aumentamos la cantidad
+      const sparkCount = 20; // Añadimos chispas
       
+      // Limpiar contenedor por si acaso
+      container.innerHTML = '';
+      
+      // Crear brasas grandes y medianas
       for (let i = 0; i < emberCount; i++) {
         createEmber(container, i);
+      }
+      
+      // Crear chispas pequeñas y rápidas
+      for (let i = 0; i < sparkCount; i++) {
+        createSpark(container, i);
       }
     }
     
@@ -546,13 +631,31 @@
       const ember = document.createElement('div');
       ember.className = 'ember';
       
+      // Determinar tipo de brasa
+      const randomType = Math.random();
+      if (randomType < 0.3) {
+        ember.classList.add('ember-large');
+        // Algunas brasas grandes pueden pulsar
+        if (Math.random() < 0.7) {
+          ember.classList.add('pulsate');
+          ember.style.setProperty('--base-opacity', (Math.random() * 0.3 + 0.5).toString());
+        }
+      } else if (randomType < 0.7) {
+        ember.classList.add('ember-medium');
+      } else {
+        ember.classList.add('ember-small');
+      }
+      
       // Establecer propiedades aleatorias
-      const size = Math.random() * 100 + 50;
-      const startPositionX = Math.random() * 100;
-      const moveX = (Math.random() - 0.5) * 50;
-      const duration = Math.random() * 10 + 10;
-      const delay = Math.random() * 15;
-      const scale = Math.random() * 1.5 + 0.5;
+      const size = randomType < 0.3 ? 
+                  Math.random() * 150 + 100 : // Brasas grandes
+                  Math.random() * 80 + 40;    // Brasas medianas y pequeñas
+      
+      const startPositionX = Math.random() * 110 - 5; // Algunas brasas pueden empezar fuera de la pantalla
+      const moveX = (Math.random() - 0.5) * 60; // Mayor movimiento horizontal
+      const duration = Math.random() * 10 + 15; // Duración más larga
+      const delay = Math.random() * 20; // Retraso más variable
+      const scale = Math.random() * 1.8 + 0.8; // Mayor escala
       
       ember.style.width = `${size}px`;
       ember.style.height = `${size}px`;
@@ -564,6 +667,54 @@
       ember.style.setProperty('--scale', scale);
       
       container.appendChild(ember);
+    }
+    
+    function createSpark(container, index) {
+      const spark = document.createElement('div');
+      spark.className = 'spark';
+      
+      // Propiedades de las chispas (pequeñas y rápidas)
+      const size = Math.random() * 15 + 5;
+      const startPositionX = Math.random() * 100;
+      const endPositionX = startPositionX + (Math.random() - 0.5) * 100;
+      const duration = Math.random() * 4 + 2; // Más rápidas que las brasas
+      const delay = Math.random() * 10;
+      
+      spark.style.width = `${size}px`;
+      spark.style.height = `${size}px`;
+      spark.style.left = `${startPositionX}%`;
+      spark.style.bottom = `-${size}px`;
+      spark.style.animationDuration = `${duration}s`;
+      spark.style.animationDelay = `${delay}s`;
+      spark.style.setProperty('--spark-start', `0vw`);
+      spark.style.setProperty('--spark-end', `${(Math.random() - 0.5) * 40}vw`);
+      
+      container.appendChild(spark);
+      
+      // Hacer que las chispas se regeneren al terminar su animación
+      setTimeout(() => {
+        spark.remove();
+        createSpark(container, index);
+      }, (duration + delay) * 1000);
+    }
+
+    // Iniciar y mantener la animación
+    function startAndMaintainAnimation() {
+      createBackgroundAnimation();
+      
+      // Regenerar brasas periódicamente para mantener la animación fresca
+      setInterval(() => {
+        const container = document.getElementById('bgAnimation');
+        
+        // Añadir brasas nuevas periódicamente
+        if (container.childElementCount < 60) {
+          createEmber(container, Math.random());
+          
+          if (Math.random() > 0.5) {
+            createSpark(container, Math.random());
+          }
+        }
+      }, 5000);
     }
 
     // Countdown timer
@@ -637,9 +788,9 @@
       });
     });
     
-    // Iniciar animación de fondo al cargar la página
+    // Iniciar animación de fondo mejorada al cargar la página
     window.addEventListener('load', function() {
-      createBackgroundAnimation();
+      startAndMaintainAnimation();
     });
   </script>
 </body>
