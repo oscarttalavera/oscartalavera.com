@@ -90,9 +90,45 @@
       background: radial-gradient(circle at center, rgba(255, 255, 200, 0.95) 0%, rgba(255, 220, 100, 0.7) 30%, rgba(255, 180, 50, 0) 70%);
       border-radius: 50%;
       box-shadow: 0 0 8px 4px rgba(255, 220, 100, 0.5);
-      animation: spark 5s infinite;
+      animation: spark 4s infinite;
       opacity: 0;
       filter: blur(1px);
+    }
+    
+    /* Nuevos elementos: humo y cenizas */
+    .smoke {
+      position: absolute;
+      background: radial-gradient(circle at center, 
+                  rgba(200, 200, 200, 0.6) 0%, 
+                  rgba(180, 180, 180, 0.4) 30%, 
+                  rgba(150, 150, 150, 0) 70%);
+      border-radius: 50%;
+      filter: blur(8px);
+      animation: smokeRise 20s infinite;
+      opacity: 0;
+      transform-origin: center bottom;
+    }
+    
+    .ash {
+      position: absolute;
+      width: 2px !important;
+      height: 2px !important;
+      background: rgba(200, 200, 200, 0.9);
+      border-radius: 50%;
+      filter: blur(0.5px);
+      animation: ashRise 7s linear infinite;
+      opacity: 0;
+    }
+    
+    .micro-spark {
+      position: absolute;
+      width: 1px !important;
+      height: 1px !important;
+      background: rgba(255, 200, 50, 1);
+      border-radius: 50%;
+      box-shadow: 0 0 3px 2px rgba(255, 200, 50, 0.7);
+      animation: microSparkRise 3s linear infinite;
+      opacity: 0;
     }
 
     @keyframes float {
@@ -100,7 +136,7 @@
         transform: translateY(100vh) translateX(0) scale(0);
         opacity: 0;
       }
-      15% {
+      10% {
         opacity: 0.8;
       }
       20% {
@@ -116,7 +152,7 @@
         opacity: 0.4;
       }
       100% {
-        transform: translateY(-20vh) translateX(var(--tx)) scale(var(--scale));
+        transform: translateY(-80vh) translateX(var(--tx)) scale(var(--scale));
         opacity: 0;
       }
     }
@@ -136,7 +172,69 @@
         opacity: 0.7;
       }
       100% {
-        transform: translateY(-10vh) translateX(var(--spark-end)) scale(0.1);
+        transform: translateY(-100vh) translateX(var(--spark-end)) scale(0.1);
+        opacity: 0;
+      }
+    }
+    
+    @keyframes smokeRise {
+      0% {
+        transform: translateY(100vh) translateX(0) scale(0.5) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.4;
+      }
+      30% {
+        opacity: 0.5;
+        transform: translateY(30vh) translateX(var(--smoke-x)) scale(1.2) rotate(var(--smoke-rotate-mid));
+      }
+      70% {
+        opacity: 0.3;
+        transform: translateY(-50vh) translateX(calc(var(--smoke-x) * 2)) scale(2) rotate(var(--smoke-rotate-end));
+      }
+      100% {
+        transform: translateY(-120vh) translateX(calc(var(--smoke-x) * 3)) scale(2.5) rotate(calc(var(--smoke-rotate-end) * 1.5));
+        opacity: 0;
+      }
+    }
+    
+    @keyframes ashRise {
+      0% {
+        transform: translateY(100vh) translateX(var(--ash-x-start)) rotate(0deg);
+        opacity: 0;
+      }
+      5% {
+        opacity: 0.7;
+      }
+      30% {
+        opacity: 0.9;
+      }
+      70% {
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(var(--ash-x-end)) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
+    @keyframes microSparkRise {
+      0% {
+        transform: translateY(100vh) translateX(var(--micro-x-start));
+        opacity: 0;
+      }
+      5% {
+        opacity: 1;
+      }
+      20% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-120vh) translateX(var(--micro-x-end));
         opacity: 0;
       }
     }
@@ -610,8 +708,11 @@
     // Crear animación de fondo mejorada
     function createBackgroundAnimation() {
       const container = document.getElementById('bgAnimation');
-      const emberCount = 30; // Aumentamos la cantidad
-      const sparkCount = 20; // Añadimos chispas
+      const emberCount = 25; // Brasas grandes y medianas
+      const sparkCount = 20; // Chispas regulares
+      const smokeCount = 15; // Columnas de humo
+      const ashCount = 50;  // Cenizas flotantes
+      const microSparkCount = 40; // Micro chispas muy rápidas
       
       // Limpiar contenedor por si acaso
       container.innerHTML = '';
@@ -621,9 +722,24 @@
         createEmber(container, i);
       }
       
-      // Crear chispas pequeñas y rápidas
+      // Crear chispas regulares
       for (let i = 0; i < sparkCount; i++) {
         createSpark(container, i);
+      }
+      
+      // Crear humo
+      for (let i = 0; i < smokeCount; i++) {
+        createSmoke(container, i);
+      }
+      
+      // Crear cenizas
+      for (let i = 0; i < ashCount; i++) {
+        createAsh(container, i);
+      }
+      
+      // Crear micro-chispas
+      for (let i = 0; i < microSparkCount; i++) {
+        createMicroSpark(container, i);
       }
     }
     
@@ -673,11 +789,11 @@
       const spark = document.createElement('div');
       spark.className = 'spark';
       
-      // Propiedades de las chispas (pequeñas y rápidas)
-      const size = Math.random() * 15 + 5;
+      // Propiedades de las chispas (más visibles y rápidas)
+      const size = Math.random() * 20 + 10; // Mayores para ser más visibles
       const startPositionX = Math.random() * 100;
       const endPositionX = startPositionX + (Math.random() - 0.5) * 100;
-      const duration = Math.random() * 4 + 2; // Más rápidas que las brasas
+      const duration = Math.random() * 3 + 2; // Más rápidas
       const delay = Math.random() * 10;
       
       spark.style.width = `${size}px`;
@@ -697,24 +813,119 @@
         createSpark(container, index);
       }, (duration + delay) * 1000);
     }
+    
+    function createSmoke(container, index) {
+      const smoke = document.createElement('div');
+      smoke.className = 'smoke';
+      
+      // Propiedades del humo
+      const size = Math.random() * 120 + 80;
+      const startPositionX = Math.random() * 100; 
+      const smokeX = (Math.random() - 0.5) * 40;
+      const duration = Math.random() * 15 + 15; // Humo lento
+      const delay = Math.random() * 15;
+      const rotateMid = Math.random() * 180 - 90;
+      const rotateEnd = Math.random() * 360 - 180;
+      
+      smoke.style.width = `${size}px`;
+      smoke.style.height = `${size}px`;
+      smoke.style.left = `${startPositionX}%`;
+      smoke.style.bottom = `-${size}px`;
+      smoke.style.animationDuration = `${duration}s`;
+      smoke.style.animationDelay = `${delay}s`;
+      smoke.style.setProperty('--smoke-x', `${smokeX}vw`);
+      smoke.style.setProperty('--smoke-rotate-mid', `${rotateMid}deg`);
+      smoke.style.setProperty('--smoke-rotate-end', `${rotateEnd}deg`);
+      
+      container.appendChild(smoke);
+      
+      // Regenerar el humo
+      setTimeout(() => {
+        smoke.remove();
+        createSmoke(container, index);
+      }, (duration + delay) * 1000);
+    }
+    
+    function createAsh(container, index) {
+      const ash = document.createElement('div');
+      ash.className = 'ash';
+      
+      // Propiedades de las cenizas
+      const startPositionX = Math.random() * 100;
+      const xStart = (Math.random() - 0.5) * 10;
+      const xEnd = (Math.random() - 0.5) * 80;
+      const duration = Math.random() * 5 + 4;
+      const delay = Math.random() * 10;
+      
+      ash.style.left = `${startPositionX}%`;
+      ash.style.bottom = "0";
+      ash.style.animationDuration = `${duration}s`;
+      ash.style.animationDelay = `${delay}s`;
+      ash.style.setProperty('--ash-x-start', `${xStart}vw`);
+      ash.style.setProperty('--ash-x-end', `${xEnd}vw`);
+      
+      container.appendChild(ash);
+      
+      // Regenerar cenizas
+      setTimeout(() => {
+        ash.remove();
+        createAsh(container, index);
+      }, (duration + delay) * 1000);
+    }
+    
+    function createMicroSpark(container, index) {
+      const microSpark = document.createElement('div');
+      microSpark.className = 'micro-spark';
+      
+      // Propiedades de micro-chispas (muy pequeñas y rápidas)
+      const startPositionX = Math.random() * 100;
+      const xStart = (Math.random() - 0.5) * 5;
+      const xEnd = (Math.random() - 0.5) * 30;
+      const duration = Math.random() * 2 + 1; // Super rápidas
+      const delay = Math.random() * 5;
+      
+      microSpark.style.left = `${startPositionX}%`;
+      microSpark.style.bottom = "0";
+      microSpark.style.animationDuration = `${duration}s`;
+      microSpark.style.animationDelay = `${delay}s`;
+      microSpark.style.setProperty('--micro-x-start', `${xStart}vw`);
+      microSpark.style.setProperty('--micro-x-end', `${xEnd}vw`);
+      
+      container.appendChild(microSpark);
+      
+      // Regenerar micro-chispas
+      setTimeout(() => {
+        microSpark.remove();
+        createMicroSpark(container, index);
+      }, (duration + delay) * 1000);
+    }
 
     // Iniciar y mantener la animación
     function startAndMaintainAnimation() {
       createBackgroundAnimation();
       
-      // Regenerar brasas periódicamente para mantener la animación fresca
+      // Regenerar partículas periódicamente para mantener la animación fresca
       setInterval(() => {
         const container = document.getElementById('bgAnimation');
         
-        // Añadir brasas nuevas periódicamente
-        if (container.childElementCount < 60) {
-          createEmber(container, Math.random());
+        // Mantener una cantidad óptima de partículas
+        if (container.childElementCount < 120) {
+          // Agregar diferentes tipos de partículas aleatoriamente
+          const randomParticle = Math.random();
           
-          if (Math.random() > 0.5) {
+          if (randomParticle < 0.2) {
+            createEmber(container, Math.random());
+          } else if (randomParticle < 0.4) {
             createSpark(container, Math.random());
+          } else if (randomParticle < 0.5) {
+            createSmoke(container, Math.random());
+          } else if (randomParticle < 0.8) {
+            createAsh(container, Math.random());
+          } else {
+            createMicroSpark(container, Math.random());
           }
         }
-      }, 5000);
+      }, 1000); // Más frecuente para mantener partículas constantes
     }
 
     // Countdown timer
