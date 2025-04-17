@@ -64,8 +64,17 @@
       position: absolute;
       border-radius: 50%;
       filter: blur(6px);
-      animation: float 15s infinite;
       opacity: 0;
+    }
+
+    /* Brasas que suben alto */
+    .ember.high {
+      animation: floatHigh 15s infinite;
+    }
+    
+    /* Brasas que se quedan abajo */
+    .ember.low {
+      animation: floatLow 15s infinite;
     }
 
     .ember-large {
@@ -90,7 +99,7 @@
       background: radial-gradient(circle at center, rgba(255, 255, 200, 0.95) 0%, rgba(255, 220, 100, 0.7) 30%, rgba(255, 180, 50, 0) 70%);
       border-radius: 50%;
       box-shadow: 0 0 8px 4px rgba(255, 220, 100, 0.5);
-      animation: spark 4s infinite;
+      animation: spark 5s infinite;
       opacity: 0;
       filter: blur(1px);
     }
@@ -127,11 +136,12 @@
       background: rgba(255, 200, 50, 1);
       border-radius: 50%;
       box-shadow: 0 0 3px 2px rgba(255, 200, 50, 0.7);
-      animation: microSparkRise 3s linear infinite;
+      animation: microSparkRise 5s linear infinite; /* Más lento que antes */
       opacity: 0;
     }
 
-    @keyframes float {
+    /* Brasas que suben bastante */
+    @keyframes floatHigh {
       0% {
         transform: translateY(100vh) translateX(0) scale(0);
         opacity: 0;
@@ -153,6 +163,30 @@
       }
       100% {
         transform: translateY(-80vh) translateX(var(--tx)) scale(var(--scale));
+        opacity: 0;
+      }
+    }
+    
+    /* Brasas que se quedan más abajo */
+    @keyframes floatLow {
+      0% {
+        transform: translateY(100vh) translateX(0) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.8;
+      }
+      30% {
+        opacity: 0.9;
+      }
+      70% {
+        opacity: 0.6;
+      }
+      90% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-30vh) translateX(var(--tx)) scale(var(--scale));
         opacity: 0;
       }
     }
@@ -255,7 +289,11 @@
     }
 
     .ember.pulsate {
-      animation: float 15s infinite, pulse 3s infinite;
+      animation: floatHigh 15s infinite, pulse 3s infinite;
+    }
+    
+    .ember.low.pulsate {
+      animation: floatLow 15s infinite, pulse 3s infinite;
     }
 
     .content {
@@ -708,18 +746,24 @@
     // Crear animación de fondo mejorada
     function createBackgroundAnimation() {
       const container = document.getElementById('bgAnimation');
-      const emberCount = 25; // Brasas grandes y medianas
-      const sparkCount = 20; // Chispas regulares
-      const smokeCount = 15; // Columnas de humo
-      const ashCount = 50;  // Cenizas flotantes
-      const microSparkCount = 40; // Micro chispas muy rápidas
+      const emberHighCount = 15; // Brasas que suben alto
+      const emberLowCount = 20;  // Brasas que se quedan abajo
+      const sparkCount = 20;     // Chispas regulares
+      const smokeCount = 12;     // Columnas de humo
+      const ashCount = 40;       // Cenizas flotantes
+      const microSparkCount = 30; // Micro chispas
       
       // Limpiar contenedor por si acaso
       container.innerHTML = '';
       
-      // Crear brasas grandes y medianas
-      for (let i = 0; i < emberCount; i++) {
-        createEmber(container, i);
+      // Crear brasas que suben alto
+      for (let i = 0; i < emberHighCount; i++) {
+        createEmber(container, i, true);
+      }
+      
+      // Crear brasas que se quedan abajo
+      for (let i = 0; i < emberLowCount; i++) {
+        createEmber(container, i, false);
       }
       
       // Crear chispas regulares
@@ -743,9 +787,16 @@
       }
     }
     
-    function createEmber(container, index) {
+    function createEmber(container, index, isHigh) {
       const ember = document.createElement('div');
       ember.className = 'ember';
+      
+      // Agregar la clase según la altura a la que debe subir
+      if (isHigh) {
+        ember.classList.add('high');
+      } else {
+        ember.classList.add('low');
+      }
       
       // Determinar tipo de brasa
       const randomType = Math.random();
@@ -793,7 +844,7 @@
       const size = Math.random() * 20 + 10; // Mayores para ser más visibles
       const startPositionX = Math.random() * 100;
       const endPositionX = startPositionX + (Math.random() - 0.5) * 100;
-      const duration = Math.random() * 3 + 2; // Más rápidas
+      const duration = Math.random() * 4 + 3; // Un poco más lentas que antes
       const delay = Math.random() * 10;
       
       spark.style.width = `${size}px`;
@@ -854,7 +905,7 @@
       const startPositionX = Math.random() * 100;
       const xStart = (Math.random() - 0.5) * 10;
       const xEnd = (Math.random() - 0.5) * 80;
-      const duration = Math.random() * 5 + 4;
+      const duration = Math.random() * 5 + 4; // Sin cambios
       const delay = Math.random() * 10;
       
       ash.style.left = `${startPositionX}%`;
@@ -877,11 +928,11 @@
       const microSpark = document.createElement('div');
       microSpark.className = 'micro-spark';
       
-      // Propiedades de micro-chispas (muy pequeñas y rápidas)
+      // Propiedades de micro-chispas (ahora más lentas)
       const startPositionX = Math.random() * 100;
       const xStart = (Math.random() - 0.5) * 5;
       const xEnd = (Math.random() - 0.5) * 30;
-      const duration = Math.random() * 2 + 1; // Super rápidas
+      const duration = Math.random() * 3 + 3; // Más lentas que antes
       const delay = Math.random() * 5;
       
       microSpark.style.left = `${startPositionX}%`;
@@ -913,11 +964,15 @@
           // Agregar diferentes tipos de partículas aleatoriamente
           const randomParticle = Math.random();
           
-          if (randomParticle < 0.2) {
-            createEmber(container, Math.random());
-          } else if (randomParticle < 0.4) {
-            createSpark(container, Math.random());
+          if (randomParticle < 0.15) {
+            // Crear brasa que sube alto
+            createEmber(container, Math.random(), true);
+          } else if (randomParticle < 0.35) {
+            // Crear brasa que se queda abajo
+            createEmber(container, Math.random(), false);
           } else if (randomParticle < 0.5) {
+            createSpark(container, Math.random());
+          } else if (randomParticle < 0.6) {
             createSmoke(container, Math.random());
           } else if (randomParticle < 0.8) {
             createAsh(container, Math.random());
