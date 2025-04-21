@@ -1,0 +1,137 @@
+/* Estilos específicos para la impresión de la guía */
+@media print {
+  body {
+    background-color: white !important;
+    color: black !important;
+    font-size: 12pt;
+  }
+  
+  body:before {
+    display: none !important;
+  }
+  
+  .bg-animation {
+    display: none !important;
+  }
+  
+  .header, .footer, .back-to-top, .toast, .edit-btn, .add-item-btn, 
+  .guide-controls, #addContactBtn, #saveNotesBtn, .accordion-icon {
+    display: none !important;
+  }
+  
+  section, .guide-section, .tab-content, .accordion-content {
+    background-color: white !important;
+    border: none !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin: 15px 0 !important;
+    padding: 10px 0 !important;
+  }
+  
+  /* Garantizar que el contenido oculto se muestre al imprimir */
+  .tab-content.hidden {
+    display: block !important;
+  }
+  
+  .accordion-item .accordion-content {
+    max-height: none !important;
+    padding: 10px !important;
+    display: block !important;
+  }
+  
+  /* Mejorar visualización de listas */
+  .checklist li {
+    background-color: white !important;
+    border: 1px solid #eee !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    color: black !important;
+  }
+  
+  .checklist li.completed {
+    background-color: #f9f9f9 !important;
+  }
+  
+  /* Estilos para texto */
+  h1, h2, h3, h4 {
+    color: #000 !important;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  
+  h1 {
+    font-size: 24pt;
+    margin-top: 20px;
+  }
+  
+  h2 {
+    font-size: 18pt;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+  }
+  
+  h3 {
+    font-size: 14pt;
+  }
+  
+  /* Ajustar colores para mejor contraste en impresión */
+  .notes {
+    color: #555 !important;
+  }
+  
+  .contact-input, #personalNotes {
+    border: 1px solid #ccc !important;
+    background-color: white !important;
+    color: black !important;
+  }
+  
+  /* Adecuar programa y tabs para impresión */
+  .program-tabs {
+    display: none !important;
+  }
+  
+  .tab-content {
+    border: 1px solid #eee !important;
+    padding: 15px !important;
+    margin-bottom: 20px !important;
+  }
+  
+  .timeline-section {
+    border-left: 3px solid #ccc;
+    padding-left: 15px;
+    margin-left: 10px;
+  }
+  
+  /* Encabezado y pie de página para la impresión */
+  @page {
+    margin: 1.5cm;
+    @top-center {
+      content: "Festival de Asado - Guía de Organización";
+      font-family: 'Outfit', sans-serif;
+    }
+    
+    @bottom-center {
+      content: "Página " counter(page) " de " counter(pages);
+      font-family: 'Outfit', sans-serif;
+    }
+  }
+  
+  /* Sección de contactos adaptada para impresión */
+  .contacts-container {
+    display: block !important;
+  }
+  
+  .contact-item {
+    background-color: white !important;
+    border: 1px solid #eee !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* Asegurar que todo sea visible */
+  .progress-container, .guide-intro, .personal-notes {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid #eee !important;
+  }
+}
