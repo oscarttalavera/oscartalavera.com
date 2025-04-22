@@ -69,6 +69,185 @@ permalink: /cumple30/
   <p>No hay cuota ni exigencias, solo buena vibra y ganas de disfrutar. Cada quien viene el tiempo que pueda y aporta lo que quiera. La idea es simple: pasarla bien.</p>
 </section>
 
+<section class="gallery-section">
+  <h2><i class="fas fa-images"></i> Así lo imaginamos</h2>
+  <p>Aquí tienes un pequeño vistazo de cómo visualizamos el festival. Un espacio al aire libre donde el fuego, la naturaleza y la buena compañía crean momentos inolvidables.</p>
+  
+  <div class="gallery-container">
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="/assets/img/fahc/fahc1.jpg" alt="Visualización del festival de asado" class="gallery-image" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="/assets/img/fahc/fahc2.jpg" alt="Escena del festival de asado" class="gallery-image" loading="lazy">
+      </div>
+      <div class="gallery-item large">
+        <img src="/assets/img/fahc/fahc3.jpg" alt="Ambiente del festival de asado" class="gallery-image" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="/assets/img/fahc/fahc4.jpg" alt="Detalles del festival de asado" class="gallery-image" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="/assets/img/fahc/fahc5.jpg" alt="Espacio del festival de asado" class="gallery-image" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="/assets/img/fahc/fahc6.jpg" alt="Vista del festival de asado" class="gallery-image" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Estilos para la galería */
+  .gallery-section {
+    /* Los estilos base de sección ya están definidos en el CSS principal */
+  }
+  
+  .gallery-container {
+    margin-top: 1.5rem;
+    overflow: hidden;
+  }
+  
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-auto-rows: 200px;
+    grid-gap: 15px;
+  }
+  
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+  
+  .gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+    border-color: var(--primary-color);
+  }
+  
+  .gallery-item.large {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  
+  .gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .gallery-item:hover .gallery-image {
+    transform: scale(1.05);
+  }
+  
+  /* Estilos para imagen ampliada (lightbox) */
+  .gallery-lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  .gallery-lightbox.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  
+  .lightbox-image {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  }
+  
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .lightbox-close:hover {
+    color: var(--primary-color);
+  }
+  
+  @media (max-width: 768px) {
+    .gallery-grid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      grid-auto-rows: 150px;
+      grid-gap: 10px;
+    }
+    
+    .gallery-item.large {
+      grid-column: auto;
+      grid-row: auto;
+    }
+  }
+</style>
+
+<script>
+  // Crear el lightbox para ver las imágenes a pantalla completa
+  document.addEventListener('DOMContentLoaded', function() {
+    // Crear el elemento lightbox
+    const lightbox = document.createElement('div');
+    lightbox.className = 'gallery-lightbox';
+    lightbox.innerHTML = `
+      <img src="" alt="Imagen ampliada" class="lightbox-image">
+      <span class="lightbox-close">&times;</span>
+    `;
+    document.body.appendChild(lightbox);
+    
+    const lightboxImage = lightbox.querySelector('.lightbox-image');
+    const lightboxClose = lightbox.querySelector('.lightbox-close');
+    
+    // Añadir funcionalidad a las imágenes de la galería
+    document.querySelectorAll('.gallery-image').forEach(image => {
+      image.addEventListener('click', function() {
+        lightboxImage.src = this.src;
+        lightbox.classList.add('active');
+      });
+    });
+    
+    // Cerrar el lightbox
+    lightboxClose.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+    });
+    
+    // También cerrar al hacer clic fuera de la imagen
+    lightbox.addEventListener('click', function(e) {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('active');
+      }
+    });
+    
+    // Cerrar con la tecla ESC
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+        lightbox.classList.remove('active');
+      }
+    });
+  });
+</script>
+
 <section>
   <h2><i class="fas fa-clock"></i> Programa general</h2>
   
