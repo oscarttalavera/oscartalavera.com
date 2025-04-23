@@ -40,6 +40,10 @@ title: Inicio
       <cite>— Séneca</cite>
     </blockquote>
     <blockquote>
+      <p>No toda batalla vale la pena. Ganar no siempre significa vencer al otro; a veces, la verdadera victoria es elegir no pelear.</p>
+      <cite>– Pensador anónimo</cite>
+    </blockquote>
+    <blockquote>
       <p>Alguien de un país en desarrollo que puede viajar a un país de primer mundo es más rico que alguien de un país de primer mundo que no se puede permitir viajar a un país en desarrollo.</p>
       <cite>— OT (Idea de regadera)</cite>
     </blockquote>
