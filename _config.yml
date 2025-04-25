@@ -8,3 +8,18 @@ theme: minima
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+
+# Configuración de colecciones
+collections:
+  recetas:
+    output: true
+    permalink: /recetas/:title/
+
+# Configuración por defecto para recetas
+defaults:
+  - scope:
+      path: ""
+      type: "recetas"
+    values:
+      layout: "recipe"
+      author: "Oscar Talavera"
