@@ -9,8 +9,9 @@ dificultad: Fácil
 porciones: 1 frasco de 16 oz (475 ml)
 categories: 
   - condimento
-  - conserva
+  - conservas
   - mexicana
+  - acompañamiento
 ingredientes:
   - nombre: Jalapeños medianos
     cantidad: 5-6
