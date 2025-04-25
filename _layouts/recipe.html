@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}Receta de {{ page.title }} - Recetario de Oscar Talavera{% endif %}">
+  <title>{{ page.title }} | Recetario de Oscar Talavera</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* Estilos específicos para recetas */
+    .recipe {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .recipe-header {
+      margin-bottom: var(--spacing-lg);
+      text-align: center;
+    }
+    
+    .recipe-title {
+      font-size: 2.5rem;
+      line-height: 1.2;
+      margin-bottom: var(--spacing-sm);
+    }
+    
+    .recipe-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-md);
+      justify-content: center;
+      margin-bottom: var(--spacing-md);
+      color: var(--text-light);
+    }
+    
+    .recipe-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .recipe-meta svg {
+      width: 18px;
+      height: 18px;
+    }
+    
+    .recipe-featured-image {
+      margin: var(--spacing-md) auto var(--spacing-lg);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      max-height: 500px;
+    }
+    
+    .recipe-featured-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .recipe-content {
+      line-height: 1.8;
+    }
+    
+    .recipe-section {
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .recipe-section h2 {
+      font-size: 1.8rem;
+      margin-bottom: var(--spacing-md);
+      color: var(--text-accent);
+    }
+    
+    .recipe-section h3 {
+      font-size: 1.4rem;
+      margin-bottom: var(--spacing-sm);
+      color: var(--text-accent);
+    }
+    
+    .recipe-ingredients {
+      background-color: var(--card-bg);
+      padding: var(--spacing-md);
+      border-radius: var(--border-radius);
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .recipe-ingredients ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    .recipe-ingredients li {
+      padding: var(--spacing-xs) 0;
+      border-bottom: 1px solid var(--accent-color);
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .recipe-ingredients li:last-child {
+      border-bottom: none;
+    }
+    
+    .ingredient-amount {
+      color: var(--text-light);
+      font-weight: 500;
+    }
+    
+    .recipe-instructions ol {
+      padding-left: var(--spacing-md);
+      counter-reset: step-counter;
+      list-style-type: none;
+    }
+    
+    .recipe-instructions li {
+      position: relative;
+      padding-left: var(--spacing-sm);
+      margin-bottom: var(--spacing-md);
+      counter-increment: step-counter;
+    }
+    
+    .recipe-instructions li::before {
+      content: counter(step-counter);
+      position: absolute;
+      left: -30px;
+      top: 0;
+      width: 24px;
+      height: 24px;
+      background-color: var(--accent-color);
+      color: var(--text-accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .recipe-notes {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: var(--spacing-md);
+      border-radius: var(--border-radius);
+      margin-top: var(--spacing-md);
+      font-style: italic;
+    }
+    
+    .recipe-notes p:last-child {
+      margin-bottom: 0;
+    }
+    
+    .recipe-source {
+      margin-top: var(--spacing-md);
+      font-size: 0.9rem;
+      color: var(--text-light);
+      font-style: italic;
+    }
+    
+    .recipe-source a {
+      color: var(--text-accent);
+      text-decoration: underline;
+    }
+    
+    .recipe-footer {
+      margin-top: var(--spacing-lg);
+      padding-top: var(--spacing-md);
+      border-top: 1px solid var(--accent-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .share-buttons {
+      display: flex;
+      gap: var(--spacing-xs);
+    }
+    
+    .share-button {
+      width: 36px;
+      height: 36px;
+      background-color: var(--card-bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    
+    .share-button:hover {
+      background-color: var(--accent-color);
+    }
+    
+    .share-button svg {
+      width: 18px;
+      height: 18px;
+    }
+    
+    .back-link {
+      color: var(--text-light);
+      font-weight: 500;
+      transition: transform 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .back-link:hover {
+      transform: translateX(-5px);
+      color: var(--text-accent);
+    }
+    
+    .back-link svg {
+      width: 16px;
+      height: 16px;
+    }
+    
+    .print-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background-color: var(--card-bg);
+      padding: 8px 16px;
+      border-radius: 20px;
+      color: var(--text-light);
+      transition: all 0.2s ease;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    
+    .print-button:hover {
+      background-color: var(--accent-color);
+      color: var(--text-accent);
+    }
+    
+    .print-button svg {
+      width: 16px;
+      height: 16px;
+    }
+    
+    /* Estilos responsivos */
+    @media (max-width: 768px) {
+      .recipe-title {
+        font-size: 2rem;
+      }
+      
+      .recipe-meta {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+        align-items: center;
+      }
+      
+      .recipe-featured-image {
+        max-height: 300px;
+      }
+      
+      .recipe-footer {
+        flex-direction: column;
+        gap: var(--spacing-md);
+      }
+    }
+    
+    @media print {
+      .header, .footer, .recipe-footer {
+        display: none;
+      }
+      
+      body {
+        background-color: white;
+        color: black;
+      }
+      
+      .recipe {
+        max-width: 100%;
+      }
+      
+      .recipe-ingredients, .recipe-notes {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+      }
+      
+      .recipe-title {
+        color: #000;
+      }
+      
+      .recipe-section h2, .recipe-section h3 {
+        color: #333;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo-container">
+      <a href="/" class="logo-link">
+        <img src="/assets/img/OT logo bco.png" alt="Oscar Talavera Logo" class="logo" />
+      </a>
+    </div>
+    <nav class="nav-main">
+      <a href="/" class="nav-link">Inicio</a>
+      <a href="/textos" class="nav-link">Textos</a>
+      <a href="/recetas" class="nav-link">Recetario</a>
+    </nav>
+  </header>
+
+  <main class="content">
+    <article class="recipe">
+      <header class="recipe-header">
+        <h1 class="recipe-title">{{ page.title }}</h1>
+        <div class="recipe-meta">
+          <div class="recipe-meta-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>Preparación: {{ page.tiempo_prep }}</span>
+          </div>
+          <div class="recipe-meta-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>Cocción: {{ page.tiempo_coccion }}</span>
+          </div>
+          <div class="recipe-meta-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            <span>Dificultad: {{ page.dificultad }}</span>
+          </div>
+          <div class="recipe-meta-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span>Porciones: {{ page.porciones }}</span>
+          </div>
+        </div>
+      </header>
+      
+      {% if page.image %}
+      <div class="recipe-featured-image">
+        <img src="{{ page.image }}" alt="{{ page.title }}">
+      </div>
+      {% endif %}
+      
+      <div class="recipe-content">
+        {% if page.description %}
+        <div class="recipe-section">
+          <p>{{ page.description }}</p>
+        </div>
+        {% endif %}
+        
+        <div class="recipe-section">
+          <h2>Ingredientes</h2>
+          <div class="recipe-ingredients">
+            <ul>
+              {% for ingrediente in page.ingredientes %}
+              <li>
+                <span class="ingredient-name">{{ ingrediente.nombre }}</span>
+                <span class="ingredient-amount">{{ ingrediente.cantidad }}</span>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        
+        <div class="recipe-section">
+          <h2>Preparación</h2>
+          <div class="recipe-instructions">
+            <ol>
+              {% for paso in page.instrucciones %}
+              <li>{{ paso }}</li>
+              {% endfor %}
+            </ol>
+          </div>
+        </div>
+        
+        {% if page.notas %}
+        <div class="recipe-section">
+          <h2>Notas</h2>
+          <div class="recipe-notes">
+            {{ page.notas | markdownify }}
+          </div>
+        </div>
+        {% endif %}
+        
+        {% if page.fuente %}
+        <div class="recipe-source">
+          <p>Fuente: {% if page.fuente_url %}<a href="{{ page.fuente_url }}" target="_blank" rel="noopener noreferrer">{{ page.fuente }}</a>{% else %}{{ page.fuente }}{% endif %}</p>
+        </div>
+        {% endif %}
+      </div>
+      
+      <footer class="recipe-footer">
+        <a href="/recetas" class="back-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Volver al recetario
+        </a>
+        
+        <div class="share-buttons">
+          <button class="print-button" onclick="window.print()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            Imprimir
+          </button>
+          <a href="https://twitter.com/intent/tweet?text={{ page.title | url_encode }}&url={{ site.url }}{{ page.url | url_encode }}" target="_blank" rel="noopener noreferrer" class="share-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+          </a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url | url_encode }}" target="_blank" rel="noopener noreferrer" class="share-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          </a>
+        </div>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <p>© {{ 'now' | date: "%Y" }} Oscar Talavera</p>
+  </footer>
+  
+  <script>
+    // Agregar funcionalidad si es necesario
+  </script>
+</body>
+</html>
