@@ -3,7 +3,7 @@ layout: post
 title: "Silver Surfer: Una Odisea Filosófica en el Umbral del Infinito"
 date: 2025-05-03
 image: /assets/img/silver-surfer-odisea.jpg
-tags: [Filosofía, Cómic, Silver Surfer, Ética, Cosmología]
+tags: [Filosofía, Cómic, Silver Surfer, Ética, Cosmología, Marvel]
 author: Oscar Talavera
 description: Un ensayo filosófico que examina al Silver Surfer como metáfora de la condición humana, explorando temas de poder, redención, soledad y justicia en el cosmos.
 audio:
