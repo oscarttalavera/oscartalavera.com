@@ -465,3 +465,104 @@ h2::after {
     justify-content: center;
   }
 }
+
+/* Tritic Highlights */
+.tritic-link {
+  color: var(--text-accent);
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.tritic-link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--accent-color);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.tritic-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Tritic Card */
+.tritic-section {
+  margin-bottom: var(--spacing-md);
+}
+
+.tritic-card {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tritic-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--accent-color), transparent);
+}
+
+.tritic-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.tritic-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.tritic-content p {
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-light);
+}
+
+.tritic-cta {
+  display: inline-block;
+  color: var(--text-accent);
+  font-weight: 500;
+  transition: transform 0.2s ease;
+}
+
+.tritic-cta:hover {
+  transform: translateX(5px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .social-links {
+    gap: var(--spacing-sm);
+  }
+  
+  .tritic-card {
+    padding: var(--spacing-sm);
+  }
+}
+
+/* Footer social styles */
+.footer-social {
+  margin-bottom: var(--spacing-xs);
+}
+
+.footer-social a {
+  font-size: 0.9rem;
+  margin: 0 var(--spacing-xs);
+}
+
+.separator {
+  color: var(--accent-color);
+}
