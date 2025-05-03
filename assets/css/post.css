@@ -308,3 +308,275 @@ audio::-webkit-media-controls-volume-slider {
     align-self: flex-start;
   }
 }
+/* Audio Player Styles */
+.audio-container {
+  margin: 2rem 0;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.audio-container:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.audio-player-wrapper {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.audio-cover {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.audio-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.audio-default-cover {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-light);
+}
+
+.audio-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.audio-title {
+  font-size: 1.1rem;
+  margin: 0 0 0.25rem;
+  font-weight: 600;
+  color: var(--text-accent);
+}
+
+.audio-narrator {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin: 0 0 1rem;
+}
+
+.audio-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.play-pause-btn {
+  background: none;
+  border: none;
+  color: var(--text-accent);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  width: 44px;
+  height: 44px;
+}
+
+.play-pause-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.play-pause-btn:active {
+  transform: scale(0.95);
+}
+
+.audio-progress {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.progress-bar {
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.progress-bar:hover {
+  height: 6px;
+}
+
+.progress-filled {
+  height: 100%;
+  background-color: var(--text-accent);
+  width: 0%;
+  transition: width 0.1s linear;
+  position: relative;
+}
+
+.progress-filled::after {
+  content: '';
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: var(--text-accent);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.progress-bar:hover .progress-filled::after {
+  opacity: 1;
+}
+
+.time-display {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  font-family: monospace;
+}
+
+.audio-extras {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.volume-btn, .download-btn {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  width: 36px;
+  height: 36px;
+}
+
+.volume-btn:hover, .download-btn:hover {
+  color: var(--text-accent);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.audio-description {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: var(--text-light);
+  font-style: italic;
+  padding-left: 96px; /* Alineado con el contenido de audio */
+}
+
+.audio-transcript {
+  margin-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1rem;
+}
+
+.audio-transcript summary {
+  cursor: pointer;
+  color: var(--text-light);
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  padding-left: 96px; /* Alineado con el contenido de audio */
+}
+
+.audio-transcript summary:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-accent);
+}
+
+.transcript-content {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-left: 96px; /* Alineado con el contenido de audio */
+}
+
+/* Ocultar el reproductor nativo cuando estamos usando controles personalizados */
+.audio-element {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .audio-player-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .audio-cover {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .audio-controls {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+  .audio-progress {
+    width: 100%;
+    order: 3;
+  }
+  
+  .play-pause-btn {
+    order: 1;
+  }
+  
+  .audio-extras {
+    order: 2;
+    margin-left: auto;
+  }
+  
+  .audio-description,
+  .audio-transcript summary,
+  .transcript-content {
+    padding-left: 0;
+    margin-left: 0;
+  }
+}
+
+/* Animaciones */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+.play-pause-btn.playing {
+  animation: pulse 2s infinite;
+}
