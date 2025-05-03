@@ -5,7 +5,7 @@ title: Inicio
 
 <section class="section">
   <h2>¿Qué hay aquí?</h2>
-  <p>Ideas, aficiones, hobbies, creaciones, etc</p>
+  <p>Ideas, aficiones, hobbies, creaciones y experimentos. Un espacio personal en constante evolución.</p>
 </section>
 
 <section class="section quotes-section">
