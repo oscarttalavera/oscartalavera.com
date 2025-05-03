@@ -245,6 +245,80 @@
         grid-template-columns: 1fr;
       }
     }
+
+    .audio-section {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  margin: var(--spacing-md) 0;
+  border: 1px solid var(--accent-color);
+}
+
+.audio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-sm);
+}
+
+.audio-header h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--text-accent);
+}
+
+.audio-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--text-accent);
+}
+
+.audio-duration {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.2rem 0.6rem;
+  border-radius: 15px;
+}
+
+.audio-description {
+  color: var(--text-light);
+  margin-bottom: var(--spacing-sm);
+  font-size: 0.95rem;
+}
+
+.audio-player {
+  width: 100%;
+  margin-top: var(--spacing-sm);
+}
+
+/* Personalización del reproductor de audio */
+audio::-webkit-media-controls-panel {
+  background-color: var(--card-bg);
+}
+
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-mute-button,
+audio::-webkit-media-controls-timeline,
+audio::-webkit-media-controls-volume-slider {
+  filter: invert(1);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .audio-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+  
+  .audio-duration {
+    align-self: flex-start;
+  }
+}
   </style>
 </head>
 <body>
@@ -275,6 +349,31 @@
           {% endif %}
         </div>
       </header>
+
+    {% if page.audio %}
+    <div class="audio-section">
+      <div class="audio-header">
+        <h3>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="audio-icon">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" x2="12" y1="19" y2="22"></line>
+          </svg>
+          {{ page.audio.title | default: "Escucha este texto" }}
+        </h3>
+        {% if page.audio.duration %}
+        <span class="audio-duration">{{ page.audio.duration }}</span>
+        {% endif %}
+      </div>
+      {% if page.audio.description %}
+      <p class="audio-description">{{ page.audio.description }}</p>
+      {% endif %}
+      <audio controls class="audio-player">
+        <source src="{{ page.audio.file }}" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+      </audio>
+    </div>
+    {% endif %}
       
       {% if page.image %}
       <div class="post-featured-image">
