@@ -6,9 +6,10 @@ image: /assets/img/silver-surfer-odisea.jpg
 tags: [Filosofía, Cómic, Silver Surfer, Ética, Cosmología]
 author: Oscar Talavera
 description: Un ensayo filosófico que examina al Silver Surfer como metáfora de la condición humana, explorando temas de poder, redención, soledad y justicia en el cosmos.
-audio_file: /assets/audio/silver-surfer-odisea.mp3
-audio_title: Audio Review - Silver Surfer: Una Odisea Filosófica en el Umbral del Infinito
-duration: 7:05 min
+audio:
+  file: /assets/audio/silver-surfer-odisea.mp3
+  audio_title: Audio Review - Silver Surfer: Una Odisea Filosófica en el Umbral del Infinito
+  duration: 7:05 min
 ---
 
 # Silver Surfer: Una Odisea Filosófica en el Umbral del Infinito
