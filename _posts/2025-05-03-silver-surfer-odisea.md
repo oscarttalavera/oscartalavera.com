@@ -10,6 +10,7 @@ audio:
   file: /assets/audio/silver-surfer-odisea.mp3
   title: "Audio Review - Silver Surfer: Una Odisea Filosófica en el Umbral del Infinito"
   duration: "7:05 min"
+  description: "Reflexión narrada sobre el ensayo filosófico del Silver Surfer"
 ---
 
 # Silver Surfer: Una Odisea Filosófica en el Umbral del Infinito
