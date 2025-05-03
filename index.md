@@ -53,12 +53,21 @@ title: Inicio
 <section class="section bio-section">
   <h2>Bio</h2>
   <ul class="bio-list">
-    <li><strong>Ingeniero</strong> — Egresado del ITCH en 2018-19, con experiencia en las industrias aeroespacial y automotriz, hasta que emprendí mi propio camino fundando <a href="https://www.tritic3d.com" target="_blank">Tritic</a>, basado en soluciones creativas de ingeniería y fabricación.</li>
+    <li><strong>Ingeniero</strong> — Egresado del ITCH en 2018-19, con experiencia en las industrias aeroespacial y automotriz. Hoy lidero <a href="https://www.tritic3d.com" target="_blank" class="tritic-link">Tritic</a>, brindando soluciones creativas de ingeniería y fabricación.</li>
     <li><strong>Hobbista del MMA</strong> — Aficionado a las artes marciales desde niño. Hoy disfruto el deporte del MMA, desde el sillón frente a la tele, hasta el tatami y la jaula.</li>
     <li><strong>Home barista</strong> — Disfruto el café, pero creo que disfruto más de preparar café.</li>
     <li><strong>Coleccionista</strong> — Mi colección favorita y más grande es de autos a escala (Hot Wheels sobre todo), pero tengo otras pequeñas colecciones como cuchillos-navajas, herramienta y cosas para cocinar.</li>
-    <li><strong>DJ y audiófilo</strong> — Fan de la música desde chavalito, fui productor en "mis tiempos" y DJ hasta la fecha. Me gusta escuchar mucha música y mejor si es en Hi-Fi.</li>
-  </ul>
+    <li><strong>DJ y audiófilo</strong> — Fan de la música desde chavalito, fui productor en "mis tiempos" y DJ hasta la fecha. Me gusta escuchar mucha música y mejor si es en Hi-Fi.</li>  </ul>
+</section>
+
+<section class="section tritic-section">
+  <div class="tritic-card">
+    <div class="tritic-content">
+      <h3>Tritic</h3>
+      <p>Soluciones creativas de ingeniería y fabricación. Transformando ideas en realidad tangible.</p>
+      <a href="https://www.tritic3d.com" target="_blank" class="tritic-cta">Visitar Tritic →</a>
+    </div>
+  </div>
 </section>
 
 <section class="section recent-posts-section">
