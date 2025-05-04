@@ -664,3 +664,169 @@ h2::after {
     display: inline-block;
   }
 }
+/* Quotes Carousel Section */
+.quotes-carousel-section {
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.quotes-carousel {
+  position: relative;
+  overflow: hidden;
+  padding: var(--spacing-sm) 0;
+}
+
+.quotes-track {
+  display: flex;
+  transition: transform 0.5s ease;
+  gap: var(--spacing-md);
+}
+
+.quote-item {
+  flex: 0 0 calc(33.333% - var(--spacing-md));
+  min-width: 0;
+}
+
+.quote-item blockquote {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  margin: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: 3px solid var(--accent-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.quote-item blockquote:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.quote-item p {
+  font-style: italic;
+  color: var(--text-light);
+  margin: 0 0 var(--spacing-sm);
+  line-height: 1.6;
+}
+
+.quote-item cite {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  font-style: normal;
+}
+
+/* Navigation buttons */
+.quotes-navigation {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 var(--spacing-xs);
+  pointer-events: none;
+}
+
+.carousel-nav {
+  pointer-events: all;
+  background-color: var(--card-bg);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-light);
+  transition: all 0.3s ease;
+  opacity: 0.8;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-nav:hover {
+  opacity: 1;
+  background-color: var(--accent-color);
+  color: var(--text-accent);
+  transform: scale(1.1);
+}
+
+.carousel-nav:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+/* Dots navigation */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: var(--spacing-md);
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--accent-color);
+  opacity: 0.3;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.carousel-dot.active {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.carousel-dot:hover {
+  opacity: 0.7;
+}
+
+.carousel-dot:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .quote-item {
+    flex: 0 0 calc(50% - var(--spacing-md));
+  }
+}
+
+@media (max-width: 768px) {
+  .quote-item {
+    flex: 0 0 100%;
+  }
+  
+  .quotes-navigation {
+    display: none; /* Ocultar botones en móvil, usar swipe */
+  }
+  
+  .quote-item blockquote {
+    padding: var(--spacing-sm);
+  }
+}
+
+/* Opcional: Animación de entrada */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.quotes-carousel-section {
+  animation: fadeIn 0.6s ease-out;
+}
