@@ -286,33 +286,37 @@ document.addEventListener('DOMContentLoaded', function() {
     <a href="/textos" class="ver-todos">Ver todos →</a>
   </div>
   
-  <div class="posts-carousel">
-    {% for post in site.posts limit:5 %}
-    <article class="post-card-modern">
-      <a href="{{ post.url }}" class="post-card-link">
-        <div class="post-card-image" style="background-image: url('{{ post.image }}');">
-          <div class="post-card-overlay"></div>
-        </div>
-        <div class="post-card-content">
-          <div class="post-meta">
-            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" }}</time>
-            {% if post.tags.size > 0 %}
-            <span class="post-category">{{ post.tags[0] }}</span>
-            {% endif %}
-          </div>
-          <h3 class="post-title">{{ post.title }}</h3>
-          {% if post.description %}
-          <p class="post-excerpt">{{ post.description | truncatewords: 15 }}</p>
-          {% elsif post.excerpt %}
-          <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 15 }}</p>
-          {% endif %}
-          <div class="post-footer">
-            <span class="read-more">Leer más →</span>
-          </div>
-        </div>
-      </a>
-    </article>
-    {% endfor %}
+  <div class="posts-carousel-container">
+    <div class="posts-carousel">
+      <div class="posts-track">
+        {% for post in site.posts limit:5 %}
+        <article class="post-card-modern">
+          <a href="{{ post.url }}" class="post-card-link">
+            <div class="post-card-image" style="background-image: url('{{ post.image }}');">
+              <div class="post-card-overlay"></div>
+            </div>
+            <div class="post-card-content">
+              <div class="post-meta">
+                <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" }}</time>
+                {% if post.tags.size > 0 %}
+                <span class="post-category">{{ post.tags[0] }}</span>
+                {% endif %}
+              </div>
+              <h3 class="post-title">{{ post.title }}</h3>
+              {% if post.description %}
+              <p class="post-excerpt">{{ post.description | truncatewords: 15 }}</p>
+              {% elsif post.excerpt %}
+              <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 15 }}</p>
+              {% endif %}
+              <div class="post-footer">
+                <span class="read-more">Leer más →</span>
+              </div>
+            </div>
+          </a>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
     
     <button class="carousel-nav posts-prev" aria-label="Post anterior">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -331,8 +335,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const carousel = document.querySelector('.posts-carousel');
-  const cards = carousel.querySelectorAll('.post-card-modern');
+  const track = document.querySelector('.posts-track');
+  const cards = document.querySelectorAll('.post-card-modern');
   const prevBtn = document.querySelector('.posts-prev');
   const nextBtn = document.querySelector('.posts-next');
   const indicatorsContainer = document.querySelector('.carousel-indicators');
@@ -382,10 +386,11 @@ document.addEventListener('DOMContentLoaded', function() {
     currentIndex = Math.max(0, Math.min(index, maxIndex));
     
     const cardWidth = cards[0].offsetWidth;
-    const gap = parseInt(window.getComputedStyle(carousel).gap) || 32;
+    const containerStyles = window.getComputedStyle(track.parentElement);
+    const gap = parseInt(containerStyles.gap) || 32;
     const offset = currentIndex * (cardWidth + gap);
     
-    carousel.style.transform = `translateX(-${offset}px)`;
+    track.style.transform = `translateX(-${offset}px)`;
     updateIndicators();
   }
   
@@ -436,6 +441,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Pausar en hover
+  const carousel = document.querySelector('.posts-carousel-container');
   carousel.addEventListener('mouseenter', () => {
     isHovering = true;
     stopAutoplay();
@@ -450,11 +456,11 @@ document.addEventListener('DOMContentLoaded', function() {
   let touchStartX = 0;
   let touchEndX = 0;
   
-  carousel.addEventListener('touchstart', e => {
+  track.addEventListener('touchstart', e => {
     touchStartX = e.changedTouches[0].screenX;
   }, false);
   
-  carousel.addEventListener('touchend', e => {
+  track.addEventListener('touchend', e => {
     touchEndX = e.changedTouches[0].screenX;
     handleSwipe();
   }, false);
