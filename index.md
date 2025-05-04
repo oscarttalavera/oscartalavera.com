@@ -19,7 +19,7 @@ title: Inicio
 </section>
 
 <section class="section quotes-carousel-section">
-  <h2>Reflexiones</h2>
+  <h2>Citas / Ideas random / Meditaciones / Reflexiones</h2>
   <div class="quotes-carousel">
     <div class="quotes-track">
       <div class="quote-item">
