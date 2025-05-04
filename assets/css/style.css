@@ -566,3 +566,101 @@ h2::after {
 .separator {
   color: var(--accent-color);
 }
+
+/* Quotes Sidebar */
+.quotes-sidebar {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 280px;
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-sm);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.quotes-sidebar:hover {
+  opacity: 1;
+}
+
+.quote-container {
+  position: relative;
+}
+
+.quote-content {
+  margin: 0;
+  transition: opacity 0.3s ease;
+}
+
+.quote-text {
+  font-style: italic;
+  color: var(--text-light);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.quote-content cite {
+  display: block;
+  font-size: 0.85rem;
+  margin-top: var(--spacing-xs);
+  color: var(--text-color);
+  font-style: normal;
+}
+
+.quote-refresh {
+  position: absolute;
+  bottom: var(--spacing-xs);
+  right: 0;
+  background: none;
+  border: none;
+  color: var(--text-light);
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+  opacity: 0.6;
+}
+
+.quote-refresh:hover {
+  color: var(--text-accent);
+  background-color: rgba(255, 255, 255, 0.05);
+  opacity: 1;
+}
+
+.quote-refresh:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+/* Responsive behavior */
+@media (max-width: 1200px) {
+  .quotes-sidebar {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .quotes-sidebar {
+    display: block;
+    position: static;
+    transform: none;
+    width: 100%;
+    margin: var(--spacing-md) 0;
+    opacity: 1;
+  }
+  
+  .quote-container {
+    text-align: center;
+  }
+  
+  .quote-refresh {
+    position: static;
+    margin-top: var(--spacing-sm);
+    display: inline-block;
+  }
+}
