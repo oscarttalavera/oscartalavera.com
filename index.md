@@ -8,47 +8,102 @@ title: Inicio
   <p>Ideas, aficiones, hobbies, creaciones y experimentos. Un espacio personal en constante evolución.</p>
 </section>
 
-<section class="section quotes-section">
-  <h2>Citas / Ideas random / Meditaciones</h2>
-  <div class="quotes">
-    <blockquote>
-      <p>Ningún hombre puede cruzar el mismo río dos veces, porque no será el mismo río y él no será el mismo hombre.</p>
-      <cite>— Heráclito</cite>
+<aside class="quotes-sidebar" aria-label="Citas aleatorias">
+  <div class="quote-container">
+    <blockquote class="quote-content" id="quoteDisplay">
+      <p class="quote-text"></p>
+      <cite>— <span class="quote-author"></span></cite>
     </blockquote>
-    <blockquote>
-      <p>Always have something to look forward to.</p>
-      <cite>— Autor desconocido</cite>
-    </blockquote>
-    <blockquote>
-      <p>Cuando entiendes que toda opinión es una visión cargada de historia personal, entenderás que todo juicio es una confesión.</p>
-      <cite>— Nikola Tesla</cite>
-    </blockquote>
-    <blockquote>
-      <p>Cooking is a feeling, baking is a science, grilling is an art.</p>
-      <cite>— Alguien en Reddit</cite>
-    </blockquote>
-    <blockquote>
-      <p>Es imposible aprender lo que crees que ya sabes.</p>
-      <cite>— Epicteto</cite>
-    </blockquote>
-    <blockquote>
-      <p>La pobreza cobra intereses.</p>
-      <cite>— Lo escuché en un podcast (creo)</cite>
-    </blockquote>
-    <blockquote>
-      <p>Ningún viento es favorable para el que no sabe a dónde se dirige.</p>
-      <cite>— Séneca</cite>
-    </blockquote>
-    <blockquote>
-      <p>No toda batalla vale la pena. Ganar no siempre significa vencer al otro; a veces, la verdadera victoria es elegir no pelear.</p>
-      <cite>– Pensador anónimo</cite>
-    </blockquote>
-    <blockquote>
-      <p>Alguien de un país en desarrollo que puede viajar a un país de primer mundo es más rico que alguien de un país de primer mundo que no se puede permitir viajar a un país en desarrollo.</p>
-      <cite>— OT (Idea de regadera)</cite>
-    </blockquote>
+    <button class="quote-refresh" aria-label="Mostrar otra cita" title="Mostrar otra cita">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="23 4 23 10 17 10"></polyline>
+        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+      </svg>
+    </button>
   </div>
-</section>
+</aside>
+
+<script>
+const quotes = [
+  {
+    text: "Ningún hombre puede cruzar el mismo río dos veces, porque no será el mismo río y él no será el mismo hombre.",
+    author: "Heráclito"
+  },
+  {
+    text: "Always have something to look forward to.",
+    author: "Autor desconocido"
+  },
+  {
+    text: "Cuando entiendes que toda opinión es una visión cargada de historia personal, entenderás que todo juicio es una confesión.",
+    author: "Nikola Tesla"
+  },
+  {
+    text: "Cooking is a feeling, baking is a science, grilling is an art.",
+    author: "Alguien en Reddit"
+  },
+  {
+    text: "Es imposible aprender lo que crees que ya sabes.",
+    author: "Epicteto"
+  },
+  {
+    text: "La pobreza cobra intereses.",
+    author: "Lo escuché en un podcast (creo)"
+  },
+  {
+    text: "Ningún viento es favorable para el que no sabe a dónde se dirige.",
+    author: "Séneca"
+  },
+  {
+    text: "No toda batalla vale la pena. Ganar no siempre significa vencer al otro; a veces, la verdadera victoria es elegir no pelear.",
+    author: "Pensador anónimo"
+  },
+  {
+    text: "Alguien de un país en desarrollo que puede viajar a un país de primer mundo es más rico que alguien de un país de primer mundo que no se puede permitir viajar a un país en desarrollo.",
+    author: "OT (Idea de regadera)"
+  }
+];
+
+let currentQuoteIndex = -1;
+
+function getRandomQuote() {
+  let newIndex;
+  do {
+    newIndex = Math.floor(Math.random() * quotes.length);
+  } while (newIndex === currentQuoteIndex);
+  
+  currentQuoteIndex = newIndex;
+  return quotes[newIndex];
+}
+
+function displayQuote(quote) {
+  const quoteText = document.querySelector('.quote-text');
+  const quoteAuthor = document.querySelector('.quote-author');
+  const quoteContent = document.querySelector('.quote-content');
+  
+  // Fade out
+  quoteContent.style.opacity = '0';
+  
+  setTimeout(() => {
+    quoteText.textContent = quote.text;
+    quoteAuthor.textContent = quote.author;
+    
+    // Fade in
+    quoteContent.style.opacity = '1';
+  }, 300);
+}
+
+// Initialize with a random quote
+document.addEventListener('DOMContentLoaded', () => {
+  const initialQuote = getRandomQuote();
+  displayQuote(initialQuote);
+  
+  // Add click handler to refresh button
+  document.querySelector('.quote-refresh').addEventListener('click', () => {
+    const newQuote = getRandomQuote();
+    displayQuote(newQuote);
+  });
+});
+</script>
 
 <section class="section bio-section">
   <h2>Bio</h2>
