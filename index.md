@@ -302,11 +302,12 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
           <h3 class="post-title">{{ post.title }}</h3>
           {% if post.description %}
-          <p class="post-excerpt">{{ post.description | truncatewords: 20 }}</p>
+          <p class="post-excerpt">{{ post.description | truncatewords: 15 }}</p>
+          {% elsif post.excerpt %}
+          <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 15 }}</p>
           {% endif %}
           <div class="post-footer">
-            <span class="read-more">Leer más</span>
-            <span class="read-time">{{ post.content | reading_time }}</span>
+            <span class="read-more">Leer más →</span>
           </div>
         </div>
       </a>
@@ -331,10 +332,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const carousel = document.querySelector('.posts-carousel');
-  const track = carousel;
   const cards = carousel.querySelectorAll('.post-card-modern');
-  const prevBtn = carousel.querySelector('.posts-prev');
-  const nextBtn = carousel.querySelector('.posts-next');
+  const prevBtn = document.querySelector('.posts-prev');
+  const nextBtn = document.querySelector('.posts-next');
   const indicatorsContainer = document.querySelector('.carousel-indicators');
   
   let currentIndex = 0;
@@ -382,10 +382,10 @@ document.addEventListener('DOMContentLoaded', function() {
     currentIndex = Math.max(0, Math.min(index, maxIndex));
     
     const cardWidth = cards[0].offsetWidth;
-    const gap = parseInt(window.getComputedStyle(track).gap) || 32;
+    const gap = parseInt(window.getComputedStyle(carousel).gap) || 32;
     const offset = currentIndex * (cardWidth + gap);
     
-    track.style.transform = `translateX(-${offset}px)`;
+    carousel.style.transform = `translateX(-${offset}px)`;
     updateIndicators();
   }
   
@@ -397,16 +397,17 @@ document.addEventListener('DOMContentLoaded', function() {
     if (currentIndex >= maxIndex) {
       goToIndex(0);
     } else {
-      goToIndex(currentIndex + 1);
+      goToIndex(currentIndex + itemsPerView);
     }
   }
   
   function prev() {
+    const itemsPerView = getItemsPerView();
+    
     if (currentIndex <= 0) {
-      const itemsPerView = getItemsPerView();
       goToIndex(Math.max(0, cards.length - itemsPerView));
     } else {
-      goToIndex(currentIndex - 1);
+      goToIndex(Math.max(0, currentIndex - itemsPerView));
     }
   }
   
@@ -426,7 +427,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Autoplay
   function startAutoplay() {
     if (!isHovering) {
-      autoplayInterval = setInterval(next, 5000);
+      autoplayInterval = setInterval(next, 6000);
     }
   }
   
@@ -468,6 +469,8 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         prev();
       }
+      stopAutoplay();
+      startAutoplay();
     }
   }
   
