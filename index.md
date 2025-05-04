@@ -112,6 +112,13 @@ document.addEventListener('DOMContentLoaded', function() {
     return 1;
   }
   
+  // Obtener el gap entre items desde CSS
+  function getGapSize() {
+    const styles = window.getComputedStyle(track);
+    const gap = styles.getPropertyValue('gap');
+    return parseInt(gap) || 32; // 32px es el valor por defecto (--spacing-md)
+  }
+  
   // Crear indicadores de navegación
   function createDots() {
     dotsContainer.innerHTML = '';
@@ -139,14 +146,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
+  // Calcular el desplazamiento correcto incluyendo gaps
+  function calculateOffset(index) {
+    const itemWidth = items[0].offsetWidth;
+    const gap = getGapSize();
+    
+    // Calculamos el offset como: (ancho del item + gap) * índice
+    return index * (itemWidth + gap);
+  }
+  
   // Navegar a un índice específico
   function goToIndex(index) {
     const itemsPerView = getItemsPerView();
     const maxIndex = Math.max(0, items.length - itemsPerView);
     currentIndex = Math.max(0, Math.min(index, maxIndex));
     
-    const itemWidth = items[0].offsetWidth;
-    const offset = currentIndex * itemWidth;
+    const offset = calculateOffset(currentIndex);
     
     track.style.transform = `translateX(-${offset}px)`;
     updateDots();
@@ -245,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
       createDots();
-      goToIndex(0);
+      goToIndex(currentIndex); // Mantener el índice actual pero recalcular posición
     }, 250);
   });
   
