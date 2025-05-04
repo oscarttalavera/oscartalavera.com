@@ -281,18 +281,208 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <section class="section recent-posts-section">
-  <h2>Textos recientes</h2>
-  <div class="post-carousel">
+  <div class="section-header">
+    <h2>Textos recientes</h2>
+    <a href="/textos" class="ver-todos">Ver todos →</a>
+  </div>
+  
+  <div class="posts-carousel">
     {% for post in site.posts limit:5 %}
-    <div class="post-card" style="background-image: url('{{ post.image }}');">
-      <a href="{{ post.url }}">
-        <div class="overlay">
-          <h3>{{ post.title }}</h3>
-          <p>{{ post.date | date: "%d %b %Y" }}</p>
+    <article class="post-card-modern">
+      <a href="{{ post.url }}" class="post-card-link">
+        <div class="post-card-image" style="background-image: url('{{ post.image }}');">
+          <div class="post-card-overlay"></div>
+        </div>
+        <div class="post-card-content">
+          <div class="post-meta">
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" }}</time>
+            {% if post.tags.size > 0 %}
+            <span class="post-category">{{ post.tags[0] }}</span>
+            {% endif %}
+          </div>
+          <h3 class="post-title">{{ post.title }}</h3>
+          {% if post.description %}
+          <p class="post-excerpt">{{ post.description | truncatewords: 20 }}</p>
+          {% endif %}
+          <div class="post-footer">
+            <span class="read-more">Leer más</span>
+            <span class="read-time">{{ post.content | reading_time }}</span>
+          </div>
         </div>
       </a>
-    </div>
+    </article>
     {% endfor %}
+    
+    <button class="carousel-nav posts-prev" aria-label="Post anterior">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+    <button class="carousel-nav posts-next" aria-label="Siguiente post">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
   </div>
-  <a href="/textos" class="ver-todos">Ver todos los textos →</a>
+  
+  <div class="carousel-indicators"></div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const carousel = document.querySelector('.posts-carousel');
+  const track = carousel;
+  const cards = carousel.querySelectorAll('.post-card-modern');
+  const prevBtn = carousel.querySelector('.posts-prev');
+  const nextBtn = carousel.querySelector('.posts-next');
+  const indicatorsContainer = document.querySelector('.carousel-indicators');
+  
+  let currentIndex = 0;
+  let autoplayInterval;
+  let isHovering = false;
+  
+  // Determinar cuántos posts mostrar según el ancho de pantalla
+  function getItemsPerView() {
+    if (window.innerWidth >= 1200) return 3;
+    if (window.innerWidth >= 768) return 2;
+    return 1;
+  }
+  
+  // Crear indicadores
+  function createIndicators() {
+    indicatorsContainer.innerHTML = '';
+    const itemsPerView = getItemsPerView();
+    const totalPages = Math.ceil(cards.length / itemsPerView);
+    
+    for (let i = 0; i < totalPages; i++) {
+      const indicator = document.createElement('button');
+      indicator.className = 'carousel-indicator';
+      indicator.setAttribute('aria-label', `Ir a página ${i + 1}`);
+      if (i === 0) indicator.classList.add('active');
+      indicator.addEventListener('click', () => goToIndex(i * itemsPerView));
+      indicatorsContainer.appendChild(indicator);
+    }
+  }
+  
+  // Actualizar indicadores
+  function updateIndicators() {
+    const indicators = document.querySelectorAll('.carousel-indicator');
+    const itemsPerView = getItemsPerView();
+    const currentPage = Math.floor(currentIndex / itemsPerView);
+    
+    indicators.forEach((indicator, index) => {
+      indicator.classList.toggle('active', index === currentPage);
+    });
+  }
+  
+  // Navegar a un índice específico
+  function goToIndex(index) {
+    const itemsPerView = getItemsPerView();
+    const maxIndex = Math.max(0, cards.length - itemsPerView);
+    currentIndex = Math.max(0, Math.min(index, maxIndex));
+    
+    const cardWidth = cards[0].offsetWidth;
+    const gap = parseInt(window.getComputedStyle(track).gap) || 32;
+    const offset = currentIndex * (cardWidth + gap);
+    
+    track.style.transform = `translateX(-${offset}px)`;
+    updateIndicators();
+  }
+  
+  // Navegación
+  function next() {
+    const itemsPerView = getItemsPerView();
+    const maxIndex = Math.max(0, cards.length - itemsPerView);
+    
+    if (currentIndex >= maxIndex) {
+      goToIndex(0);
+    } else {
+      goToIndex(currentIndex + 1);
+    }
+  }
+  
+  function prev() {
+    if (currentIndex <= 0) {
+      const itemsPerView = getItemsPerView();
+      goToIndex(Math.max(0, cards.length - itemsPerView));
+    } else {
+      goToIndex(currentIndex - 1);
+    }
+  }
+  
+  // Event listeners
+  nextBtn.addEventListener('click', () => {
+    next();
+    stopAutoplay();
+    startAutoplay();
+  });
+  
+  prevBtn.addEventListener('click', () => {
+    prev();
+    stopAutoplay();
+    startAutoplay();
+  });
+  
+  // Autoplay
+  function startAutoplay() {
+    if (!isHovering) {
+      autoplayInterval = setInterval(next, 5000);
+    }
+  }
+  
+  function stopAutoplay() {
+    clearInterval(autoplayInterval);
+  }
+  
+  // Pausar en hover
+  carousel.addEventListener('mouseenter', () => {
+    isHovering = true;
+    stopAutoplay();
+  });
+  
+  carousel.addEventListener('mouseleave', () => {
+    isHovering = false;
+    startAutoplay();
+  });
+  
+  // Soporte táctil
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  carousel.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, false);
+  
+  carousel.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, false);
+  
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+    
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        next();
+      } else {
+        prev();
+      }
+    }
+  }
+  
+  // Resize handler
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      createIndicators();
+      goToIndex(currentIndex);
+    }, 250);
+  });
+  
+  // Inicializar
+  createIndicators();
+  startAutoplay();
+});
+</script>
