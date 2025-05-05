@@ -563,13 +563,23 @@ h2::after {
   transform: translateX(3px);
 }
 
+/* Contenedor principal del carrusel */
+.posts-carousel-container {
+  position: relative;
+  overflow: hidden;
+  margin: 0 -24px; /* Compensar para los botones */
+  padding: 0 24px;
+}
+
 /* Posts carousel modernizado */
 .posts-carousel {
-  position: relative;
-  display: flex;
-  gap: var(--spacing-md);
   overflow: hidden;
   padding: var(--spacing-xs) 0;
+}
+
+.posts-track {
+  display: flex;
+  gap: var(--spacing-md);
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -595,18 +605,25 @@ h2::after {
   text-decoration: none;
 }
 
+/* Estilos para la imagen de portada de las tarjetas */
 .post-card-image {
   position: relative;
   height: 220px;
   background-size: cover;
   background-position: center;
   overflow: hidden;
+  transition: all 0.3s ease;
 }
 
+.post-card-modern:hover .post-card-image {
+  transform: scale(1.05);
+}
+
+/* Overlay para mejorar legibilidad del texto */
 .post-card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%);
   transition: opacity 0.3s ease;
 }
 
@@ -689,10 +706,8 @@ h2::after {
   transform: translateX(3px);
 }
 
-/* Eliminamos .read-time ya que no se usa */
-
 /* Navegación del carousel */
-.posts-carousel .carousel-nav {
+.posts-carousel-container .carousel-nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -712,24 +727,24 @@ h2::after {
   pointer-events: none;
 }
 
-.posts-carousel:hover .carousel-nav {
+.posts-carousel-container:hover .carousel-nav {
   opacity: 0.8;
   pointer-events: all;
 }
 
-.posts-carousel .carousel-nav:hover {
+.posts-carousel-container .carousel-nav:hover {
   opacity: 1;
   background-color: var(--accent-color);
   color: var(--text-accent);
   transform: translateY(-50%) scale(1.1);
 }
 
-.posts-carousel .posts-prev {
-  left: -24px;
+.posts-carousel-container .posts-prev {
+  left: 0;
 }
 
-.posts-carousel .posts-next {
-  right: -24px;
+.posts-carousel-container .posts-next {
+  right: 0;
 }
 
 /* Indicadores */
@@ -819,12 +834,25 @@ h2::after {
     flex: 0 0 100%;
   }
   
-  .posts-carousel .carousel-nav {
+  .posts-carousel-container {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .posts-carousel-container .carousel-nav {
     display: none;
   }
   
+  /* Ajustes responsive para imágenes */
   .post-card-image {
-    height: 180px;
+    height: 0;
+    padding-bottom: 66.67%; /* Mantiene un aspect ratio 3:2 */
+    background-position: top center; /* Muestra la parte superior de la imagen */
+  }
+  
+  /* Mejora el overlay para dar más contraste en móvil */
+  .post-card-overlay {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%);
   }
   
   .post-card-content {
@@ -855,6 +883,11 @@ h2::after {
   
   .recipe-filters {
     justify-content: center;
+  }
+  
+  /* Tamaños adicionales para pantallas muy pequeñas */
+  .post-card-image {
+    padding-bottom: 56.25%; /* Aspect ratio 16:9 para pantallas más pequeñas */
   }
 }
 
@@ -908,96 +941,3 @@ h2::after {
 .post-card-modern:nth-child(3) { animation-delay: 0.3s; }
 .post-card-modern:nth-child(4) { animation-delay: 0.4s; }
 .post-card-modern:nth-child(5) { animation-delay: 0.5s; }
-
-/* Contenedor principal del carrusel */
-.posts-carousel-container {
-  position: relative;
-  overflow: hidden;
-  margin: 0 -24px; /* Compensar para los botones */
-  padding: 0 24px;
-}
-
-/* Posts carousel modernizado */
-.posts-carousel {
-  overflow: hidden;
-  padding: var(--spacing-xs) 0;
-}
-
-.posts-track {
-  display: flex;
-  gap: var(--spacing-md);
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.post-card-modern {
-  flex: 0 0 calc(33.333% - var(--spacing-md) * 2 / 3);
-  min-width: 0;
-  border-radius: 16px;
-  overflow: hidden;
-  background-color: var(--card-bg);
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-/* Navegación del carousel */
-.posts-carousel-container .carousel-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  background-color: var(--card-bg);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--text-light);
-  transition: all 0.3s ease;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.posts-carousel-container:hover .carousel-nav {
-  opacity: 0.8;
-  pointer-events: all;
-}
-
-.posts-carousel-container .carousel-nav:hover {
-  opacity: 1;
-  background-color: var(--accent-color);
-  color: var(--text-accent);
-  transform: translateY(-50%) scale(1.1);
-}
-
-.posts-carousel-container .posts-prev {
-  left: 0;
-}
-
-.posts-carousel-container .posts-next {
-  right: 0;
-}
-
-/* Responsive adjustments */
-@media (max-width: 1200px) {
-  .post-card-modern {
-    flex: 0 0 calc(50% - var(--spacing-md) / 2);
-  }
-}
-
-@media (max-width: 768px) {
-  .post-card-modern {
-    flex: 0 0 100%;
-  }
-  
-  .posts-carousel-container {
-    margin: 0;
-    padding: 0;
-  }
-  
-  .posts-carousel-container .carousel-nav {
-    display: none;
-  }
-}
