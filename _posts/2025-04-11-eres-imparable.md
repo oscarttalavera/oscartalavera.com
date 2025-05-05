@@ -6,6 +6,11 @@ image: /assets/img/eres-imparable.jpg
 tags: [Motivación, Filosofía, Psicología]
 author: Oscar Talavera
 description: Un texto intenso y transformador que invita a liberar todo tu potencial físico, mental, emocional y espiritual. Una llamada a la acción que no deja indiferente a nadie.
+audio:
+  file: /assets/audio/eres-imparable.mp3
+  title: "Audio Review - Eres Imparable: El Día Que Decidas Serlo"
+  duration: "7:05"
+  description: "Reflexión narrada sobre el texto 'Eres Imparable: El Día Que Decidas Serlo'"
 ---
 
 # Eres Imparable: El Día Que Decidas Serlo
