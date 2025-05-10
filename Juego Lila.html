@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Lila la Labradora Aventurera</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #87CEEB; /* Cielo azul claro */
+            color: #333;
+            overflow: hidden; /* Para evitar scrollbars por los controles */
+        }
+        #gameCanvas {
+            border: 2px solid #333;
+            background-color: #90EE90; /* Césped verde claro */
+            touch-action: none; /* Evita zoom/scroll en canvas con toques */
+        }
+        #controls {
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 10px;
+            width: 180px; /* Ancho de los controles */
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10 and IE 11 */
+            user-select: none; /* Standard syntax */
+        }
+        .control-button {
+            background-color: #f0e68c; /* Amarillo arena */
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }
+        .control-button:active {
+            background-color: #e0d67c;
+            transform: scale(0.95);
+        }
+        /* Posicionamiento de los botones de control */
+        #btnUp { grid-column: 2; grid-row: 1; }
+        #btnLeft { grid-column: 1; grid-row: 2; }
+        #btnDown { grid-column: 2; grid-row: 2; }
+        #btnRight { grid-column: 3; grid-row: 2; }
+        .empty-cell { display: none; } /* Para ocupar espacio en el grid si es necesario */
+
+        #scoreBoard {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #4A3B31; /* Marrón oscuro */
+        }
+        #messageArea {
+            font-size: 20px;
+            color: #D2691E; /* Chocolate */
+            height: 30px; /* Para que no salte el layout */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lila la Labradora</h1>
+    <div id="scoreBoard">Huesos: 0 / 5</div>
+    <div id="messageArea"></div>
+    <canvas id="gameCanvas"></canvas>
+    <div id="controls">
+        <div class="empty-cell"></div>
+        <button id="btnUp" class="control-button">▲</button>
+        <div class="empty-cell"></div>
+        <button id="btnLeft" class="control-button">◀</button>
+        <button id="btnDown" class="control-button">▼</button>
+        <button id="btnRight" class="control-button">▶</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreBoard = document.getElementById('scoreBoard');
+        const messageArea = document.getElementById('messageArea');
+
+        // Configuración del juego
+        const TILE_SIZE = 30; // Tamaño de Lila y los huesos
+        const LILA_SPEED = TILE_SIZE / 2; // Movimiento más suave
+        const NUM_BONES = 5;
+
+        let canvasWidth = 300;
+        let canvasHeight = 300;
+
+        // Ajustar tamaño del canvas para que sea múltiplo de TILE_SIZE y quepa en pantalla
+        function setCanvasSize() {
+            const availableWidth = window.innerWidth * 0.9;
+            const availableHeight = (window.innerHeight - document.getElementById('controls').offsetHeight - 150) * 0.9; // 150 para título, score, etc.
+
+            canvasWidth = Math.floor(Math.min(availableWidth, 450) / TILE_SIZE) * TILE_SIZE;
+            canvasHeight = Math.floor(Math.min(availableHeight, 450) / TILE_SIZE) * TILE_SIZE;
+            
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
+        }
+        setCanvasSize(); // Establecer tamaño inicial
+
+        let lila = {
+            x: Math.floor(canvas.width / 2 / TILE_SIZE) * TILE_SIZE,
+            y: Math.floor(canvas.height / 2 / TILE_SIZE) * TILE_SIZE,
+            width: TILE_SIZE,
+            height: TILE_SIZE,
+            color: '#D2B48C', // Color Tan (Labrador)
+            emoji: '🐕' // Representación de Lila
+        };
+
+        let bones = [];
+        let score = 0;
+        let gameOver = false;
+
+        // --- Inicialización del Juego ---
+        function initGame() {
+            gameOver = false;
+            score = 0;
+            messageArea.textContent = "";
+            updateScoreBoard();
+            lila.x = Math.floor(canvas.width / 2 / TILE_SIZE) * TILE_SIZE;
+            lila.y = Math.floor(canvas.height / 2 / TILE_SIZE) * TILE_SIZE;
+            spawnBones();
+            if (gameLoopId) cancelAnimationFrame(gameLoopId); // Detener bucle anterior si existe
+            gameLoop();
+        }
+
+        function spawnBones() {
+            bones = [];
+            for (let i = 0; i < NUM_BONES; i++) {
+                spawnSingleBone();
+            }
+        }
+
+        function spawnSingleBone() {
+            let boneX, boneY, validPosition;
+            do {
+                validPosition = true;
+                boneX = Math.floor(Math.random() * (canvas.width / TILE_SIZE)) * TILE_SIZE;
+                boneY = Math.floor(Math.random() * (canvas.height / TILE_SIZE)) * TILE_SIZE;
+
+                // Evitar que el hueso aparezca sobre Lila al inicio
+                if (boneX === lila.x && boneY === lila.y) {
+                    validPosition = false;
+                    continue;
+                }
+                // Evitar que los huesos se superpongan
+                for (const b of bones) {
+                    if (b.x === boneX && b.y === boneY) {
+                        validPosition = false;
+                        break;
+                    }
+                }
+            } while (!validPosition);
+
+            bones.push({
+                x: boneX,
+                y: boneY,
+                width: TILE_SIZE,
+                height: TILE_SIZE,
+                color: '#FAFAD2', // LightGoldenRodYellow (Hueso)
+                emoji: '🦴' // Representación del hueso
+            });
+        }
+
+        // --- Controles ---
+        let dx = 0;
+        let dy = 0;
+
+        document.addEventListener('keydown', (e) => {
+            if (gameOver) return;
+            switch (e.key) {
+                case 'ArrowUp': case 'w': dy = -LILA_SPEED; dx = 0; e.preventDefault(); break;
+                case 'ArrowDown': case 's': dy = LILA_SPEED; dx = 0; e.preventDefault(); break;
+                case 'ArrowLeft': case 'a': dx = -LILA_SPEED; dy = 0; e.preventDefault(); break;
+                case 'ArrowRight': case 'd': dx = LILA_SPEED; dy = 0; e.preventDefault(); break;
+            }
+        });
+        
+        // Para controles táctiles
+        const btnUp = document.getElementById('btnUp');
+        const btnDown = document.getElementById('btnDown');
+        const btnLeft = document.getElementById('btnLeft');
+        const btnRight = document.getElementById('btnRight');
+
+        function handleTouchMove(newDx, newDy) {
+            if (gameOver) return;
+            dx = newDx;
+            dy = newDy;
+        }
+
+        btnUp.addEventListener('pointerdown', () => handleTouchMove(0, -LILA_SPEED));
+        btnDown.addEventListener('pointerdown', () => handleTouchMove(0, LILA_SPEED));
+        btnLeft.addEventListener('pointerdown', () => handleTouchMove(-LILA_SPEED, 0));
+        btnRight.addEventListener('pointerdown', () => handleTouchMove(LILA_SPEED, 0));
+
+        // Detener movimiento cuando se suelta el botón táctil (o después de un breve tiempo)
+        // Esto es opcional pero puede mejorar la jugabilidad. Por simplicidad, aquí el movimiento es por "toque".
+        // Si quisieras movimiento continuo mientras se presiona, necesitarías 'pointerup' y manejar estados.
+
+
+        // --- Lógica del Juego ---
+        function update() {
+            if (gameOver) return;
+
+            // Mover a Lila
+            let nextX = lila.x + dx;
+            let nextY = lila.y + dy;
+
+            // Limitar movimiento al canvas
+            if (nextX >= 0 && nextX + lila.width <= canvas.width) {
+                lila.x = nextX;
+            }
+            if (nextY >= 0 && nextY + lila.height <= canvas.height) {
+                lila.y = nextY;
+            }
+            
+            // Resetear dx, dy para que el movimiento sea por pulsación/toque individual
+            dx = 0;
+            dy = 0;
+
+            // Colisiones con huesos
+            for (let i = bones.length - 1; i >= 0; i--) {
+                const bone = bones[i];
+                if (lila.x < bone.x + bone.width &&
+                    lila.x + lila.width > bone.x &&
+                    lila.y < bone.y + bone.height &&
+                    lila.y + lila.height > bone.y) {
+                    bones.splice(i, 1); // Quitar hueso
+                    score++;
+                    updateScoreBoard();
+                    if (bones.length === 0) { // Si era el último hueso, regenerar
+                        spawnSingleBone();
+                    }
+                    if (score === NUM_BONES) {
+                        winGame();
+                    }
+                }
+            }
+        }
+        
+        function updateScoreBoard() {
+            scoreBoard.textContent = `Huesos: ${score} / ${NUM_BONES}`;
+        }
+
+        function winGame() {
+            gameOver = true;
+            messageArea.textContent = "¡Guau! ¡Has ganado!";
+            // Podrías añadir un botón de "Jugar de Nuevo" aquí
+            setTimeout(initGame, 3000); // Reiniciar automáticamente después de 3 segundos
+        }
+
+        // --- Dibujado ---
+        function draw() {
+            // Limpiar canvas
+            ctx.fillStyle = '#90EE90'; // Césped
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Dibujar Lila (con Emoji)
+            ctx.font = `${TILE_SIZE * 0.8}px Arial`; // Tamaño del emoji
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(lila.emoji, lila.x + lila.width / 2, lila.y + lila.height / 2);
+            // ctx.fillStyle = lila.color; // Dibujo alternativo con rectángulo
+            // ctx.fillRect(lila.x, lila.y, lila.width, lila.height);
+
+
+            // Dibujar Huesos (con Emoji)
+            bones.forEach(bone => {
+                ctx.fillText(bone.emoji, bone.x + bone.width / 2, bone.y + bone.height / 2);
+                // ctx.fillStyle = bone.color; // Dibujo alternativo con rectángulo
+                // ctx.fillRect(bone.x, bone.y, bone.width, bone.height);
+            });
+        }
+
+        // --- Bucle Principal del Juego ---
+        let lastTime = 0;
+        const gameSpeedDelay = 100; // ms, controla la velocidad de actualización del juego
+        let gameLoopId;
+
+        function gameLoop(currentTime = 0) {
+            if (!gameOver) {
+                gameLoopId = requestAnimationFrame(gameLoop);
+            }
+            
+            const deltaTime = currentTime - lastTime;
+
+            if (deltaTime > gameSpeedDelay) {
+                lastTime = currentTime - (deltaTime % gameSpeedDelay); // Ajustar para mantener consistencia
+                update();
+                draw();
+            }
+        }
+        
+        // Ajustar canvas si la ventana cambia de tamaño
+        window.addEventListener('resize', () => {
+            setCanvasSize();
+            // Podrías querer reiniciar el juego o reubicar elementos si el tamaño cambia drásticamente
+            // Por simplicidad, aquí solo ajustamos y el juego continúa.
+            // Para una mejor experiencia, podrías llamar a initGame() o adaptar las posiciones.
+            lila.x = Math.min(lila.x, canvas.width - lila.width);
+            lila.y = Math.min(lila.y, canvas.height - lila.height);
+            // Re-posicionar huesos si se salen
+            bones.forEach(bone => {
+                bone.x = Math.min(bone.x, canvas.width - bone.width);
+                bone.y = Math.min(bone.y, canvas.height - bone.height);
+            });
+            draw(); // Redibujar inmediatamente con el nuevo tamaño
+        });
+
+        // Iniciar el juego
+        initGame();
+
+    </script>
+</body>
+</html>
