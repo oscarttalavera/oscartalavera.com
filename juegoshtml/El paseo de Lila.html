@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Vuelo de Lila</title>
+    <style>
+        body {
+            background-color: #222222;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 100vh; margin: 0; font-family: 'Verdana', 'Geneva', sans-serif;
+        }
+
+        #gameTitle {
+            color: #E0E0E0; margin-bottom: 15px; font-size: 2.5em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        #gameContainer {
+            width: 800px; height: 500px;
+            background: linear-gradient(to bottom, #87CEFA 0%, #B0E0E6 65%, #90EE90 65%, #90EE90 100%);
+            border: 5px solid #004d00; position: relative; overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .cloud {
+            position: absolute; background-color: rgba(255, 255, 255, 0.75);
+            border-radius: 50%; opacity: 0.7; pointer-events: none; z-index: 0;
+        }
+        .cloud.c1 { width: 100px; height: 60px; top: 40px; animation: moveCloud1 30s linear infinite; }
+        .cloud.c2 { width: 150px; height: 80px; top: 90px; animation: moveCloud2 40s linear infinite 3s; }
+        .cloud.c3 { width: 80px; height: 50px; top: 60px; animation: moveCloud3 25s linear infinite 7s; }
+        .cloud::before, .cloud::after { content: ''; position: absolute; background-color: rgba(255, 255, 255, 0.75); border-radius: 50%; }
+        .cloud.c1::before { width: 60px; height: 60px; top: -20px; left: 20px; }
+        .cloud.c1::after { width: 70px; height: 70px; top: -10px; right: 15px; }
+        .cloud.c2::before { width: 90px; height: 90px; top: -30px; left: 30px; }
+        .cloud.c2::after { width: 80px; height: 80px; top: -20px; right: 25px; }
+        @keyframes moveCloud1 { from { left: -120px; } to { left: 820px; } }
+        @keyframes moveCloud2 { from { left: -170px; } to { left: 820px; } }
+        @keyframes moveCloud3 { from { left: -100px; } to { left: 820px; } }
+
+        #ground {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 70px;
+            background-color: #556B2F; border-top: 4px solid #4A5D23; z-index: 1;
+        }
+
+        .fence-post {
+            position: absolute; width: 15px; height: 80px; background-color: #F5F5DC;
+            border: 1px solid #D2B48C; bottom: 65px; z-index: 0; box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .fence-post::before {
+            content: ''; position: absolute; top: -5px; left: 50%; transform: translateX(-50%);
+            width: 0; height: 0; border-left: 7.5px solid transparent;
+            border-right: 7.5px solid transparent; border-bottom: 7.5px solid #F5F5DC;
+        }
+
+        .flower {
+            position: absolute; width: 20px; height: 30px; bottom: 70px; z-index: 0;
+        }
+        .flower .stem { width: 3px; height: 20px; background-color: #3CB371; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); }
+        .flower .petal-center { width: 8px; height: 8px; background-color: #FFD700; border-radius: 50%; position: absolute; top: 0; left: 50%; transform: translateX(-50%); }
+        .flower .petal { width: 10px; height: 10px; border-radius: 50% 50% 0 0; position: absolute; top: -3px; left: 50%; transform-origin: bottom center; }
+        .flower .p1 { transform: translateX(-50%) rotate(0deg); } .flower .p2 { transform: translateX(-50%) rotate(72deg); }
+        .flower .p3 { transform: translateX(-50%) rotate(144deg); } .flower .p4 { transform: translateX(-50%) rotate(216deg); }
+        .flower .p5 { transform: translateX(-50%) rotate(288deg); }
+
+        #lila {
+            width: 100px; height: auto; position: absolute; left: 60px;
+            user-select: none; -webkit-user-drag: none; z-index: 10;
+            animation: lilaBobbing 0.35s ease-in-out infinite;
+            /* La imagen se establece en JS para asegurar que se cargue Lila.png */
+        }
+        #lila.jumping, #lila.double-jumping { animation: none; transform: translateY(-2px) rotate(-3deg); }
+        #lila.double-jumping { transform: translateY(-5px) rotate(-7deg) scale(1.05); }
+        @keyframes lilaBobbing {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(1deg); }
+        }
+
+        .game-element { /* Clase base para obstáculos y recompensas */
+            position: absolute;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center bottom; /* Centrar horizontalmente, alinear al fondo */
+            z-index: 5;
+        }
+
+        .obstacle.hydrant {
+            width: 50px; /* Ajusta según tu hydrant.png */
+            height: 75px; /* Ajusta según tu hydrant.png */
+            background-image: url('hydrant.png');
+        }
+        .obstacle.bush {
+            width: 80px; /* Ajusta según tu bush.png */
+            height: 55px; /* Ajusta según tu bush.png */
+            background-image: url('bush.png');
+        }
+
+        .reward {
+            z-index: 6; /* Encima de obstáculos base, pero debajo de Lila si se superponen */
+            animation: rewardFloat 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes rewardFloat {
+            from { transform: translateY(0px); }
+            to   { transform: translateY(-10px); }
+        }
+
+        .reward.bone {
+            width: 45px; /* Ajusta según tu bone.png */
+            height: 30px; /* Ajusta según tu bone.png */
+            background-image: url('bone.png');
+        }
+        .reward.wing {
+            width: 50px; /* Ajusta según tu wing.png */
+            height: 40px; /* Ajusta según tu wing.png */
+            background-image: url('wing.png');
+        }
+
+        #scoreDisplay {
+            font-size: 28px; margin-top: 15px; color: #E0E0E0; font-weight: bold;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.7);
+        }
+
+        #startScreen, #gameOverScreen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(20, 20, 20, 0.75); color: white; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; z-index: 1000; backdrop-filter: blur(4px);
+        }
+        #startScreen h2, #gameOverScreen h2 { font-size: 50px; margin-bottom: 25px; text-shadow: 2px 2px 4px rgba(0,0,0,0.6); }
+        #startScreen p, #gameOverScreen p { font-size: 24px; margin-bottom: 35px; line-height: 1.5; }
+        #startScreen .jump-info { font-size: 18px; color: #cccccc; margin-top: -15px; margin-bottom: 25px; }
+        #gameOverScreen button {
+            padding: 16px 32px; font-size: 20px; color: #FFFFFF; background-color: #337ab7;
+            border: none; border-bottom: 3px solid #286090; border-radius: 7px; cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s; text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+        }
+        #gameOverScreen button:hover { background-color: #286090; }
+        #gameOverScreen button:active { transform: translateY(2px); border-bottom-width: 1px; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <h1 id="gameTitle">El Vuelo de Lila</h1>
+    <div id="gameContainer">
+        <div class="cloud c1"></div> <div class="cloud c2"></div> <div class="cloud c3"></div>
+        <div id="ground"></div>
+        <img id="lila" src="Lila.png" alt="Lila la perrita">
+
+        <div id="startScreen">
+            <h2>El Vuelo de Lila</h2>
+            <p>Presiona ESPACIO o FLECHA ARRIBA<br>para Saltar y Empezar</p>
+            <p class="jump-info">(Puedes hacer un segundo salto en el aire)</p>
+        </div>
+        <div id="gameOverScreen" class="hidden">
+            <h2>¡Juego Terminado!</h2>
+            <p id="finalScore">Puntuación Final: 0</p>
+            <button id="restartButton">Reiniciar Juego</button>
+        </div>
+    </div>
+    <div id="scoreDisplay">Puntuación: 0</div>
+
+    <script>
+        const gameContainer = document.getElementById('gameContainer');
+        const lila = document.getElementById('lila');
+        const ground = document.getElementById('ground');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const startScreen = document.getElementById('startScreen');
+        const gameOverScreen = document.getElementById('gameOverScreen');
+        const finalScoreDisplay = document.getElementById('finalScore');
+        const restartButton = document.getElementById('restartButton');
+
+        const GAME_WIDTH = gameContainer.offsetWidth;
+        const GAME_HEIGHT = gameContainer.offsetHeight;
+        const LILA_WIDTH = 100; // CSS width
+        const LILA_ASPECT_RATIO = 0.75;
+        const LILA_HEIGHT = LILA_WIDTH * LILA_ASPECT_RATIO; // CSS height
+        // lila.style.height se ajusta implícitamente por 'auto' y el src en HTML
+
+        const GROUND_HEIGHT = ground.offsetHeight;
+        const LILA_INITIAL_Y = GROUND_HEIGHT;
+
+        let score = 0;
+        let gameSpeed = 4.5;
+        let gameSpeedIncreaseFactor = 0.0004;
+        let maxGameSpeed = 11;
+
+        let lilaY = LILA_INITIAL_Y;
+        let lilaVelocityY = 0;
+        const GRAVITY = 0.75;
+        const JUMP_STRENGTH = 16.5; // Un poquito más de fuerza para alcanzar recompensas
+        const DOUBLE_JUMP_STRENGTH = 13.5;
+        let jumpCount = 0;
+        let isJumpingState = false;
+
+        let obstacles = [];
+        let rewards = [];
+        let backgroundElements = [];
+
+        let obstacleSpawnTimer = 0;
+        const OBSTACLE_SPAWN_INTERVAL_MIN = 1900; // Ajustar un poco
+        const OBSTACLE_SPAWN_INTERVAL_MAX = 3300;
+        let nextObstacleSpawn = getRandomInterval(OBSTACLE_SPAWN_INTERVAL_MIN, OBSTACLE_SPAWN_INTERVAL_MAX);
+
+        let rewardSpawnTimer = 0;
+        const REWARD_SPAWN_INTERVAL_MIN = 4000; // Menos frecuentes
+        const REWARD_SPAWN_INTERVAL_MAX = 7000;
+        let nextRewardSpawn = getRandomInterval(REWARD_SPAWN_INTERVAL_MIN, REWARD_SPAWN_INTERVAL_MAX);
+
+        let fenceSpawnTimer = 0;
+        const FENCE_POST_WIDTH = 15; // px, from CSS
+        const FENCE_SPACING = 120; // Espacio entre postes
+        let nextFenceSpawn = FENCE_SPACING;
+
+        let flowerSpawnTimer = 0;
+        const FLOWER_INTERVAL_MIN = 2500;
+        const FLOWER_INTERVAL_MAX = 5000;
+        let nextFlowerSpawn = getRandomInterval(FLOWER_INTERVAL_MIN, FLOWER_INTERVAL_MAX);
+
+        let gameStarted = false;
+        let gameOver = false;
+        let gameLoopInterval;
+        let scoreInterval;
+
+        function getRandomInterval(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        function updateLilaVisualState() {
+            lila.style.bottom = `${lilaY}px`;
+            if (isJumpingState && lilaY > LILA_INITIAL_Y) {
+                if (jumpCount === 1) lila.classList.add('jumping');
+                else if (jumpCount === 2) lila.classList.add('double-jumping');
+            } else {
+                lila.classList.remove('jumping', 'double-jumping');
+            }
+        }
+
+        function jump() {
+            if (jumpCount < 2) {
+                isJumpingState = true;
+                jumpCount++;
+                lilaVelocityY = (jumpCount === 1) ? JUMP_STRENGTH : DOUBLE_JUMP_STRENGTH;
+                lila.classList.remove('jumping', 'double-jumping');
+                if (jumpCount === 1) lila.classList.add('jumping');
+                else if (jumpCount === 2) lila.classList.add('double-jumping');
+            }
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (!gameStarted && (event.code === 'Space' || event.key === 'ArrowUp')) {
+                event.preventDefault(); startGame();
+            } else if (gameStarted && !gameOver && (event.code === 'Space' || event.key === 'ArrowUp')) {
+                event.preventDefault(); jump();
+            }
+        });
+        gameContainer.addEventListener('touchstart', (event) => {
+            event.preventDefault();
+            if (!gameStarted) startGame();
+            else if (gameStarted && !gameOver) jump();
+        }, { passive: false });
+
+        function createElement(type, category) { // category: 'obstacle', 'reward'
+            const element = document.createElement('div');
+            element.classList.add('game-element', category, type); // Añade game-element
+            
+            let elWidth, elHeight, elPoints = 0;
+            // Dimensiones y puntos basados en el CSS y tipo
+            if (category === 'obstacle') {
+                if (type === 'hydrant') { elWidth = 50; elHeight = 75; }
+                else if (type === 'bush') { elWidth = 80; elHeight = 55; }
+            } else if (category === 'reward') {
+                if (type === 'bone') { elWidth = 45; elHeight = 30; elPoints = 25; }
+                else if (type === 'wing') { elWidth = 50; elHeight = 40; elPoints = 50; }
+                // Posicionar recompensas en el aire
+                const randomHeightOffset = Math.random() * 80 + 50; // Entre 50px y 130px sobre el suelo
+                element.style.bottom = `${GROUND_HEIGHT + randomHeightOffset}px`;
+            }
+            
+            element.style.width = `${elWidth}px`;
+            element.style.height = `${elHeight}px`;
+            element.style.right = `-${elWidth}px`;
+            element.dataset.points = elPoints;
+
+            if (category === 'obstacle') {
+                 element.style.bottom = `${GROUND_HEIGHT}px`; // Obstáculos siempre en el suelo
+            }
+
+
+            gameContainer.appendChild(element);
+            if (category === 'obstacle') obstacles.push(element);
+            else if (category === 'reward') rewards.push(element);
+        }
+        
+        function createBackgroundElement(type) {
+            const element = document.createElement('div');
+            element.dataset.type = type;
+            let elSpeedMultiplier = 0.5;
+
+            if (type === 'fence-post') {
+                element.classList.add('fence-post');
+                element.style.right = `-${FENCE_POST_WIDTH}px`;
+                elSpeedMultiplier = 0.8;
+            } else if (type === 'flower') {
+                element.classList.add('flower');
+                const stem = document.createElement('div'); stem.className = 'stem';
+                const petalCenter = document.createElement('div'); petalCenter.className = 'petal-center';
+                element.appendChild(stem); element.appendChild(petalCenter);
+                ['p1','p2','p3','p4','p5'].forEach(pClass => {
+                    const petal = document.createElement('div'); petal.className = `petal ${pClass}`;
+                    const colors = ['#FF69B4', '#FFFFE0', '#ADD8E6', '#FFB6C1', '#DA70D6'];
+                    petal.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    element.appendChild(petal);
+                });
+                element.style.right = '-30px';
+                element.style.bottom = `${GROUND_HEIGHT + Math.random() * 10 - 5}px`;
+                elSpeedMultiplier = 0.4;
+            }
+            element.dataset.speedMultiplier = elSpeedMultiplier;
+            gameContainer.insertBefore(element, lila);
+            backgroundElements.push(element);
+        }
+
+        function updateGameElements(elementsArray, isObstacleOrReward) {
+            for (let i = elementsArray.length - 1; i >= 0; i--) {
+                const element = elementsArray[i];
+                let currentRight = parseFloat(element.style.right);
+                
+                let speed = gameSpeed;
+                // Los elementos de fondo (no obstáculos/recompensas) pueden tener su propia velocidad
+                if (!isObstacleOrReward && element.dataset.speedMultiplier) {
+                    speed *= parseFloat(element.dataset.speedMultiplier);
+                }
+                currentRight += speed;
+                element.style.right = `${currentRight}px`;
+
+                if (isObstacleOrReward && checkCollision(lila, element)) {
+                    if (element.classList.contains('obstacle')) {
+                        endGame();
+                        return; // Termina el juego y el bucle de actualización para este frame
+                    } else if (element.classList.contains('reward')) {
+                        score += parseInt(element.dataset.points) || 0;
+                        updateScoreDisplay();
+                        element.remove();
+                        elementsArray.splice(i, 1);
+                        continue; // Continúa con otros elementos
+                    }
+                }
+
+                const elementWidth = parseFloat(element.style.width);
+                if (currentRight > GAME_WIDTH + elementWidth + 50) {
+                    element.remove();
+                    elementsArray.splice(i, 1);
+                }
+            }
+        }
+
+        function checkCollision(element1, element2) {
+            const rect1 = element1.getBoundingClientRect();
+            const rect2 = element2.getBoundingClientRect();
+            const lilaToleranceVertical = LILA_HEIGHT * 0.15; // Reducir un poco para que sea más fácil coger recompensas
+            const lilaToleranceHorizontal = LILA_WIDTH * 0.20;
+
+            const lilaEffectiveRect = {
+                top: rect1.top + lilaToleranceVertical,
+                bottom: rect1.bottom - lilaToleranceVertical,
+                left: rect1.left + lilaToleranceHorizontal,
+                right: rect1.right - lilaToleranceHorizontal,
+            };
+            
+            const itemTolerance = 2; // Pequeña tolerancia para los items
+
+            return !(
+                lilaEffectiveRect.right < rect2.left + itemTolerance ||
+                lilaEffectiveRect.left > rect2.right - itemTolerance ||
+                lilaEffectiveRect.bottom < rect2.top + itemTolerance ||
+                lilaEffectiveRect.top > rect2.bottom - itemTolerance
+            );
+        }
+
+        function updateScoreDisplay() {
+            scoreDisplay.textContent = `Puntuación: ${Math.floor(score)}`;
+        }
+
+        function showGameOverScreen() {
+            finalScoreDisplay.textContent = `Puntuación Final: ${Math.floor(score)}`;
+            gameOverScreen.classList.remove('hidden');
+        }
+
+        function resetGame() {
+            gameOver = false; gameStarted = false; score = 0;
+            gameSpeed = 4.5; lilaY = LILA_INITIAL_Y; lilaVelocityY = 0;
+            jumpCount = 0; isJumpingState = false;
+
+            [obstacles, rewards, backgroundElements].forEach(arr => {
+                arr.forEach(el => el.remove());
+                arr.length = 0; // Vaciar array
+            });
+
+            updateLilaVisualState(); updateScoreDisplay();
+            gameOverScreen.classList.add('hidden'); startScreen.classList.remove('hidden');
+            lila.style.animationPlayState = 'paused';
+        }
+        
+        function startGame() {
+            if (gameStarted) return;
+            resetGame(); gameStarted = true;
+            startScreen.classList.add('hidden'); lila.style.animationPlayState = 'running';
+
+            const now = Date.now();
+            obstacleSpawnTimer = now;
+            nextObstacleSpawn = getRandomInterval(OBSTACLE_SPAWN_INTERVAL_MIN, OBSTACLE_SPAWN_INTERVAL_MAX);
+            rewardSpawnTimer = now;
+            nextRewardSpawn = getRandomInterval(REWARD_SPAWN_INTERVAL_MIN, REWARD_SPAWN_INTERVAL_MAX);
+            fenceSpawnTimer = now;
+            nextFenceSpawn = FENCE_SPACING / (gameSpeed / 4.5);
+            flowerSpawnTimer = now;
+            nextFlowerSpawn = getRandomInterval(FLOWER_INTERVAL_MIN, FLOWER_INTERVAL_MAX);
+
+            if (gameLoopInterval) clearInterval(gameLoopInterval);
+            gameLoopInterval = setInterval(gameLoop, 1000 / 60);
+            if (scoreInterval) clearInterval(scoreInterval);
+            scoreInterval = setInterval(() => {
+                if (!gameOver && gameStarted) {
+                    score += gameSpeed / 15; updateScoreDisplay();
+                }
+            }, 100);
+        }
+
+        function endGame() {
+            gameOver = true; gameStarted = false;
+            showGameOverScreen(); lila.style.animationPlayState = 'paused';
+        }
+
+        function gameLoop() {
+            if (gameOver) return;
+
+            lilaVelocityY -= GRAVITY; lilaY += lilaVelocityY;
+            if (lilaY <= LILA_INITIAL_Y) {
+                lilaY = LILA_INITIAL_Y; lilaVelocityY = 0; jumpCount = 0; isJumpingState = false;
+            }
+            updateLilaVisualState();
+
+            const currentTime = Date.now();
+
+            // Spawning
+            if (currentTime - obstacleSpawnTimer > nextObstacleSpawn) {
+                createElement(Math.random() < 0.5 ? 'hydrant' : 'bush', 'obstacle');
+                obstacleSpawnTimer = currentTime;
+                let dMin = Math.max(800, OBSTACLE_SPAWN_INTERVAL_MIN * (4.5 / gameSpeed));
+                let dMax = Math.max(1500, OBSTACLE_SPAWN_INTERVAL_MAX * (4.5 / gameSpeed));
+                nextObstacleSpawn = getRandomInterval(dMin, dMax);
+            }
+            if (currentTime - rewardSpawnTimer > nextRewardSpawn) {
+                createElement(Math.random() < 0.6 ? 'bone' : 'wing', 'reward');
+                rewardSpawnTimer = currentTime;
+                let dMin = Math.max(2000, REWARD_SPAWN_INTERVAL_MIN * (4.5 / gameSpeed));
+                let dMax = Math.max(3500, REWARD_SPAWN_INTERVAL_MAX * (4.5 / gameSpeed));
+                nextRewardSpawn = getRandomInterval(dMin, dMax);
+            }
+            if (currentTime - fenceSpawnTimer > nextFenceSpawn) {
+                createBackgroundElement('fence-post');
+                fenceSpawnTimer = currentTime;
+                nextFenceSpawn = FENCE_SPACING / (gameSpeed / 4.5);
+            }
+            if (currentTime - flowerSpawnTimer > nextFlowerSpawn) {
+                createBackgroundElement('flower');
+                flowerSpawnTimer = currentTime;
+                let dMin = Math.max(1000, FLOWER_INTERVAL_MIN * (4.5 / gameSpeed));
+                let dMax = Math.max(2000, FLOWER_INTERVAL_MAX * (4.5 / gameSpeed));
+                nextFlowerSpawn = getRandomInterval(dMin, dMax);
+            }
+
+            updateGameElements(obstacles, true);
+            updateGameElements(rewards, true);
+            updateGameElements(backgroundElements, false);
+
+            if (gameSpeed < maxGameSpeed) gameSpeed += gameSpeedIncreaseFactor;
+            if (gameStarted) lila.style.animationPlayState = 'running';
+        }
+
+        restartButton.addEventListener('click', resetGame);
+        lilaY = LILA_INITIAL_Y; updateLilaVisualState(); updateScoreDisplay();
+        lila.style.animationPlayState = 'paused';
+    </script>
+</body>
+</html>
