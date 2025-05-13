@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Paseo de Lila</title>
+    <title>El Paseo de Lila - Mejorado</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+        @font-face {
+            font-family: 'GameFont';
+            src: url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+            font-display: swap;
+        }
         
         :root {
-            --sky-color: #87CEFA;
-            --grass-color: #90EE90;
-            --ground-color: #556B2F;
-            --text-color: #E0E0E0;
-            --accent-color: #FF69B4;
-            --button-color: #337ab7;
-            --button-hover: #286090;
+            --primary-color: #4a7aff;
+            --secondary-color: #ff7a4a;
+            --background-dark: #1a1a2e;
+            --text-light: #f0f0f0;
+            --accent-color: #ffce00;
         }
         
         * {
@@ -24,208 +26,198 @@
         }
         
         body {
-            background-color: #222222;
-            background-image: radial-gradient(circle, #333333 0%, #1a1a1a 100%);
+            background-color: var(--background-dark);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            font-family: 'Nunito', sans-serif;
-            color: var(--text-color);
+            font-family: 'GameFont', 'Nunito', 'Geneva', sans-serif;
             overflow: hidden;
-            transition: background-color 0.5s;
+            touch-action: manipulation;
         }
         
-        .container {
+        #gameWrapper {
             position: relative;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            background-color: rgba(20, 20, 20, 0.5);
-            backdrop-filter: blur(10px);
-            margin: 20px;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-
+        
         #gameTitle {
+            color: var(--text-light);
             margin-bottom: 15px;
             font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-            background: linear-gradient(to right, var(--accent-color), var(--button-color));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(74, 122, 255, 0.7), 0 0 20px rgba(74, 122, 255, 0.5);
+            letter-spacing: 2px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
         }
-
+        
         #gameContainer {
-            width: 800px;
-            height: 500px;
-            background: linear-gradient(to bottom, var(--sky-color) 0%, #B0E0E6 65%, var(--grass-color) 65%, var(--grass-color) 100%);
+            width: 100%;
+            height: 0;
+            padding-bottom: 62.5%; /* Mantiene la relación de aspecto 8:5 (800:500) */
+            background: linear-gradient(to bottom, #87CEFA 0%, #B0E0E6 65%, #90EE90 65%, #90EE90 100%);
+            border-radius: 15px;
             border: 5px solid #004d00;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 0 30px rgba(0,0,0,0.6);
-            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+            max-width: 800px;
+            max-height: 500px;
         }
         
-        /* Sistema de Parallax */
+        @media (min-width: 800px) {
+            #gameContainer {
+                width: 800px;
+                height: 500px;
+                padding-bottom: 0;
+            }
+        }
+        
         .parallax-layer {
             position: absolute;
             width: 100%;
             height: 100%;
-            overflow: hidden;
+            top: 0;
+            left: 0;
+            pointer-events: none;
         }
         
-        #far-background {
-            z-index: 0;
-        }
-        
-        #mid-background {
-            z-index: 1;
-        }
-        
-        #foreground {
-            z-index: 2;
-        }
-        
-        .mountain {
+        .mountain-bg {
             position: absolute;
             bottom: 70px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #6a9172 0%, #4A5D23 100%);
-            opacity: 0.4;
-            transform-origin: bottom center;
+            width: 1200px;
+            height: 150px;
+            background-image: url('mountain_bg.png');
+            background-repeat: repeat-x;
+            background-position: 0 bottom;
+            background-size: auto 100%;
+            transform: translateZ(-10px) scale(1.1);
+            z-index: 0;
+            opacity: 0.7;
         }
         
-        .mountain.large {
-            width: 300px;
-            height: 200px;
-            left: 100px;
-        }
-        
-        .mountain.medium {
-            width: 200px;
-            height: 130px;
-            left: 350px;
-        }
-        
-        .mountain.small {
-            width: 150px;
-            height: 100px;
-            left: 600px;
-        }
-
         .cloud {
             position: absolute;
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: rgba(255, 255, 255, 0.75);
             border-radius: 50%;
-            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
+            opacity: 0.8;
+            pointer-events: none;
             z-index: 0;
+            will-change: transform;
         }
         
-        .cloud.c1 { 
-            width: 100px; 
-            height: 60px; 
-            top: 40px; 
-            animation: moveCloud1 30s linear infinite; 
+        .cloud.c1 {
+            width: 100px;
+            height: 60px;
+            top: 40px;
+            animation: moveCloud1 30s linear infinite;
         }
         
-        .cloud.c2 { 
-            width: 150px; 
-            height: 80px; 
-            top: 90px; 
-            animation: moveCloud2 40s linear infinite 3s; 
+        .cloud.c2 {
+            width: 150px;
+            height: 80px;
+            top: 90px;
+            animation: moveCloud2 40s linear infinite 3s;
         }
         
-        .cloud.c3 { 
-            width: 80px; 
-            height: 50px; 
-            top: 60px; 
-            animation: moveCloud3 25s linear infinite 7s; 
+        .cloud.c3 {
+            width: 80px;
+            height: 50px;
+            top: 60px;
+            animation: moveCloud3 25s linear infinite 7s;
         }
         
-        .cloud::before, .cloud::after { 
-            content: ''; 
-            position: absolute; 
-            background-color: rgba(255, 255, 255, 0.85); 
-            border-radius: 50%; 
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.75);
+            border-radius: 50%;
         }
         
-        .cloud.c1::before { 
-            width: 60px; 
-            height: 60px; 
-            top: -20px; 
-            left: 20px; 
+        .cloud.c1::before {
+            width: 60px;
+            height: 60px;
+            top: -20px;
+            left: 20px;
         }
         
-        .cloud.c1::after { 
-            width: 70px; 
-            height: 70px; 
-            top: -10px; 
-            right: 15px; 
+        .cloud.c1::after {
+            width: 70px;
+            height: 70px;
+            top: -10px;
+            right: 15px;
         }
         
-        .cloud.c2::before { 
-            width: 90px; 
-            height: 90px; 
-            top: -30px; 
-            left: 30px; 
+        .cloud.c2::before {
+            width: 90px;
+            height: 90px;
+            top: -30px;
+            left: 30px;
         }
         
-        .cloud.c2::after { 
-            width: 80px; 
-            height: 80px; 
-            top: -20px; 
-            right: 25px; 
+        .cloud.c2::after {
+            width: 80px;
+            height: 80px;
+            top: -20px;
+            right: 25px;
         }
         
-        @keyframes moveCloud1 { 
-            from { left: -120px; } 
-            to { left: 820px; } 
+        @keyframes moveCloud1 {
+            from {
+                left: -120px;
+            }
+            to {
+                left: 100%;
+            }
         }
         
-        @keyframes moveCloud2 { 
-            from { left: -170px; } 
-            to { left: 820px; } 
+        @keyframes moveCloud2 {
+            from {
+                left: -170px;
+            }
+            to {
+                left: 100%;
+            }
         }
         
-        @keyframes moveCloud3 { 
-            from { left: -100px; } 
-            to { left: 820px; } 
+        @keyframes moveCloud3 {
+            from {
+                left: -100px;
+            }
+            to {
+                left: 100%;
+            }
         }
-
+        
         #ground {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
             height: 70px;
-            background-color: var(--ground-color);
+            background-color: #556B2F;
             border-top: 4px solid #4A5D23;
             z-index: 1;
-            background-image: 
-                linear-gradient(90deg, rgba(0,0,0,0.1) 0px, transparent 1px),
-                linear-gradient(0deg, rgba(0,0,0,0.1) 0px, transparent 1px);
-            background-size: 20px 20px;
-            background-position: center;
+            background-image: repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(255, 255, 255, 0.07) 50px, rgba(255, 255, 255, 0.07) 100px);
         }
-
+        
         .flower {
             position: absolute;
             width: 20px;
             height: 30px;
             bottom: 70px;
-            z-index: 1;
-            transform-origin: bottom center;
-            transition: transform 0.2s;
+            z-index: 0;
+            will-change: transform;
         }
         
-        .flower:hover {
-            transform: scale(1.1) rotate(5deg);
-        }
-        
-        .flower .stem { 
+        .flower .stem {
             width: 3px;
             height: 20px;
             background-color: #3CB371;
@@ -233,10 +225,9 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
         
-        .flower .petal-center { 
+        .flower .petal-center {
             width: 8px;
             height: 8px;
             background-color: #FFD700;
@@ -245,10 +236,10 @@
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+            z-index: 2;
         }
         
-        .flower .petal { 
+        .flower .petal {
             width: 10px;
             height: 10px;
             border-radius: 50% 50% 0 0;
@@ -256,17 +247,29 @@
             top: -3px;
             left: 50%;
             transform-origin: bottom center;
-            filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.3));
-            transition: transform 0.2s;
+            z-index: 1;
         }
         
-        .flower .p1 { transform: translateX(-50%) rotate(0deg); }
-        .flower .p2 { transform: translateX(-50%) rotate(72deg); }
-        .flower .p3 { transform: translateX(-50%) rotate(144deg); }
-        .flower .p4 { transform: translateX(-50%) rotate(216deg); }
-        .flower .p5 { transform: translateX(-50%) rotate(288deg); }
-
-        /* Lila (personaje principal) */
+        .flower .p1 {
+            transform: translateX(-50%) rotate(0deg);
+        }
+        
+        .flower .p2 {
+            transform: translateX(-50%) rotate(72deg);
+        }
+        
+        .flower .p3 {
+            transform: translateX(-50%) rotate(144deg);
+        }
+        
+        .flower .p4 {
+            transform: translateX(-50%) rotate(216deg);
+        }
+        
+        .flower .p5 {
+            transform: translateX(-50%) rotate(288deg);
+        }
+        
         #lila {
             width: 100px;
             height: auto;
@@ -275,68 +278,72 @@
             user-select: none;
             -webkit-user-drag: none;
             z-index: 10;
-            transition: transform 0.1s ease-out;
-            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
-        }
-        
-        /* Estados de animación para Lila */
-        #lila.running {
-            animation: lilaRunning 0.35s ease-in-out infinite;
+            transform-origin: bottom center;
+            will-change: transform;
+            animation: lilaBobbing 0.35s ease-in-out infinite;
         }
         
         #lila.jumping {
             animation: none;
-            transform: translateY(-5px) rotate(-3deg) scale(1.02);
+            transform: translateY(-2px) rotate(-3deg);
         }
         
         #lila.double-jumping {
             animation: none;
-            transform: translateY(-8px) rotate(-7deg) scale(1.05);
+            transform: translateY(-5px) rotate(-7deg) scale(1.05);
         }
         
-        #lila.hurt {
-            animation: lilaHurt 0.5s ease-in-out;
-            filter: drop-shadow(2px 4px 6px rgba(255,0,0,0.6));
+        #lila.dash {
+            animation: lilaDashing 0.2s ease-in-out;
+            transform: scale(1.1) translateY(-5px);
         }
         
-        #lila.invulnerable {
-            animation: lilaInvulnerable 0.8s ease-in-out infinite;
+        @keyframes lilaBobbing {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-5px) rotate(1deg);
+            }
         }
         
-        @keyframes lilaRunning {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-5px) rotate(1deg) scale(1.01); }
-            100% { transform: translateY(0) rotate(0deg); }
+        @keyframes lilaDashing {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-5px) rotate(-3deg) scale(1.2);
+            }
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
         }
         
-        @keyframes lilaHurt {
-            0% { transform: translateX(0) rotate(0); filter: brightness(1); }
-            15% { transform: translateX(-5px) rotate(-5deg); filter: brightness(1.5) hue-rotate(30deg); }
-            30% { transform: translateX(5px) rotate(5deg); filter: brightness(1.5) hue-rotate(-30deg); }
-            45% { transform: translateX(-3px) rotate(-3deg); filter: brightness(1.5) hue-rotate(30deg); }
-            60% { transform: translateX(3px) rotate(3deg); filter: brightness(1.5) hue-rotate(-30deg); }
-            75% { transform: translateX(-1px) rotate(-1deg); filter: brightness(1.2) hue-rotate(15deg); }
-            100% { transform: translateX(0) rotate(0); filter: brightness(1); }
+        .lila-trail {
+            position: absolute;
+            bottom: 70px;
+            z-index: 9;
+            opacity: 0.5;
+            pointer-events: none;
+            transform-origin: bottom center;
+            animation: fadeOut 0.5s forwards;
         }
         
-        @keyframes lilaInvulnerable {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+            }
         }
-
-        /* Elementos del juego */
+        
         .game-element {
             position: absolute;
             background-repeat: no-repeat;
             background-size: contain;
             background-position: center bottom;
             z-index: 5;
-            transition: transform 0.2s;
-            filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.3));
+            will-change: transform;
         }
-
-        /* Obstáculos */
+        
         .obstacle.hydrant {
             width: 60px;
             height: 90px;
@@ -349,24 +356,20 @@
             background-image: url('bush.png');
         }
         
-        /* Nueva clase de obstáculo: roca */
-        .obstacle.rock {
-            width: 70px;
-            height: 60px;
-            background-image: url('rock.png');
-        }
-
-        /* Recompensas */
         .reward {
             z-index: 6;
             animation: rewardFloat 1.5s ease-in-out infinite alternate;
         }
         
         @keyframes rewardFloat {
-            from { transform: translateY(0px); }
-            to   { transform: translateY(-10px); }
+            from {
+                transform: translateY(0px);
+            }
+            to {
+                transform: translateY(-10px);
+            }
         }
-
+        
         .reward.bone {
             width: 60px;
             height: 40px;
@@ -379,99 +382,264 @@
             background-image: url('wing.png');
         }
         
-        /* Nuevos power-ups */
-        .power-up {
+        .reward.coin {
+            width: 40px;
+            height: 40px;
+            background-image: url('coin.png');
+            animation: coinSpin 1s linear infinite, rewardFloat 1.5s ease-in-out infinite alternate;
+        }
+        
+        @keyframes coinSpin {
+            from {
+                transform: rotateY(0deg);
+            }
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+        
+        .powerup {
             z-index: 6;
-            animation: powerUpGlow 2s ease-in-out infinite alternate;
+            width: 50px;
+            height: 50px;
+            animation: powerupPulse 1.5s ease-in-out infinite;
         }
         
-        @keyframes powerUpGlow {
-            from { 
-                transform: translateY(0px); 
-                filter: drop-shadow(0 0 5px rgba(255,255,255,0.5)); 
+        .powerup.shield {
+            background-image: url('power_shield.png');
+        }
+        
+        .powerup.magnet {
+            background-image: url('power_magnet.png');
+        }
+        
+        .powerup.clock {
+            background-image: url('power_clock.png');
+        }
+        
+        @keyframes powerupPulse {
+            0% {
+                transform: scale(1) translateY(0);
             }
-            to { 
-                transform: translateY(-10px); 
-                filter: drop-shadow(0 0 20px rgba(255,255,255,0.9)); 
+            50% {
+                transform: scale(1.1) translateY(-5px);
+            }
+            100% {
+                transform: scale(1) translateY(0);
             }
         }
         
-        .power-up.shield {
-            width: 50px;
-            height: 50px;
-            background-image: url('shield.png');
+        .collected {
+            animation: collect 0.5s ease-out forwards !important;
         }
         
-        .power-up.magnet {
-            width: 50px;
-            height: 50px;
-            background-image: url('magnet.png');
+        @keyframes collect {
+            to {
+                transform: scale(0.1) translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
         }
         
-        .power-up.slowdown {
-            width: 50px;
-            height: 50px;
-            background-image: url('clock.png');
-        }
-
-        /* Interfaz de usuario */
-        #scoreDisplay {
-            font-size: 28px;
-            margin-top: 15px;
-            color: var(--text-color);
-            font-weight: bold;
-            text-shadow: 1px 1px 1px rgba(0,0,0,0.7);
-            display: flex;
-            justify-content: space-between;
-            width: 800px;
+        .hit-effect {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,0,0,0.7) 0%, rgba(255,0,0,0) 70%);
+            z-index: 15;
+            animation: hitExpand 0.5s ease-out forwards;
+            pointer-events: none;
         }
         
-        #livesDisplay {
-            display: flex;
-            align-items: center;
+        @keyframes hitExpand {
+            from {
+                transform: scale(0.5);
+                opacity: 0.8;
+            }
+            to {
+                transform: scale(2);
+                opacity: 0;
+            }
         }
         
-        .life-icon {
-            width: 30px;
-            height: 30px;
-            margin-left: 5px;
-            filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.5));
-            transition: transform 0.3s, opacity 0.3s;
+        .powerup-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 20;
         }
         
-        .life-icon.lost {
-            opacity: 0.3;
-            filter: grayscale(100%) drop-shadow(1px 1px 2px rgba(0,0,0,0.5));
+        .shield-effect {
+            border-radius: 50%;
+            border: 3px solid rgba(74, 122, 255, 0.7);
+            box-shadow: 0 0 20px rgba(74, 122, 255, 0.5);
+            animation: shieldPulse 1s infinite;
         }
         
-        /* Power-up activo icon */
-        #activePowerUps {
+        @keyframes shieldPulse {
+            0%, 100% {
+                opacity: 0.7;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.9;
+                transform: scale(1.05);
+            }
+        }
+        
+        .magnet-effect {
+            border: 2px dashed rgba(255, 122, 74, 0.7);
+            border-radius: 50%;
+            animation: magnetRotate 3s linear infinite;
+        }
+        
+        @keyframes magnetRotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .slow-motion {
+            filter: sepia(0.2) hue-rotate(180deg);
+        }
+        
+        #hud {
             position: absolute;
             top: 10px;
             left: 10px;
             display: flex;
+            align-items: center;
+            gap: 20px;
             z-index: 100;
         }
         
-        .active-power-up {
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
-            position: relative;
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.9));
+        #livesContainer {
+            display: flex;
+            gap: 5px;
         }
         
-        .power-up-timer {
+        .life {
+            width: 30px;
+            height: 30px;
+            background-image: url('heart.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        
+        .life.lost {
+            opacity: 0.3;
+            filter: grayscale(100%);
+        }
+        
+        #scoreDisplay {
+            font-size: 24px;
+            color: var(--text-light);
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        #scoreCurrent {
+            color: var(--text-light);
+        }
+        
+        #highScore {
+            color: var(--accent-color);
+            font-size: 0.8em;
+        }
+        
+        #gameControls {
+            position: absolute;
+            bottom: 80px;
+            right: 10px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            backdrop-filter: blur(4px);
+        }
+        
+        .control-btn.pause {
+            background-image: url('pause_button.png');
+            background-size: 50% 50%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .control-btn.jump:after {
+            content: '↑';
+            font-size: 24px;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+        
+        .control-btn.dash:after {
+            content: '→';
+            font-size: 24px;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+        
+        @media (max-width: 600px) {
+            .control-btn {
+                width: 60px;
+                height: 60px;
+            }
+            
+            #gameControls {
+                right: auto;
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 100px;
+            }
+            
+            #hud {
+                top: 50px;
+            }
+        }
+        
+        .control-btn:active {
+            transform: scale(0.95);
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        #touchControls {
             position: absolute;
             bottom: 0;
             left: 0;
-            height: 4px;
-            background-color: rgba(255, 255, 255, 0.8);
-            transition: width 0.1s linear;
+            width: 100%;
+            height: 70%;
+            display: flex;
+            pointer-events: none;
+            z-index: 90;
         }
         
-        /* Pantallas del juego */
-        .game-screen {
+        #leftTouch, #rightTouch {
+            width: 50%;
+            height: 100%;
+            pointer-events: auto;
+        }
+        
+        #startScreen, #gameOverScreen, #pauseScreen {
             position: absolute;
             top: 0;
             left: 0;
@@ -485,1330 +653,1303 @@
             justify-content: center;
             text-align: center;
             z-index: 1000;
-            backdrop-filter: blur(5px);
-            opacity: 0;
-            transition: opacity 0.5s;
+            backdrop-filter: blur(4px);
         }
         
-        .game-screen.visible {
-            opacity: 1;
-        }
-        
-        .game-screen h2 {
+        #startScreen h2, #gameOverScreen h2, #pauseScreen h2 {
             font-size: 50px;
             margin-bottom: 25px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-            animation: titlePulse 2s ease-in-out infinite;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+            color: var(--text-light);
         }
         
-        @keyframes titlePulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        .game-screen p {
+        #startScreen p, #gameOverScreen p, #pauseScreen p {
             font-size: 24px;
             margin-bottom: 35px;
             line-height: 1.5;
+            color: var(--text-light);
+            max-width: 80%;
         }
         
-        .jump-info {
+        #startScreen .jump-info {
             font-size: 18px;
             color: #cccccc;
             margin-top: -15px;
             margin-bottom: 25px;
         }
         
-        /* Botones */
-        .game-button {
+        #gameOverScreen button, #pauseScreen button, #startScreen button {
             padding: 16px 32px;
             font-size: 20px;
             color: #FFFFFF;
-            background-color: var(--button-color);
+            background-color: var(--primary-color);
             border: none;
-            border-bottom: 3px solid var(--button-hover);
+            border-bottom: 3px solid #2a5ac7;
             border-radius: 7px;
             cursor: pointer;
-            transition: all 0.2s;
-            text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+            transition: background-color 0.2s, transform 0.1s;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
             margin: 10px;
-            font-family: 'Nunito', sans-serif;
-            position: relative;
-            overflow: hidden;
         }
         
-        .game-button:hover {
-            background-color: var(--button-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        #gameOverScreen button:hover, #pauseScreen button:hover, #startScreen button:hover {
+            background-color: #3a6ae7;
         }
         
-        .game-button:active {
-            transform: translateY(1px);
+        #gameOverScreen button:active, #pauseScreen button:active, #startScreen button:active {
+            transform: translateY(2px);
             border-bottom-width: 1px;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
         }
         
-        .game-button::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.1);
-            transform: translateX(-100%);
-            transition: transform 0.3s;
-        }
-        
-        .game-button:hover::after {
-            transform: translateX(0);
-        }
-        
-        /* Historial de puntuaciones */
-        .score-history {
-            margin-top: 20px;
-            background-color: rgba(0,0,0,0.3);
-            padding: 15px;
-            border-radius: 10px;
-            width: 80%;
-            max-height: 150px;
-            overflow-y: auto;
-            font-size: 18px;
-        }
-        
-        .score-history h3 {
-            margin-bottom: 10px;
-            color: var(--accent-color);
-        }
-        
-        .score-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-            padding: 5px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .high-score {
-            color: gold;
-            font-weight: bold;
-        }
-        
-        /* Efectos visuales */
-        .collect-effect {
-            position: absolute;
-            pointer-events: none;
-            z-index: 1000;
-            font-size: 24px;
-            font-weight: bold;
-            color: gold;
-            text-shadow: 0 0 5px black;
-            animation: collectEffect 1s ease-out forwards;
-        }
-        
-        @keyframes collectEffect {
-            0% { 
-                transform: scale(0.5) translateY(0); 
-                opacity: 0;
-            }
-            50% { 
-                transform: scale(1.5) translateY(-20px); 
-                opacity: 1;
-            }
-            100% { 
-                transform: scale(1) translateY(-40px); 
-                opacity: 0;
-            }
-        }
-        
-        /* Responsive design */
-        @media (max-width: 850px) {
-            #gameContainer, #scoreDisplay {
-                width: 95vw;
-                max-width: 800px;
-            }
-            
-            #gameContainer {
-                height: calc(95vw * 0.625); /* Mantener relación de aspecto */
-                max-height: 500px;
-            }
-            
-            #gameTitle {
-                font-size: 2em;
-            }
-        }
-        
-        /* Utilidades */
         .hidden {
             display: none !important;
         }
         
-        /* Cambio de tamaño de las recompensas cuando el imán está activo */
-        .reward.attracted {
-            transform: scale(1.2);
-            filter: brightness(1.3);
-            transition: all 0.5s;
-        }
-        
-        /* Puntuación de bonus que aparece al recoger recompensas */
-        .bonus-score {
+        #effectMessages {
             position: absolute;
-            color: white;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 36px;
             font-weight: bold;
-            font-size: 20px;
-            text-shadow: 0 0 5px black;
-            animation: bonusScoreAnim 1.5s ease-out forwards;
-            z-index: 1000;
+            color: white;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+            z-index: 50;
+            pointer-events: none;
+            opacity: 0;
+            text-align: center;
         }
         
-        @keyframes bonusScoreAnim {
-            0% { 
-                transform: translateY(0) scale(0.8); 
-                opacity: 0; 
+        #effectMessages.show {
+            animation: showMessage 2s ease-out forwards;
+        }
+        
+        @keyframes showMessage {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
             }
-            20% { 
-                transform: translateY(-20px) scale(1.2); 
-                opacity: 1; 
+            20% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.2);
             }
-            80% { 
-                opacity: 1; 
+            80% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
             }
-            100% { 
-                transform: translateY(-40px) scale(1); 
-                opacity: 0; 
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+        }
+        
+        /* Animaciones para pantallas de mensaje */
+        .screen-fade-in {
+            animation: screenFadeIn 0.5s ease-out forwards;
+        }
+        
+        .screen-fade-out {
+            animation: screenFadeOut 0.5s ease-out forwards;
+        }
+        
+        @keyframes screenFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes screenFadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div id="gameWrapper">
         <h1 id="gameTitle">El Paseo de Lila</h1>
+        
         <div id="gameContainer">
-            <!-- Capas de parallax -->
-            <div id="far-background" class="parallax-layer">
-                <div class="mountain large"></div>
-                <div class="mountain medium"></div>
-                <div class="mountain small"></div>
-            </div>
-            
-            <div id="mid-background" class="parallax-layer">
+            <div class="parallax-layer" id="backgroundLayer">
+                <div class="mountain-bg"></div>
                 <div class="cloud c1"></div>
                 <div class="cloud c2"></div>
                 <div class="cloud c3"></div>
             </div>
             
-            <div id="foreground" class="parallax-layer">
-                <div id="ground"></div>
-                <img id="lila" src="Lila.png" alt="Lila la perrita">
-                
-                <!-- Sistema de power-ups activos -->
-                <div id="activePowerUps"></div>
-            </div>
-
-            <!-- Pantallas del juego -->
-            <div id="startScreen" class="game-screen visible">
-                <h2>El Paseo de Lila</h2>
-                <p>Ayuda a Lila a recoger premios y evitar obstáculos en su paseo</p>
-                <p class="jump-info">Presiona ESPACIO o FLECHA ARRIBA para Saltar<br>(Puedes hacer un segundo salto en el aire)</p>
-                <button id="startButton" class="game-button">¡Comenzar!</button>
-                
-                <!-- Solo se muestra si hay puntuaciones guardadas -->
-                <div id="highScores" class="score-history hidden">
-                    <h3>Mejores Puntuaciones</h3>
-                    <div id="highScoresList"></div>
+            <div id="ground"></div>
+            <img id="lila" src="Lila.png" alt="Lila la perrita">
+            
+            <div id="hud">
+                <div id="livesContainer">
+                    <div class="life"></div>
+                    <div class="life"></div>
+                    <div class="life"></div>
                 </div>
             </div>
             
-            <div id="gameOverScreen" class="game-screen">
+            <div id="gameControls" class="hidden">
+                <div class="control-btn pause" id="pauseBtn"></div>
+                <div class="control-btn dash" id="dashBtn"></div>
+                <div class="control-btn jump" id="jumpBtn"></div>
+            </div>
+            
+            <div id="touchControls">
+                <div id="leftTouch"></div>
+                <div id="rightTouch"></div>
+            </div>
+            
+            <div id="effectMessages"></div>
+            
+            <div id="startScreen" class="screen-fade-in">
+                <h2>El Paseo de Lila</h2>
+                <p>¡Ayuda a Lila a recolectar premios y evitar obstáculos!</p>
+                <div class="jump-info">
+                    <p>ESPACIO/FLECHA ARRIBA: Saltar (doble salto en el aire)</p>
+                    <p>FLECHA DERECHA: Dash (impulso adelante)</p>
+                </div>
+                <button id="startButton">¡JUGAR!</button>
+            </div>
+            
+            <div id="gameOverScreen" class="hidden">
                 <h2>¡Juego Terminado!</h2>
                 <p id="finalScore">Puntuación Final: 0</p>
-                <div id="newHighScoreMessage" class="hidden">
-                    <p style="color: gold; font-size: 28px; margin-bottom: 10px;">¡NUEVO RÉCORD!</p>
-                </div>
-                <button id="restartButton" class="game-button">Jugar de Nuevo</button>
-                <button id="mainMenuButton" class="game-button">Menú Principal</button>
+                <p id="newHighScore" class="hidden">¡NUEVO RÉCORD!</p>
+                <button id="restartButton">Jugar de Nuevo</button>
             </div>
             
-            <div id="pauseScreen" class="game-screen">
+            <div id="pauseScreen" class="hidden">
                 <h2>Juego Pausado</h2>
-                <button id="resumeButton" class="game-button">Continuar</button>
-                <button id="quitButton" class="game-button">Salir</button>
+                <button id="resumeButton">Continuar</button>
+                <button id="quitButton">Salir</button>
             </div>
         </div>
         
         <div id="scoreDisplay">
-            <div id="currentScore">Puntuación: 0</div>
-            <div id="highScore">Récord: 0</div>
-            <div id="livesDisplay">
-                Vidas: 
-                <img src="heart.png" alt="Vida" class="life-icon">
-                <img src="heart.png" alt="Vida" class="life-icon">
-                <img src="heart.png" alt="Vida" class="life-icon">
-            </div>
+            <span id="scoreCurrent">Puntuación: 0</span>
+            <span id="highScore">Récord: 0</span>
         </div>
     </div>
-
-    <!-- Audio elements -->
-    <audio id="jumpSound" src="jump.mp3" preload="auto"></audio>
-    <audio id="doubleJumpSound" src="double_jump.mp3" preload="auto"></audio>
-    <audio id="collectSound" src="collect.mp3" preload="auto"></audio>
-    <audio id="powerUpSound" src="powerup.mp3" preload="auto"></audio>
-    <audio id="hurtSound" src="hurt.mp3" preload="auto"></audio>
-    <audio id="gameOverSound" src="gameover.mp3" preload="auto"></audio>
-    <audio id="bgMusic" src="background_music.mp3" loop preload="auto"></audio>
-
+    
     <script>
-        /*
-         * El Paseo de Lila - Runner Game
-         * Versión Optimizada
-         */
+        // Precarga de imágenes
+        const imagesToPreload = [
+            'Lila.png', 'hydrant.png', 'bush.png', 'bone.png', 'wing.png', 
+            'coin.png', 'heart.png', 'power_shield.png', 'power_magnet.png', 
+            'power_clock.png', 'mountain_bg.png', 'pause_button.png'
+        ];
         
-        // ===== Configuración del juego =====
-        const CONFIG = {
-            // Dimensiones
-            GAME_WIDTH: 800,
-            GAME_HEIGHT: 500,
-            GROUND_HEIGHT: 70,
-            
-            // Lila (personaje)
-            LILA_WIDTH: 100,
-            LILA_ASPECT_RATIO: 0.75,
-            LILA_POSITION_X: 60,
-            
-            // Física
-            GRAVITY: 0.75,
-            JUMP_STRENGTH: 16.5,
-            DOUBLE_JUMP_STRENGTH: 13.5,
-            
-            // Velocidad del juego
-            INITIAL_GAME_SPEED: 4.5,
-            SPEED_INCREASE_FACTOR: 0.0004,
-            MAX_GAME_SPEED: 12,
-            
-            // Obstáculos
-            OBSTACLE_MIN_INTERVAL: 1900,
-            OBSTACLE_MAX_INTERVAL: 3300,
-            
-            // Recompensas
-            REWARD_MIN_INTERVAL: 4000,
-            REWARD_MAX_INTERVAL: 7000,
-            
-            // Power-ups
-            POWERUP_MIN_INTERVAL: 8000,
-            POWERUP_MAX_INTERVAL: 15000,
-            POWERUP_DURATION: 6000, // 6 segundos
-            
-            // Flores (decoración)
-            FLOWER_MIN_INTERVAL: 2500,
-            FLOWER_MAX_INTERVAL: 5000,
-            
-            // Sistema de vidas
-            MAX_LIVES: 3,
-            INVULNERABLE_TIME: 2000, // 2 segundos
-            
-            // Puntuaciones
-            BONE_POINTS: 25,
-            WING_POINTS: 50,
-            
-            // Probabilidades
-            OBSTACLE_TYPES: [
-                { type: 'hydrant', probability: 0.4 },
-                { type: 'bush', probability: 0.4 },
-                { type: 'rock', probability: 0.2 }
-            ],
-            REWARD_TYPES: [
-                { type: 'bone', probability: 0.7 },
-                { type: 'wing', probability: 0.3 }
-            ],
-            POWERUP_TYPES: [
-                { type: 'shield', probability: 0.4 },
-                { type: 'magnet', probability: 0.4 },
-                { type: 'slowdown', probability: 0.2 }
-            ],
-            
-            // Almacenamiento local
-            STORAGE_KEY: 'lilaPaseoHighScores',
-            MAX_SCORES_SAVED: 5
-        };
+        const preloadedImages = {};
         
-        // ===== Elementos DOM =====
-        const DOM = {
-            gameContainer: document.getElementById('gameContainer'),
-            lila: document.getElementById('lila'),
-            ground: document.getElementById('ground'),
-            scoreDisplay: document.getElementById('currentScore'),
-            highScoreDisplay: document.getElementById('highScore'),
-            livesDisplay: document.getElementById('livesDisplay'),
-            lifeIcons: document.querySelectorAll('.life-icon'),
-            
-            // Pantallas
-            startScreen: document.getElementById('startScreen'),
-            gameOverScreen: document.getElementById('gameOverScreen'),
-            pauseScreen: document.getElementById('pauseScreen'),
-            
-            // Botones
-            startButton: document.getElementById('startButton'),
-            restartButton: document.getElementById('restartButton'),
-            mainMenuButton: document.getElementById('mainMenuButton'),
-            resumeButton: document.getElementById('resumeButton'),
-            quitButton: document.getElementById('quitButton'),
-            
-            // Elementos de puntuación
-            finalScoreDisplay: document.getElementById('finalScore'),
-            newHighScoreMessage: document.getElementById('newHighScoreMessage'),
-            highScoresContainer: document.getElementById('highScores'),
-            highScoresList: document.getElementById('highScoresList'),
-            
-            // Power-ups
-            activePowerUps: document.getElementById('activePowerUps'),
-            
-            // Audio
-            jumpSound: document.getElementById('jumpSound'),
-            doubleJumpSound: document.getElementById('doubleJumpSound'),
-            collectSound: document.getElementById('collectSound'),
-            powerUpSound: document.getElementById('powerUpSound'),
-            hurtSound: document.getElementById('hurtSound'),
-            gameOverSound: document.getElementById('gameOverSound'),
-            bgMusic: document.getElementById('bgMusic')
-        };
+        function preloadImages() {
+            imagesToPreload.forEach(src => {
+                const img = new Image();
+                img.src = src;
+                preloadedImages[src] = img;
+            });
+        }
         
-        // Calcular constantes dependientes
-        CONFIG.LILA_HEIGHT = CONFIG.LILA_WIDTH * CONFIG.LILA_ASPECT_RATIO;
-        CONFIG.LILA_INITIAL_Y = CONFIG.GROUND_HEIGHT;
+        preloadImages();
         
-        // ===== Estado del juego =====
-        const gameState = {
-            score: 0,
-            highScore: 0,
-            gameSpeed: CONFIG.INITIAL_GAME_SPEED,
-            lives: CONFIG.MAX_LIVES,
-            
-            lilaY: CONFIG.LILA_INITIAL_Y,
-            lilaVelocityY: 0,
-            jumpCount: 0,
-            isJumping: false,
-            isInvulnerable: false,
-            
-            gameStarted: false,
-            gameOver: false,
-            gamePaused: false,
-            
-            activePowerUps: {
-                shield: { active: false, timer: null, endTime: 0 },
-                magnet: { active: false, timer: null, endTime: 0 },
-                slowdown: { active: false, timer: null, endTime: 0 }
-            },
-            
-            // Elementos del juego
+        // Elementos del DOM
+        const gameContainer = document.getElementById('gameContainer');
+        const lila = document.getElementById('lila');
+        const ground = document.getElementById('ground');
+        const scoreDisplay = document.getElementById('scoreCurrent');
+        const highScoreDisplay = document.getElementById('highScore');
+        const startScreen = document.getElementById('startScreen');
+        const gameOverScreen = document.getElementById('gameOverScreen');
+        const pauseScreen = document.getElementById('pauseScreen');
+        const finalScoreDisplay = document.getElementById('finalScore');
+        const newHighScoreDisplay = document.getElementById('newHighScore');
+        const livesContainer = document.getElementById('livesContainer');
+        const gameControls = document.getElementById('gameControls');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const jumpBtn = document.getElementById('jumpBtn');
+        const dashBtn = document.getElementById('dashBtn');
+        const effectMessages = document.getElementById('effectMessages');
+        const startButton = document.getElementById('startButton');
+        const restartButton = document.getElementById('restartButton');
+        const resumeButton = document.getElementById('resumeButton');
+        const quitButton = document.getElementById('quitButton');
+        const leftTouch = document.getElementById('leftTouch');
+        const rightTouch = document.getElementById('rightTouch');
+        const mountainBg = document.querySelector('.mountain-bg');
+        
+        // Constantes del juego
+        const GAME_WIDTH = gameContainer.offsetWidth;
+        const GAME_HEIGHT = gameContainer.offsetHeight;
+        const LILA_WIDTH = 100;
+        const LILA_ASPECT_RATIO = 0.75;
+        const LILA_HEIGHT = LILA_WIDTH * LILA_ASPECT_RATIO;
+        const GROUND_HEIGHT = ground.offsetHeight;
+        const LILA_INITIAL_Y = GROUND_HEIGHT;
+        
+        // Propiedades del juego
+        let score = 0;
+        let highScore = localStorage.getItem('lilaHighScore') || 0;
+        let lives = 3;
+        let gameSpeed = 4.5;
+        let gameSpeedIncreaseFactor = 0.0003;
+        let maxGameSpeed = 12;
+        let gameSpeedBeforeSlow = 0;
+        
+        // Estado de Lila
+        let lilaX = 60;
+        let lilaY = LILA_INITIAL_Y;
+        let lilaVelocityY = 0;
+        let lilaXVelocity = 0;
+        const GRAVITY = 0.75;
+        const JUMP_STRENGTH = 16;
+        const DOUBLE_JUMP_STRENGTH = 13;
+        const DASH_STRENGTH = 15;
+        const DASH_DURATION = 200;
+        const DASH_COOLDOWN = 1500;
+        let jumpCount = 0;
+        let isJumpingState = false;
+        let isDashing = false;
+        let canDash = true;
+        let dashTimeoutId = null;
+        
+        // Power-ups y efectos
+        let hasShield = false;
+        let shieldTimeLeft = 0;
+        let hasMagnet = false;
+        let magnetTimeLeft = 0;
+        let magnetRadius = 200;
+        let isSlowMotion = false;
+        let slowMotionTimeLeft = 0;
+        
+        // Objetos del juego
+        const objectPool = {
             obstacles: [],
             rewards: [],
-            powerUps: [],
-            backgroundElements: [],
-            
-            // Timers
-            lastFrameTime: 0,
-            obstacleSpawnTimer: 0,
-            rewardSpawnTimer: 0,
-            powerUpSpawnTimer: 0,
-            flowerSpawnTimer: 0,
-            animationFrameId: null,
-            
-            // Intervalos de spawn
-            nextObstacleSpawn: 0,
-            nextRewardSpawn: 0,
-            nextPowerUpSpawn: 0,
-            nextFlowerSpawn: 0
+            powerups: [],
+            effects: [],
+            backgroundElements: []
         };
         
-        // ===== Funciones Auxiliares =====
+        const activeObjects = {
+            obstacles: [],
+            rewards: [],
+            powerups: [],
+            effects: [],
+            backgroundElements: []
+        };
+        
+        // Temporizadores
+        let obstacleSpawnTimer = 0;
+        const OBSTACLE_SPAWN_INTERVAL_MIN = 1900;
+        const OBSTACLE_SPAWN_INTERVAL_MAX = 3300;
+        let nextObstacleSpawn = getRandomInterval(OBSTACLE_SPAWN_INTERVAL_MIN, OBSTACLE_SPAWN_INTERVAL_MAX);
+        
+        let rewardSpawnTimer = 0;
+        const REWARD_SPAWN_INTERVAL_MIN = 3000;
+        const REWARD_SPAWN_INTERVAL_MAX = 6000;
+        let nextRewardSpawn = getRandomInterval(REWARD_SPAWN_INTERVAL_MIN, REWARD_SPAWN_INTERVAL_MAX);
+        
+        let powerupSpawnTimer = 0;
+        const POWERUP_SPAWN_INTERVAL_MIN = 7000;
+        const POWERUP_SPAWN_INTERVAL_MAX = 15000;
+        let nextPowerupSpawn = getRandomInterval(POWERUP_SPAWN_INTERVAL_MIN, POWERUP_SPAWN_INTERVAL_MAX);
+        
+        let flowerSpawnTimer = 0;
+        const FLOWER_INTERVAL_MIN = 2000;
+        const FLOWER_INTERVAL_MAX = 4000;
+        let nextFlowerSpawn = getRandomInterval(FLOWER_INTERVAL_MIN, FLOWER_INTERVAL_MAX);
+        
+        // Estado del juego
+        let gameStarted = false;
+        let gameOver = false;
+        let gamePaused = false;
+        let lastFrameTime = 0;
+        let animationFrameId = null;
+        let mountainBgPosition = 0;
+        
+        // Inicialización
+        highScoreDisplay.textContent = `Récord: ${highScore}`;
+        
+        /* ===== FUNCIONES AUXILIARES ===== */
         function getRandomInterval(min, max) {
             return Math.random() * (max - min) + min;
         }
         
-        function getRandomType(types) {
-            const rand = Math.random();
-            let cumulativeProbability = 0;
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        
+        function showMessage(text, color = '#ffffff') {
+            effectMessages.textContent = text;
+            effectMessages.style.color = color;
+            effectMessages.classList.remove('show');
+            void effectMessages.offsetWidth; // Reinicia la animación
+            effectMessages.classList.add('show');
+        }
+        
+        /* ===== GESTIÓN DE OBJETOS ===== */
+        // Object pooling para reutilizar elementos del DOM
+        function getObjectFromPool(category, type) {
+            const pool = objectPool[category];
             
-            for (const item of types) {
-                cumulativeProbability += item.probability;
-                if (rand < cumulativeProbability) {
-                    return item.type;
+            // Busca objeto no utilizado del mismo tipo
+            for (let i = 0; i < pool.length; i++) {
+                if (!pool[i].inUse && pool[i].dataset.type === type) {
+                    pool[i].inUse = true;
+                    return pool[i];
                 }
             }
             
-            // Fallback
-            return types[0].type;
-        }
-        
-        function playSound(sound, volume = 1.0) {
-            if (!sound) return;
+            // Crea un nuevo objeto si no hay disponibles
+            const element = document.createElement('div');
             
-            try {
-                sound.volume = volume;
-                sound.currentTime = 0;
-                sound.play().catch(e => console.log("Error playing sound:", e));
-            } catch (error) {
-                console.log("Error playing sound:", error);
+            if (category === 'obstacles') {
+                element.classList.add('game-element', 'obstacle', type);
+            } else if (category === 'rewards') {
+                element.classList.add('game-element', 'reward', type);
+            } else if (category === 'powerups') {
+                element.classList.add('game-element', 'powerup', type);
+            } else if (category === 'effects') {
+                element.classList.add(type === 'hit' ? 'hit-effect' : 'powerup-effect');
+                if (type !== 'hit') element.classList.add(`${type}-effect`);
+            } else if (category === 'backgroundElements') {
+                if (type === 'flower') {
+                    element.classList.add('flower');
+                    const stem = document.createElement('div');
+                    stem.className = 'stem';
+                    const petalCenter = document.createElement('div');
+                    petalCenter.className = 'petal-center';
+                    element.appendChild(stem);
+                    element.appendChild(petalCenter);
+                    
+                    ['p1', 'p2', 'p3', 'p4', 'p5'].forEach(pClass => {
+                        const petal = document.createElement('div');
+                        petal.className = `petal ${pClass}`;
+                        const colors = ['#FF69B4', '#FFFFE0', '#ADD8E6', '#FFB6C1', '#DA70D6'];
+                        petal.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        element.appendChild(petal);
+                    });
+                }
+            }
+            
+            element.dataset.type = type;
+            element.inUse = true;
+            pool.push(element);
+            
+            return element;
+        }
+        
+        function returnObjectToPool(element, category) {
+            if (!element || !element.inUse) return;
+            
+            element.inUse = false;
+            gameContainer.removeChild(element);
+            
+            const index = activeObjects[category].indexOf(element);
+            if (index !== -1) {
+                activeObjects[category].splice(index, 1);
             }
         }
         
-        function showElement(element) {
-            if (!element) return;
-            element.classList.add('visible');
-        }
-        
-        function hideElement(element) {
-            if (!element) return;
-            element.classList.remove('visible');
-        }
-        
-        // ===== Gestión de puntuaciones =====
-        function loadHighScores() {
-            try {
-                const scores = localStorage.getItem(CONFIG.STORAGE_KEY);
-                return scores ? JSON.parse(scores) : [];
-            } catch (error) {
-                console.error("Error loading high scores:", error);
-                return [];
-            }
-        }
-        
-        function saveHighScore(score) {
-            try {
-                const scores = loadHighScores();
-                const newScore = {
-                    score: Math.floor(score),
-                    date: new Date().toLocaleDateString()
-                };
-                
-                scores.push(newScore);
-                scores.sort((a, b) => b.score - a.score);
-                
-                if (scores.length > CONFIG.MAX_SCORES_SAVED) {
-                    scores.length = CONFIG.MAX_SCORES_SAVED;
+        function createGameElement(category, type, options = {}) {
+            const element = getObjectFromPool(category, type);
+            
+            let elWidth, elHeight, elPoints = 0;
+            let randomHeightOffset = 0;
+            
+            if (category === 'obstacles') {
+                if (type === 'hydrant') {
+                    elWidth = 60;
+                    elHeight = 90;
+                } else if (type === 'bush') {
+                    elWidth = 96;
+                    elHeight = 66;
+                }
+                element.style.bottom = `${GROUND_HEIGHT}px`;
+            } else if (category === 'rewards') {
+                if (type === 'bone') {
+                    elWidth = 60;
+                    elHeight = 40;
+                    elPoints = 25;
+                } else if (type === 'wing') {
+                    elWidth = 58;
+                    elHeight = 46;
+                    elPoints = 50;
+                } else if (type === 'coin') {
+                    elWidth = 40;
+                    elHeight = 40;
+                    elPoints = 10;
                 }
                 
-                localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(scores));
-                return scores[0].score === newScore.score;
-            } catch (error) {
-                console.error("Error saving high score:", error);
-                return false;
+                randomHeightOffset = Math.random() * 80 + 60;
+                element.style.bottom = `${GROUND_HEIGHT + randomHeightOffset}px`;
+            } else if (category === 'powerups') {
+                elWidth = 50;
+                elHeight = 50;
+                randomHeightOffset = Math.random() * 100 + 100;
+                element.style.bottom = `${GROUND_HEIGHT + randomHeightOffset}px`;
+            } else if (category === 'effects') {
+                if (type === 'hit') {
+                    elWidth = 100;
+                    elHeight = 100;
+                    element.style.left = `${options.x - elWidth / 2}px`;
+                    element.style.top = `${options.y - elHeight / 2}px`;
+                    
+                    // Auto-remove after animation
+                    setTimeout(() => {
+                        returnObjectToPool(element, 'effects');
+                    }, 500);
+                } else {
+                    elWidth = LILA_WIDTH * 1.5;
+                    elHeight = LILA_HEIGHT * 1.5;
+                    element.style.width = `${elWidth}px`;
+                    element.style.height = `${elHeight}px`;
+                    
+                    // Position relative to Lila
+                    updateEffectPosition(element);
+                }
+            } else if (category === 'backgroundElements') {
+                if (type === 'flower') {
+                    elWidth = 20;
+                    elHeight = 30;
+                    element.style.bottom = `${GROUND_HEIGHT + Math.random() * 10 - 5}px`;
+                    element.dataset.speedMultiplier = 0.4 + Math.random() * 0.2;
+                }
             }
-        }
-        
-        function updateHighScoreDisplay() {
-            const scores = loadHighScores();
             
-            if (scores.length > 0) {
-                gameState.highScore = scores[0].score;
-                DOM.highScoreDisplay.textContent = `Récord: ${gameState.highScore}`;
-                
-                // Actualizar lista de puntuaciones altas
-                DOM.highScoresList.innerHTML = '';
-                
-                scores.forEach((score, index) => {
-                    const scoreItem = document.createElement('div');
-                    scoreItem.className = 'score-item';
-                    if (index === 0) scoreItem.classList.add('high-score');
-                    
-                    scoreItem.innerHTML = `
-                        <span>${index + 1}. ${score.score} puntos</span>
-                        <span>${score.date}</span>
-                    `;
-                    
-                    DOM.highScoresList.appendChild(scoreItem);
-                });
-                
-                DOM.highScoresContainer.classList.remove('hidden');
+            if (category !== 'effects' || type === 'hit') {
+                element.style.width = `${elWidth}px`;
+                element.style.height = `${elHeight}px`;
+                element.style.right = `-${elWidth}px`;
+            }
+            
+            element.dataset.points = elPoints;
+            
+            if (category !== 'effects' || category === 'backgroundElements') {
+                gameContainer.insertBefore(element, gameContainer.firstChild);
             } else {
-                DOM.highScoresContainer.classList.add('hidden');
+                gameContainer.appendChild(element);
             }
+            
+            activeObjects[category].push(element);
+            
+            return element;
         }
         
-        // ===== Funciones de Lila (personaje) =====
-        function updateLilaVisualState() {
-            DOM.lila.style.bottom = `${gameState.lilaY}px`;
+        function updateEffectPosition(effectElement) {
+            if (!effectElement || !effectElement.inUse) return;
             
-            // Limpiar clases previas
-            DOM.lila.className = '';
+            const lilaRect = lila.getBoundingClientRect();
+            const gameRect = gameContainer.getBoundingClientRect();
             
-            if (gameState.isInvulnerable) {
-                DOM.lila.classList.add('invulnerable');
+            const effectWidth = parseFloat(effectElement.style.width);
+            const effectHeight = parseFloat(effectElement.style.height);
+            
+            const centerX = lilaRect.left - gameRect.left + lilaRect.width / 2 - effectWidth / 2;
+            const centerY = lilaRect.top - gameRect.top + lilaRect.height / 2 - effectHeight / 2;
+            
+            effectElement.style.left = `${centerX}px`;
+            effectElement.style.top = `${centerY}px`;
+        }
+        
+        /* ===== MECÁNICAS DE JUEGO ===== */
+        function updateLilaPosition(deltaTime) {
+            // Actualizar posición vertical (salto)
+            lilaVelocityY -= GRAVITY;
+            lilaY += lilaVelocityY;
+            
+            if (lilaY <= LILA_INITIAL_Y) {
+                lilaY = LILA_INITIAL_Y;
+                lilaVelocityY = 0;
+                jumpCount = 0;
+                isJumpingState = false;
             }
             
-            if (gameState.isJumping) {
-                if (gameState.jumpCount === 1) {
-                    DOM.lila.classList.add('jumping');
-                } else if (gameState.jumpCount === 2) {
-                    DOM.lila.classList.add('double-jumping');
-                }
-            } else if (gameState.gameStarted && !gameState.gameOver) {
-                DOM.lila.classList.add('running');
+            // Actualizar posición horizontal (dash)
+            lilaX += lilaXVelocity * deltaTime;
+            lilaXVelocity *= 0.9; // Fricción
+            
+            // Mantener a Lila dentro de los límites
+            if (lilaX < 60) {
+                lilaX = 60;
+                lilaXVelocity = 0;
+            } else if (lilaX > GAME_WIDTH * 0.5) {
+                lilaX = GAME_WIDTH * 0.5;
+                lilaXVelocity = 0;
+            }
+            
+            // Actualizar estilos
+            lila.style.bottom = `${lilaY}px`;
+            lila.style.left = `${lilaX}px`;
+            
+            updateLilaVisualState();
+        }
+        
+        function updateLilaVisualState() {
+            lila.classList.remove('jumping', 'double-jumping', 'dash');
+            
+            if (isDashing) {
+                lila.classList.add('dash');
+            } else if (isJumpingState && lilaY > LILA_INITIAL_Y) {
+                if (jumpCount === 1) lila.classList.add('jumping');
+                else if (jumpCount === 2) lila.classList.add('double-jumping');
             }
         }
         
         function jump() {
-            if (gameState.jumpCount < 2) {
-                gameState.isJumping = true;
-                gameState.jumpCount++;
+            if (jumpCount < 2) {
+                isJumpingState = true;
+                jumpCount++;
+                lilaVelocityY = (jumpCount === 1) ? JUMP_STRENGTH : DOUBLE_JUMP_STRENGTH;
                 
-                if (gameState.jumpCount === 1) {
-                    gameState.lilaVelocityY = CONFIG.JUMP_STRENGTH;
-                    playSound(DOM.jumpSound, 0.7);
-                } else {
-                    gameState.lilaVelocityY = CONFIG.DOUBLE_JUMP_STRENGTH;
-                    playSound(DOM.doubleJumpSound, 0.7);
-                }
-                
-                updateLilaVisualState();
+                // Efecto de sonido (sería añadido aquí)
             }
         }
         
-        function makeLilaInvulnerable() {
-            gameState.isInvulnerable = true;
-            updateLilaVisualState();
+        function dash() {
+            if (!canDash || isDashing) return;
             
+            isDashing = true;
+            canDash = false;
+            lilaXVelocity = DASH_STRENGTH;
+            
+            // Crear un efecto de estela
+            createDashTrail();
+            
+            // Temporalmente invulnerable durante dash
+            const tempShield = hasShield;
+            hasShield = true;
+            
+            // Después de DASH_DURATION, quitar el estado de dash pero mantener la inercia
             setTimeout(() => {
-                gameState.isInvulnerable = false;
-                updateLilaVisualState();
-            }, CONFIG.INVULNERABLE_TIME);
+                isDashing = false;
+                hasShield = tempShield;
+            }, DASH_DURATION);
+            
+            // Después del cooldown, permitir dash de nuevo
+            clearTimeout(dashTimeoutId);
+            dashTimeoutId = setTimeout(() => {
+                canDash = true;
+            }, DASH_COOLDOWN);
         }
         
-        // ===== Creación de elementos =====
-        function createElement(type, category) {
-            const element = document.createElement('div');
-            element.classList.add('game-element', category, type);
+        function createDashTrail() {
+            const trailElement = document.createElement('img');
+            trailElement.src = lila.src;
+            trailElement.classList.add('lila-trail');
+            trailElement.style.width = lila.offsetWidth + 'px';
+            trailElement.style.height = lila.offsetHeight + 'px';
+            trailElement.style.left = lila.style.left;
+            trailElement.style.bottom = lila.style.bottom;
+            trailElement.style.transform = 'scale(0.9) rotate(-3deg)';
             
-            // Obtener dimensiones desde el estilo computado
-            const tempEl = document.createElement('div');
-            tempEl.className = `game-element ${category} ${type}`;
-            document.body.appendChild(tempEl);
-            const elWidth = parseFloat(getComputedStyle(tempEl).width);
-            const elHeight = parseFloat(getComputedStyle(tempEl).height);
-            document.body.removeChild(tempEl);
+            gameContainer.appendChild(trailElement);
             
-            let elPoints = 0;
-            
-            if (category === 'reward') {
-                if (type === 'bone') {
-                    elPoints = CONFIG.BONE_POINTS;
-                } else if (type === 'wing') {
-                    elPoints = CONFIG.WING_POINTS;
-                }
-                
-                // Posicionar recompensas en el aire
-                const randomHeightOffset = Math.random() * 80 + 60;
-                element.style.bottom = `${CONFIG.GROUND_HEIGHT + randomHeightOffset}px`;
-            } else if (category === 'power-up') {
-                // Posicionar power-ups más alto
-                const randomHeightOffset = Math.random() * 100 + 120;
-                element.style.bottom = `${CONFIG.GROUND_HEIGHT + randomHeightOffset}px`;
-            } else if (category === 'obstacle') {
-                element.style.bottom = `${CONFIG.GROUND_HEIGHT}px`;
-            }
-            
-            element.style.width = `${elWidth}px`;
-            element.style.height = `${elHeight}px`;
-            element.style.right = `-${elWidth}px`;
-            element.dataset.points = elPoints;
-            
-            DOM.gameContainer.appendChild(element);
-            
-            if (category === 'obstacle') {
-                gameState.obstacles.push(element);
-            } else if (category === 'reward') {
-                gameState.rewards.push(element);
-            } else if (category === 'power-up') {
-                gameState.powerUps.push(element);
-            }
-            
-            return element;
-        }
-        
-        function createBackgroundElement(type) {
-            if (type !== 'flower') return;
-            
-            const element = document.createElement('div');
-            element.dataset.type = type;
-            element.dataset.speedMultiplier = 0.4; // Flores más lentas para efecto parallax
-            
-            element.classList.add('flower');
-            
-            // Crear partes de la flor
-            const stem = document.createElement('div');
-            stem.className = 'stem';
-            
-            const petalCenter = document.createElement('div');
-            petalCenter.className = 'petal-center';
-            
-            element.appendChild(stem);
-            element.appendChild(petalCenter);
-            
-            // Crear pétalos con colores aleatorios
-            const colors = ['#FF69B4', '#FFFFE0', '#ADD8E6', '#FFB6C1', '#DA70D6'];
-            
-            ['p1', 'p2', 'p3', 'p4', 'p5'].forEach(pClass => {
-                const petal = document.createElement('div');
-                petal.className = `petal ${pClass}`;
-                petal.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                element.appendChild(petal);
-            });
-            
-            element.style.right = '-30px';
-            element.style.bottom = `${CONFIG.GROUND_HEIGHT + Math.random() * 10 - 5}px`;
-            
-            // Insertar antes de Lila para que aparezca detrás
-            DOM.gameContainer.insertBefore(element, DOM.lila);
-            gameState.backgroundElements.push(element);
-            
-            return element;
-        }
-        
-        // ===== Actualización de elementos =====
-        function updateGameElements(elementsArray, elementType, deltaTime) {
-            for (let i = elementsArray.length - 1; i >= 0; i--) {
-                const element = elementsArray[i];
-                let currentRight = parseFloat(element.style.right);
-                
-                let speed = gameState.gameSpeed;
-                
-                // Ajustar velocidad para elementos de fondo
-                if (elementType === 'background' && element.dataset.speedMultiplier) {
-                    speed *= parseFloat(element.dataset.speedMultiplier);
-                }
-                
-                // Mover en función del tiempo delta para movimiento consistente
-                currentRight += speed * (deltaTime / 16.67); // Normalizar a aproximadamente 60 FPS
-                element.style.right = `${currentRight}px`;
-                
-                // Comprobar colisiones o magnetismo
-                if (elementType === 'game') {
-                    // Power-up de imán para atraer recompensas
-                    if (element.classList.contains('reward') && gameState.activePowerUps.magnet.active) {
-                        const rect1 = DOM.lila.getBoundingClientRect();
-                        const rect2 = element.getBoundingClientRect();
-                        
-                        const lilaCenter = {
-                            x: rect1.left + rect1.width / 2,
-                            y: rect1.top + rect1.height / 2
-                        };
-                        
-                        const rewardCenter = {
-                            x: rect2.left + rect2.width / 2,
-                            y: rect2.top + rect2.height / 2
-                        };
-                        
-                        const dx = lilaCenter.x - rewardCenter.x;
-                        const dy = lilaCenter.y - rewardCenter.y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (distance < 200) { // Radio de atracción
-                            element.classList.add('attracted');
-                            
-                            // Atraer hacia Lila
-                            const attraction = 0.15;
-                            const moveX = dx * attraction * (deltaTime / 16.67);
-                            const moveY = dy * attraction * (deltaTime / 16.67);
-                            
-                            currentRight -= moveX / 5;
-                            const currentBottom = parseFloat(element.style.bottom);
-                            element.style.bottom = `${currentBottom - moveY / 5}px`;
-                            element.style.right = `${currentRight}px`;
-                        } else {
-                            element.classList.remove('attracted');
-                        }
-                    }
-                    
-                    if (checkCollision(DOM.lila, element)) {
-                        if (element.classList.contains('obstacle')) {
-                            if (gameState.activePowerUps.shield.active || gameState.isInvulnerable) {
-                                // No hacer daño, solo crear efecto visual
-                                const shieldEffect = document.createElement('div');
-                                shieldEffect.className = 'collect-effect';
-                                shieldEffect.textContent = '¡Protegido!';
-                                shieldEffect.style.left = `${element.getBoundingClientRect().left}px`;
-                                shieldEffect.style.top = `${element.getBoundingClientRect().top}px`;
-                                DOM.gameContainer.appendChild(shieldEffect);
-                                
-                                // Eliminar el efecto después de la animación
-                                setTimeout(() => {
-                                    shieldEffect.remove();
-                                }, 1000);
-                                
-                                // Si es escudo, consumirlo
-                                if (gameState.activePowerUps.shield.active) {
-                                    deactivatePowerUp('shield');
-                                }
-                            } else {
-                                // Perder una vida
-                                loseLife();
-                            }
-                            continue;
-                        } else if (element.classList.contains('reward')) {
-                            collectReward(element, i);
-                            continue;
-                        } else if (element.classList.contains('power-up')) {
-                            activatePowerUp(element.classList[2]); // La tercera clase es el tipo
-                            playSound(DOM.powerUpSound, 0.8);
-                            element.remove();
-                            elementsArray.splice(i, 1);
-                            continue;
-                        }
-                    }
-                }
-                
-                // Eliminar elementos fuera de pantalla
-                const elementWidth = parseFloat(element.style.width);
-                if (currentRight > CONFIG.GAME_WIDTH + elementWidth + 50) {
-                    element.remove();
-                    elementsArray.splice(i, 1);
-                }
-            }
-        }
-        
-        function collectReward(element, index) {
-            const points = parseInt(element.dataset.points) || 0;
-            gameState.score += points;
-            
-            // Crear efecto visual de puntos
-            const bonusScore = document.createElement('div');
-            bonusScore.className = 'bonus-score';
-            bonusScore.textContent = `+${points}`;
-            bonusScore.style.left = `${element.getBoundingClientRect().left}px`;
-            bonusScore.style.top = `${element.getBoundingClientRect().top}px`;
-            DOM.gameContainer.appendChild(bonusScore);
-            
-            // Eliminar el efecto después de la animación
+            // Auto eliminar después de la animación
             setTimeout(() => {
-                bonusScore.remove();
-            }, 1500);
-            
-            updateScoreDisplay();
-            playSound(DOM.collectSound, 0.6);
-            
-            element.remove();
-            gameState.rewards.splice(index, 1);
+                if (trailElement.parentNode) {
+                    gameContainer.removeChild(trailElement);
+                }
+            }, 500);
         }
         
+        /* ===== COLISIONES ===== */
         function checkCollision(element1, element2) {
             const rect1 = element1.getBoundingClientRect();
             const rect2 = element2.getBoundingClientRect();
+            const gameRect = gameContainer.getBoundingClientRect();
             
-            // Tolerancias para hacer las colisiones más precisas
-            const lilaToleranceVertical = CONFIG.LILA_HEIGHT * 0.2;
-            const lilaToleranceHorizontal = CONFIG.LILA_WIDTH * 0.25;
-            
-            const lilaEffectiveRect = {
-                top: rect1.top + lilaToleranceVertical,
-                bottom: rect1.bottom - lilaToleranceVertical,
-                left: rect1.left + lilaToleranceHorizontal,
-                right: rect1.right - lilaToleranceHorizontal
+            // Ajustar coordenadas al contenedor del juego
+            const rect1Adj = {
+                top: rect1.top - gameRect.top,
+                bottom: rect1.bottom - gameRect.top,
+                left: rect1.left - gameRect.left,
+                right: rect1.right - gameRect.left
             };
             
-            const itemTolerance = 5;
+            const rect2Adj = {
+                top: rect2.top - gameRect.top,
+                bottom: rect2.bottom - gameRect.top,
+                left: rect2.left - gameRect.left,
+                right: rect2.right - gameRect.left
+            };
+            
+            // Tolerancias para colisiones más precisas
+            const lilaToleranceVertical = LILA_HEIGHT * 0.15;
+            const lilaToleranceHorizontal = LILA_WIDTH * 0.20;
+            
+            const lilaEffectiveRect = {
+                top: rect1Adj.top + lilaToleranceVertical,
+                bottom: rect1Adj.bottom - lilaToleranceVertical,
+                left: rect1Adj.left + lilaToleranceHorizontal,
+                right: rect1Adj.right - lilaToleranceHorizontal,
+            };
+            
+            const itemTolerance = 2;
             
             return !(
-                lilaEffectiveRect.right < rect2.left + itemTolerance ||
-                lilaEffectiveRect.left > rect2.right - itemTolerance ||
-                lilaEffectiveRect.bottom < rect2.top + itemTolerance ||
-                lilaEffectiveRect.top > rect2.bottom - itemTolerance
+                lilaEffectiveRect.right < rect2Adj.left + itemTolerance ||
+                lilaEffectiveRect.left > rect2Adj.right - itemTolerance ||
+                lilaEffectiveRect.bottom < rect2Adj.top + itemTolerance ||
+                lilaEffectiveRect.top > rect2Adj.bottom - itemTolerance
             );
         }
         
-        // ===== Sistema de power-ups =====
-        function activatePowerUp(type) {
-            if (!gameState.activePowerUps[type]) return;
-            
-            // Cancela el timer anterior si existe
-            if (gameState.activePowerUps[type].timer) {
-                clearTimeout(gameState.activePowerUps[type].timer);
-            }
-            
-            // Establece el power-up como activo
-            gameState.activePowerUps[type].active = true;
-            gameState.activePowerUps[type].endTime = Date.now() + CONFIG.POWERUP_DURATION;
-            
-            // Aplica efectos especiales
-            if (type === 'slowdown') {
-                gameState.gameSpeed *= 0.6; // Ralentiza el juego
-            }
-            
-            // Crear y mostrar ícono del power-up
-            let powerUpIcon = document.querySelector(`.active-power-up.${type}`);
-            
-            if (!powerUpIcon) {
-                powerUpIcon = document.createElement('div');
-                powerUpIcon.className = `active-power-up ${type}`;
+        function handleCollisions() {
+            // Verificar colisiones con obstáculos
+            for (let i = 0; i < activeObjects.obstacles.length; i++) {
+                const obstacle = activeObjects.obstacles[i];
                 
-                const timer = document.createElement('div');
-                timer.className = `power-up-timer ${type}-timer`;
-                timer.style.width = '100%';
-                
-                powerUpIcon.appendChild(timer);
-                DOM.activePowerUps.appendChild(powerUpIcon);
-            }
-            
-            // Establecer timer para desactivar
-            gameState.activePowerUps[type].timer = setTimeout(() => {
-                deactivatePowerUp(type);
-            }, CONFIG.POWERUP_DURATION);
-            
-            // Actualizar la barra de tiempo regularmente
-            const updateTimer = () => {
-                if (!gameState.activePowerUps[type].active) return;
-                
-                const timeLeft = gameState.activePowerUps[type].endTime - Date.now();
-                if (timeLeft <= 0) return;
-                
-                const percentage = (timeLeft / CONFIG.POWERUP_DURATION) * 100;
-                const timerBar = powerUpIcon.querySelector(`.${type}-timer`);
-                if (timerBar) {
-                    timerBar.style.width = `${percentage}%`;
+                if (checkCollision(lila, obstacle)) {
+                    if (hasShield) {
+                        // Efecto de rebote con escudo
+                        obstacle.classList.add('collected');
+                        setTimeout(() => returnObjectToPool(obstacle, 'obstacles'), 500);
+                        
+                        // Desactivar escudo después de un hit
+                        hasShield = false;
+                        showMessage("¡ESCUDO USADO!", "#4a7aff");
+                        
+                        // Eliminar efecto visual de escudo
+                        const shieldEffect = activeObjects.effects.find(
+                            e => e.classList.contains('shield-effect')
+                        );
+                        if (shieldEffect) returnObjectToPool(shieldEffect, 'effects');
+                        
+                        return;
+                    }
+                    
+                    // Crear efecto visual de golpe
+                    const lilaRect = lila.getBoundingClientRect();
+                    const gameRect = gameContainer.getBoundingClientRect();
+                    createGameElement('effects', 'hit', {
+                        x: lilaRect.left - gameRect.left + lilaRect.width / 2,
+                        y: lilaRect.top - gameRect.top + lilaRect.height / 2
+                    });
+                    
+                    loseLife();
+                    return;
                 }
+            }
+            
+            // Verificar colisiones con recompensas
+            for (let i = activeObjects.rewards.length - 1; i >= 0; i--) {
+                const reward = activeObjects.rewards[i];
                 
-                requestAnimationFrame(updateTimer);
-            };
+                if (checkCollision(lila, reward) || 
+                    (hasMagnet && isItemInMagnetRange(reward))) {
+                    
+                    // Si hay imán, mover la recompensa hacia Lila
+                    if (hasMagnet && !checkCollision(lila, reward)) {
+                        moveTowardsLila(reward);
+                        continue;
+                    }
+                    
+                    // Añadir puntos
+                    const points = parseInt(reward.dataset.points) || 0;
+                    score += points;
+                    updateScoreDisplay();
+                    
+                    // Efecto visual
+                    reward.classList.add('collected');
+                    
+                    // Eliminar después de la animación
+                    setTimeout(() => {
+                        returnObjectToPool(reward, 'rewards');
+                    }, 500);
+                }
+            }
             
-            updateTimer();
+            // Verificar colisiones con power-ups
+            for (let i = activeObjects.powerups.length - 1; i >= 0; i--) {
+                const powerup = activeObjects.powerups[i];
+                
+                if (checkCollision(lila, powerup) || 
+                    (hasMagnet && isItemInMagnetRange(powerup))) {
+                    
+                    // Si hay imán, mover el powerup hacia Lila
+                    if (hasMagnet && !checkCollision(lila, powerup)) {
+                        moveTowardsLila(powerup);
+                        continue;
+                    }
+                    
+                    const type = powerup.dataset.type;
+                    
+                    if (type === 'shield') {
+                        activateShield();
+                    } else if (type === 'magnet') {
+                        activateMagnet();
+                    } else if (type === 'clock') {
+                        activateSlowMotion();
+                    }
+                    
+                    // Efecto visual
+                    powerup.classList.add('collected');
+                    
+                    // Eliminar después de la animación
+                    setTimeout(() => {
+                        returnObjectToPool(powerup, 'powerups');
+                    }, 500);
+                }
+            }
         }
         
-        function deactivatePowerUp(type) {
-            if (!gameState.activePowerUps[type]) return;
+        function isItemInMagnetRange(item) {
+            if (!hasMagnet) return false;
             
-            gameState.activePowerUps[type].active = false;
+            const lilaRect = lila.getBoundingClientRect();
+            const itemRect = item.getBoundingClientRect();
+            const gameRect = gameContainer.getBoundingClientRect();
             
-            if (gameState.activePowerUps[type].timer) {
-                clearTimeout(gameState.activePowerUps[type].timer);
-                gameState.activePowerUps[type].timer = null;
-            }
+            const lilaX = lilaRect.left - gameRect.left + lilaRect.width / 2;
+            const lilaY = lilaRect.top - gameRect.top + lilaRect.height / 2;
             
-            // Revertir efectos especiales
-            if (type === 'slowdown' && !gameState.gameOver) {
-                gameState.gameSpeed /= 0.6;
-            }
+            const itemX = itemRect.left - gameRect.left + itemRect.width / 2;
+            const itemY = itemRect.top - gameRect.top + itemRect.height / 2;
             
-            // Eliminar ícono
-            const powerUpIcon = document.querySelector(`.active-power-up.${type}`);
-            if (powerUpIcon) {
-                powerUpIcon.remove();
-            }
+            const distance = Math.sqrt(
+                Math.pow(lilaX - itemX, 2) + Math.pow(lilaY - itemY, 2)
+            );
+            
+            return distance <= magnetRadius;
         }
         
-        // ===== Sistema de vidas =====
-        function loseLife() {
-            if (gameState.isInvulnerable) return;
+        function moveTowardsLila(item) {
+            const lilaRect = lila.getBoundingClientRect();
+            const itemRect = item.getBoundingClientRect();
+            const gameRect = gameContainer.getBoundingClientRect();
             
-            gameState.lives--;
+            const lilaX = lilaRect.left - gameRect.left + lilaRect.width / 2;
+            const lilaY = lilaRect.top - gameRect.top + lilaRect.height / 2;
             
-            // Actualizar visualización de vidas
-            updateLivesDisplay();
+            const itemX = itemRect.left - gameRect.left + itemRect.width / 2;
+            const itemY = itemRect.top - gameRect.top + itemRect.height / 2;
             
-            // Efecto visual y sonoro
-            DOM.lila.classList.add('hurt');
-            playSound(DOM.hurtSound, 0.8);
+            // Calcular dirección hacia Lila
+            const dirX = lilaX - itemX;
+            const dirY = lilaY - itemY;
             
-            setTimeout(() => {
-                DOM.lila.classList.remove('hurt');
-            }, 500);
+            // Normalizar
+            const length = Math.sqrt(dirX * dirX + dirY * dirY);
+            const normDirX = dirX / length;
+            const normDirY = dirY / length;
             
-            if (gameState.lives <= 0) {
-                endGame();
-            } else {
-                makeLilaInvulnerable();
-            }
+            // Velocidad de atracción basada en la distancia
+            const speed = Math.min(10, 300 / length);
+            
+            // Mover el objeto
+            const currentRight = parseFloat(item.style.right);
+            const currentBottom = parseFloat(item.style.bottom);
+            
+            item.style.right = `${currentRight - normDirX * speed}px`;
+            item.style.bottom = `${currentBottom + normDirY * speed}px`;
         }
         
-        function updateLivesDisplay() {
-            const lifeIcons = document.querySelectorAll('.life-icon');
+        /* ===== POWERUPS ===== */
+        function activateShield() {
+            hasShield = true;
+            shieldTimeLeft = 10000; // 10 segundos
             
-            lifeIcons.forEach((icon, index) => {
-                if (index < gameState.lives) {
-                    icon.classList.remove('lost');
-                } else {
-                    icon.classList.add('lost');
+            // Eliminar escudo anterior si existe
+            const existingShield = activeObjects.effects.find(
+                e => e.classList.contains('shield-effect')
+            );
+            if (existingShield) returnObjectToPool(existingShield, 'effects');
+            
+            // Crear efecto visual
+            createGameElement('effects', 'shield');
+            
+            showMessage("¡ESCUDO ACTIVADO!", "#4a7aff");
+        }
+        
+        function activateMagnet() {
+            hasMagnet = true;
+            magnetTimeLeft = 8000; // 8 segundos
+            
+            // Eliminar imán anterior si existe
+            const existingMagnet = activeObjects.effects.find(
+                e => e.classList.contains('magnet-effect')
+            );
+            if (existingMagnet) returnObjectToPool(existingMagnet, 'effects');
+            
+            // Crear efecto visual
+            createGameElement('effects', 'magnet');
+            
+            showMessage("¡IMÁN ACTIVADO!", "#ff7a4a");
+        }
+        
+        function activateSlowMotion() {
+            isSlowMotion = true;
+            gameSpeedBeforeSlow = gameSpeed;
+            gameSpeed *= 0.5; // Reducir velocidad a la mitad
+            slowMotionTimeLeft = 5000; // 5 segundos
+            
+            // Añadir clase para efecto visual
+            gameContainer.classList.add('slow-motion');
+            
+            showMessage("¡TIEMPO LENTO!", "#ffce00");
+        }
+        
+        function updatePowerupEffects(deltaTime) {
+            // Actualizar tiempos restantes
+            if (hasShield) {
+                shieldTimeLeft -= deltaTime;
+                if (shieldTimeLeft <= 0) {
+                    hasShield = false;
+                    
+                    // Eliminar efecto visual
+                    const shieldEffect = activeObjects.effects.find(
+                        e => e.classList.contains('shield-effect')
+                    );
+                    if (shieldEffect) returnObjectToPool(shieldEffect, 'effects');
+                    
+                    showMessage("¡Escudo agotado!", "#4a7aff");
+                }
+            }
+            
+            if (hasMagnet) {
+                magnetTimeLeft -= deltaTime;
+                if (magnetTimeLeft <= 0) {
+                    hasMagnet = false;
+                    
+                    // Eliminar efecto visual
+                    const magnetEffect = activeObjects.effects.find(
+                        e => e.classList.contains('magnet-effect')
+                    );
+                    if (magnetEffect) returnObjectToPool(magnetEffect, 'effects');
+                    
+                    showMessage("¡Imán agotado!", "#ff7a4a");
+                }
+            }
+            
+            if (isSlowMotion) {
+                slowMotionTimeLeft -= deltaTime;
+                if (slowMotionTimeLeft <= 0) {
+                    isSlowMotion = false;
+                    gameSpeed = gameSpeedBeforeSlow;
+                    
+                    // Quitar efecto visual
+                    gameContainer.classList.remove('slow-motion');
+                    
+                    showMessage("¡Tiempo normal!", "#ffce00");
+                }
+            }
+            
+            // Actualizar posiciones de los efectos visuales
+            activeObjects.effects.forEach(effect => {
+                if (effect.classList.contains('shield-effect') || 
+                    effect.classList.contains('magnet-effect')) {
+                    updateEffectPosition(effect);
                 }
             });
         }
         
-        // ===== Actualización de puntuación =====
-        function updateScoreDisplay() {
-            DOM.scoreDisplay.textContent = `Puntuación: ${Math.floor(gameState.score)}`;
+        /* ===== GESTIÓN DE VIDAS ===== */
+        function updateLivesDisplay() {
+            const lifeElements = livesContainer.querySelectorAll('.life');
+            
+            for (let i = 0; i < lifeElements.length; i++) {
+                if (i < lives) {
+                    lifeElements[i].classList.remove('lost');
+                } else {
+                    lifeElements[i].classList.add('lost');
+                }
+            }
         }
         
-        // ===== Control del juego =====
-        function startGame() {
-            if (gameState.gameStarted) return;
+        function loseLife() {
+            lives--;
+            updateLivesDisplay();
             
-            resetGame();
-            gameState.gameStarted = true;
-            
-            hideElement(DOM.startScreen);
-            hideElement(DOM.gameOverScreen);
-            hideElement(DOM.pauseScreen);
-            
-            const now = Date.now();
-            gameState.lastFrameTime = now;
-            gameState.obstacleSpawnTimer = now;
-            gameState.rewardSpawnTimer = now;
-            gameState.powerUpSpawnTimer = now;
-            gameState.flowerSpawnTimer = now;
-            
-            // Intervalos iniciales de spawn
-            gameState.nextObstacleSpawn = getRandomInterval(
-                CONFIG.OBSTACLE_MIN_INTERVAL,
-                CONFIG.OBSTACLE_MAX_INTERVAL
-            );
-            
-            gameState.nextRewardSpawn = getRandomInterval(
-                CONFIG.REWARD_MIN_INTERVAL,
-                CONFIG.REWARD_MAX_INTERVAL
-            );
-            
-            gameState.nextPowerUpSpawn = getRandomInterval(
-                CONFIG.POWERUP_MIN_INTERVAL,
-                CONFIG.POWERUP_MAX_INTERVAL
-            );
-            
-            gameState.nextFlowerSpawn = getRandomInterval(
-                CONFIG.FLOWER_MIN_INTERVAL,
-                CONFIG.FLOWER_MAX_INTERVAL
-            );
-            
-            // Iniciar música
-            try {
-                DOM.bgMusic.volume = 0.3;
-                DOM.bgMusic.play().catch(e => console.log("Error playing music:", e));
-            } catch (error) {
-                console.log("Error playing music:", error);
-            }
-            
-            // Iniciar loop del juego
-            gameLoop();
-        }
-        
-        function pauseGame() {
-            if (!gameState.gameStarted || gameState.gameOver) return;
-            
-            gameState.gamePaused = true;
-            cancelAnimationFrame(gameState.animationFrameId);
-            
-            // Pausar música
-            try {
-                DOM.bgMusic.pause();
-            } catch (error) {
-                console.log("Error pausing music:", error);
-            }
-            
-            showElement(DOM.pauseScreen);
-        }
-        
-        function resumeGame() {
-            if (!gameState.gamePaused) return;
-            
-            gameState.gamePaused = false;
-            gameState.lastFrameTime = Date.now();
-            
-            hideElement(DOM.pauseScreen);
-            
-            // Reanudar música
-            try {
-                DOM.bgMusic.play().catch(e => console.log("Error resuming music:", e));
-            } catch (error) {
-                console.log("Error resuming music:", error);
-            }
-            
-            // Reanudar loop del juego
-            gameLoop();
-        }
-        
-        function endGame() {
-            gameState.gameOver = true;
-            gameState.gameStarted = false;
-            
-            // Detener animaciones
-            cancelAnimationFrame(gameState.animationFrameId);
-            
-            // Detener música
-            try {
-                DOM.bgMusic.pause();
-                DOM.bgMusic.currentTime = 0;
-            } catch (error) {
-                console.log("Error stopping music:", error);
-            }
-            
-            // Reproducir sonido de game over
-            playSound(DOM.gameOverSound, 0.8);
-            
-            // Actualizar puntuación final
-            DOM.finalScoreDisplay.textContent = `Puntuación Final: ${Math.floor(gameState.score)}`;
-            
-            // Comprobar si es una puntuación alta
-            const isNewHighScore = saveHighScore(gameState.score);
-            updateHighScoreDisplay();
-            
-            if (isNewHighScore) {
-                DOM.newHighScoreMessage.classList.remove('hidden');
+            if (lives <= 0) {
+                endGame();
             } else {
-                DOM.newHighScoreMessage.classList.add('hidden');
+                // Invulnerabilidad temporal
+                hasShield = true;
+                
+                // Crear efecto visual
+                createGameElement('effects', 'shield');
+                
+                // Quitar después de 2 segundos
+                setTimeout(() => {
+                    hasShield = false;
+                    const shieldEffect = activeObjects.effects.find(
+                        e => e.classList.contains('shield-effect')
+                    );
+                    if (shieldEffect) returnObjectToPool(shieldEffect, 'effects');
+                }, 2000);
+                
+                showMessage(`¡CUIDADO! ${lives} ${lives === 1 ? 'VIDA' : 'VIDAS'}`, "#ff0000");
+            }
+        }
+        
+        /* ===== GESTIÓN DEL JUEGO ===== */
+        function updateGameElements(deltaTime) {
+            const effectiveGameSpeed = isSlowMotion ? gameSpeed : gameSpeed;
+            const deltaSpeed = effectiveGameSpeed * deltaTime / 16.67; // Normalizar a ~60 FPS
+            
+            // Mover elementos del juego (obstáculos, recompensas, powerups, fondo)
+            Object.keys(activeObjects).forEach(category => {
+                if (category === 'effects') return; // Los efectos se manejan aparte
+                
+                for (let i = activeObjects[category].length - 1; i >= 0; i--) {
+                    const element = activeObjects[category][i];
+                    let currentRight = parseFloat(element.style.right);
+                    
+                    let speed = deltaSpeed;
+                    if (category === 'backgroundElements' && element.dataset.speedMultiplier) {
+                        speed *= parseFloat(element.dataset.speedMultiplier);
+                    }
+                    
+                    currentRight += speed;
+                    element.style.right = `${currentRight}px`;
+                    
+                    // Eliminar elementos que salieron de la pantalla
+                    const elementWidth = parseFloat(element.style.width);
+                    if (currentRight > GAME_WIDTH + elementWidth + 50) {
+                        returnObjectToPool(element, category);
+                    }
+                }
+            });
+            
+            // Mover fondo de montañas con parallax
+            mountainBgPosition += deltaSpeed * 0.3;
+            mountainBg.style.backgroundPosition = `-${mountainBgPosition}px bottom`;
+        }
+        
+        function spawnGameElements(currentTime) {
+            // Generar obstáculos
+            if (currentTime - obstacleSpawnTimer > nextObstacleSpawn) {
+                const type = Math.random() < 0.5 ? 'hydrant' : 'bush';
+                createGameElement('obstacles', type);
+                
+                obstacleSpawnTimer = currentTime;
+                
+                // Ajustar intervalos basados en velocidad del juego
+                let dMin = Math.max(800, OBSTACLE_SPAWN_INTERVAL_MIN * (4.5 / gameSpeed));
+                let dMax = Math.max(1500, OBSTACLE_SPAWN_INTERVAL_MAX * (4.5 / gameSpeed));
+                nextObstacleSpawn = getRandomInterval(dMin, dMax);
             }
             
-            // Mostrar pantalla de game over
-            showElement(DOM.gameOverScreen);
+            // Generar recompensas
+            if (currentTime - rewardSpawnTimer > nextRewardSpawn) {
+                const rand = Math.random();
+                let type = 'bone';
+                
+                if (rand < 0.4) type = 'bone';
+                else if (rand < 0.7) type = 'wing';
+                else type = 'coin';
+                
+                createGameElement('rewards', type);
+                
+                rewardSpawnTimer = currentTime;
+                
+                // Ajustar intervalos basados en velocidad del juego
+                let dMinR = Math.max(1500, REWARD_SPAWN_INTERVAL_MIN * (4.5 / gameSpeed));
+                let dMaxR = Math.max(3000, REWARD_SPAWN_INTERVAL_MAX * (4.5 / gameSpeed));
+                nextRewardSpawn = getRandomInterval(dMinR, dMaxR);
+            }
+            
+            // Generar power-ups
+            if (currentTime - powerupSpawnTimer > nextPowerupSpawn) {
+                const rand = Math.random();
+                let type = 'shield';
+                
+                if (rand < 0.4) type = 'shield';
+                else if (rand < 0.7) type = 'magnet';
+                else type = 'clock';
+                
+                const powerup = createGameElement('powerups', type);
+                powerup.dataset.type = type;
+                
+                powerupSpawnTimer = currentTime;
+                nextPowerupSpawn = getRandomInterval(POWERUP_SPAWN_INTERVAL_MIN, POWERUP_SPAWN_INTERVAL_MAX);
+            }
+            
+            // Generar flores (elementos decorativos)
+            if (currentTime - flowerSpawnTimer > nextFlowerSpawn) {
+                createGameElement('backgroundElements', 'flower');
+                
+                flowerSpawnTimer = currentTime;
+                
+                let dMinF = Math.max(800, FLOWER_INTERVAL_MIN * (4.5 / gameSpeed));
+                let dMaxF = Math.max(1800, FLOWER_INTERVAL_MAX * (4.5 / gameSpeed));
+                nextFlowerSpawn = getRandomInterval(dMinF, dMaxF);
+            }
+        }
+        
+        function updateScoreDisplay() {
+            scoreDisplay.textContent = `Puntuación: ${Math.floor(score)}`;
+            
+            if (score > highScore) {
+                highScore = score;
+                highScoreDisplay.textContent = `Récord: ${Math.floor(highScore)}`;
+                localStorage.setItem('lilaHighScore', Math.floor(highScore));
+            }
+        }
+        
+        function showGameOverScreen() {
+            finalScoreDisplay.textContent = `Puntuación Final: ${Math.floor(score)}`;
+            
+            if (score > highScore - 1) { // -1 para tener en cuenta posibles errores de redondeo
+                newHighScoreDisplay.classList.remove('hidden');
+            } else {
+                newHighScoreDisplay.classList.add('hidden');
+            }
+            
+            gameOverScreen.classList.remove('hidden');
+            gameOverScreen.classList.add('screen-fade-in');
         }
         
         function resetGame() {
-            gameState.gameOver = false;
-            gameState.gameStarted = false;
-            gameState.gamePaused = false;
+            // Restablecer estado del juego
+            gameOver = false;
+            gameStarted = false;
+            gamePaused = false;
+            score = 0;
+            gameSpeed = 4.5;
+            lilaX = 60;
+            lilaY = LILA_INITIAL_Y;
+            lilaVelocityY = 0;
+            lilaXVelocity = 0;
+            jumpCount = 0;
+            isJumpingState = false;
+            isDashing = false;
+            canDash = true;
+            lives = 3;
             
-            gameState.score = 0;
-            gameState.gameSpeed = CONFIG.INITIAL_GAME_SPEED;
-            gameState.lives = CONFIG.MAX_LIVES;
+            // Restablecer power-ups
+            hasShield = false;
+            shieldTimeLeft = 0;
+            hasMagnet = false;
+            magnetTimeLeft = 0;
+            isSlowMotion = false;
+            slowMotionTimeLeft = 0;
             
-            gameState.lilaY = CONFIG.LILA_INITIAL_Y;
-            gameState.lilaVelocityY = 0;
-            gameState.jumpCount = 0;
-            gameState.isJumping = false;
-            gameState.isInvulnerable = false;
+            // Limpiar temporizadores
+            clearTimeout(dashTimeoutId);
             
-            // Limpiar power-ups
-            Object.keys(gameState.activePowerUps).forEach(type => {
-                deactivatePowerUp(type);
+            // Eliminar todos los objetos activos
+            Object.keys(activeObjects).forEach(category => {
+                const elements = [...activeObjects[category]];
+                elements.forEach(element => returnObjectToPool(element, category));
             });
             
-            // Limpiar elementos del juego
-            [gameState.obstacles, gameState.rewards, gameState.powerUps, gameState.backgroundElements].forEach(arr => {
-                arr.forEach(el => el.remove());
-                arr.length = 0;
-            });
-            
-            DOM.activePowerUps.innerHTML = '';
-            
+            // Restablecer visuales
+            gameContainer.classList.remove('slow-motion');
             updateLilaVisualState();
-            updateScoreDisplay();
             updateLivesDisplay();
-            updateHighScoreDisplay();
+            updateScoreDisplay();
             
-            // Restaurar pantallas
-            hideElement(DOM.gameOverScreen);
-            hideElement(DOM.pauseScreen);
-            showElement(DOM.startScreen);
+            // Ocultar pantallas
+            gameOverScreen.classList.add('hidden');
+            pauseScreen.classList.add('hidden');
+            startScreen.classList.remove('hidden');
+            
+            // Detener animación de Lila
+            lila.style.animationPlayState = 'paused';
         }
         
-        function showMainMenu() {
+        function startGame() {
+            if (gameStarted) return;
+            
             resetGame();
-            updateHighScoreDisplay();
+            gameStarted = true;
             
-            // Detener música
-            try {
-                DOM.bgMusic.pause();
-                DOM.bgMusic.currentTime = 0;
-            } catch (error) {
-                console.log("Error stopping music:", error);
-            }
+            startScreen.classList.add('screen-fade-out');
+            setTimeout(() => {
+                startScreen.classList.add('hidden');
+                startScreen.classList.remove('screen-fade-out');
+            }, 500);
             
-            hideElement(DOM.gameOverScreen);
-            hideElement(DOM.pauseScreen);
-            showElement(DOM.startScreen);
+            lila.style.animationPlayState = 'running';
+            gameControls.classList.remove('hidden');
+            
+            // Reiniciar temporizadores
+            const now = Date.now();
+            obstacleSpawnTimer = now;
+            nextObstacleSpawn = getRandomInterval(OBSTACLE_SPAWN_INTERVAL_MIN, OBSTACLE_SPAWN_INTERVAL_MAX);
+            
+            rewardSpawnTimer = now;
+            nextRewardSpawn = getRandomInterval(REWARD_SPAWN_INTERVAL_MIN, REWARD_SPAWN_INTERVAL_MAX);
+            
+            powerupSpawnTimer = now;
+            nextPowerupSpawn = getRandomInterval(POWERUP_SPAWN_INTERVAL_MIN, POWERUP_SPAWN_INTERVAL_MAX);
+            
+            flowerSpawnTimer = now;
+            nextFlowerSpawn = getRandomInterval(FLOWER_INTERVAL_MIN, FLOWER_INTERVAL_MAX);
+            
+            // Iniciar el bucle del juego
+            lastFrameTime = performance.now();
+            requestAnimationFrame(gameLoop);
         }
         
-        // ===== Game Loop =====
+        function pauseGame() {
+            if (!gameStarted || gameOver) return;
+            
+            gamePaused = true;
+            pauseScreen.classList.remove('hidden');
+            pauseScreen.classList.add('screen-fade-in');
+            
+            lila.style.animationPlayState = 'paused';
+            
+            // Pausar animaciones
+            document.querySelectorAll('.cloud, .reward, .powerup').forEach(el => {
+                el.style.animationPlayState = 'paused';
+            });
+        }
+        
+        function resumeGame() {
+            if (!gamePaused) return;
+            
+            gamePaused = false;
+            pauseScreen.classList.add('screen-fade-out');
+            
+            setTimeout(() => {
+                pauseScreen.classList.add('hidden');
+                pauseScreen.classList.remove('screen-fade-out');
+            }, 500);
+            
+            lila.style.animationPlayState = 'running';
+            
+            // Reanudar animaciones
+            document.querySelectorAll('.cloud, .reward, .powerup').forEach(el => {
+                el.style.animationPlayState = 'running';
+            });
+            
+            // Retomar el tiempo
+            lastFrameTime = performance.now();
+            requestAnimationFrame(gameLoop);
+        }
+        
+        function endGame() {
+            gameOver = true;
+            gameStarted = false;
+            
+            showGameOverScreen();
+            
+            lila.style.animationPlayState = 'paused';
+            gameControls.classList.add('hidden');
+            
+            // Cancelar el bucle del juego
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+        }
+        
         function gameLoop(timestamp) {
-            if (gameState.gameOver || gameState.gamePaused) return;
+            if (gameOver || gamePaused) return;
             
             // Calcular delta time para movimiento consistente
-            const now = timestamp || Date.now();
-            const deltaTime = now - gameState.lastFrameTime;
-            gameState.lastFrameTime = now;
+            const deltaTime = timestamp - lastFrameTime;
+            lastFrameTime = timestamp;
             
-            // Física de Lila
-            gameState.lilaVelocityY -= CONFIG.GRAVITY * (deltaTime / 16.67);
-            gameState.lilaY += gameState.lilaVelocityY * (deltaTime / 16.67);
+            // Actualizar la posición de Lila
+            updateLilaPosition(deltaTime);
             
-            if (gameState.lilaY <= CONFIG.LILA_INITIAL_Y) {
-                gameState.lilaY = CONFIG.LILA_INITIAL_Y;
-                gameState.lilaVelocityY = 0;
-                gameState.jumpCount = 0;
-                gameState.isJumping = false;
+            // Verificar colisiones
+            handleCollisions();
+            
+            // Generar elementos del juego
+            spawnGameElements(Date.now());
+            
+            // Actualizar elementos del juego
+            updateGameElements(deltaTime);
+            
+            // Actualizar efectos de power-ups
+            updatePowerupEffects(deltaTime);
+            
+            // Aumentar velocidad gradualmente
+            if (gameSpeed < maxGameSpeed && !isSlowMotion) {
+                gameSpeed += gameSpeedIncreaseFactor * deltaTime;
             }
             
-            updateLilaVisualState();
-            
-            // Generar elementos
-            const currentTime = now;
-            
-            // Spawn obstáculos
-            if (currentTime - gameState.obstacleSpawnTimer > gameState.nextObstacleSpawn) {
-                const obstacleType = getRandomType(CONFIG.OBSTACLE_TYPES);
-                createElement(obstacleType, 'obstacle');
-                
-                gameState.obstacleSpawnTimer = currentTime;
-                
-                // Ajustar intervalos según velocidad (más difícil con velocidad)
-                let dMin = Math.max(800, CONFIG.OBSTACLE_MIN_INTERVAL * (CONFIG.INITIAL_GAME_SPEED / gameState.gameSpeed));
-                let dMax = Math.max(1500, CONFIG.OBSTACLE_MAX_INTERVAL * (CONFIG.INITIAL_GAME_SPEED / gameState.gameSpeed));
-                
-                gameState.nextObstacleSpawn = getRandomInterval(dMin, dMax);
-            }
-            
-            // Spawn recompensas
-            if (currentTime - gameState.rewardSpawnTimer > gameState.nextRewardSpawn) {
-                const rewardType = getRandomType(CONFIG.REWARD_TYPES);
-                createElement(rewardType, 'reward');
-                
-                gameState.rewardSpawnTimer = currentTime;
-                
-                let dMinR = Math.max(2000, CONFIG.REWARD_MIN_INTERVAL * (CONFIG.INITIAL_GAME_SPEED / gameState.gameSpeed));
-                let dMaxR = Math.max(3500, CONFIG.REWARD_MAX_INTERVAL * (CONFIG.INITIAL_GAME_SPEED / gameState.gameSpeed));
-                
-                gameState.nextRewardSpawn = getRandomInterval(dMinR, dMaxR);
-            }
-            
-            // Spawn power-ups
-            if (currentTime - gameState.powerUpSpawnTimer > gameState.nextPowerUpSpawn) {
-                const powerUpType = getRandomType(CONFIG.POWERUP_TYPES);
-                createElement(powerUpType, 'power-up');
-                
-                gameState.powerUpSpawnTimer = currentTime;
-                
-                // Power-ups menos frecuentes
-                gameState.nextPowerUpSpawn = getRandomInterval(
-                    CONFIG.POWERUP_MIN_INTERVAL,
-                    CONFIG.POWERUP_MAX_INTERVAL
-                );
-            }
-            
-            // Spawn flores (decoración)
-            if (currentTime - gameState.flowerSpawnTimer > gameState.nextFlowerSpawn) {
-                createBackgroundElement('flower');
-                
-                gameState.flowerSpawnTimer = currentTime;
-                
-                let dMinF = Math.max(1000, CONFIG.FLOWER_MIN_INTERVAL * (CONFIG.INITIAL_GAME_SPEED / gameState.gameSpeed));
-                let dMaxF = Math.max(2000, CONFIG.FLOWER_MAX_INTERVAL * (CONFIG.INITIAL_GAME_SPEED / gameState.gameSpeed));
-                
-                gameState.nextFlowerSpawn = getRandomInterval(dMinF, dMaxF);
-            }
-            
-            // Actualizar elementos
-            updateGameElements(gameState.obstacles, 'game', deltaTime);
-            updateGameElements(gameState.rewards, 'game', deltaTime);
-            updateGameElements(gameState.powerUps, 'game', deltaTime);
-            updateGameElements(gameState.backgroundElements, 'background', deltaTime);
-            
-            // Actualizar parallax de fondo
-            updateParallaxBackground(deltaTime);
-            
-            // Incrementar velocidad gradualmente
-            if (gameState.gameSpeed < CONFIG.MAX_GAME_SPEED) {
-                gameState.gameSpeed += CONFIG.SPEED_INCREASE_FACTOR * (deltaTime / 16.67);
-            }
-            
-            // Incrementar puntuación con el tiempo
-            if (!gameState.gameOver && gameState.gameStarted) {
-                gameState.score += (gameState.gameSpeed / 15) * (deltaTime / 100);
+            // Aumentar puntuación con el tiempo
+            if (!gameOver && gameStarted) {
+                score += (gameSpeed / 15) * (deltaTime / 100);
                 updateScoreDisplay();
             }
             
-            // Continuar loop
-            gameState.animationFrameId = requestAnimationFrame(gameLoop);
+            // Continuar el bucle
+            animationFrameId = requestAnimationFrame(gameLoop);
         }
         
-        function updateParallaxBackground(deltaTime) {
-            // Capas de parallax
-            const farBackground = document.getElementById('far-background');
-            const midBackground = document.getElementById('mid-background');
-            
-            // Mover montañas (más lentas)
-            if (farBackground) {
-                const currentPos = parseFloat(farBackground.dataset.position || 0);
-                const newPos = currentPos + (gameState.gameSpeed * 0.2 * (deltaTime / 16.67));
-                farBackground.dataset.position = newPos % CONFIG.GAME_WIDTH;
-                farBackground.style.backgroundPosition = `-${newPos}px 0`;
-            }
-            
-            // Mover nubes (velocidad media)
-            if (midBackground) {
-                const currentPos = parseFloat(midBackground.dataset.position || 0);
-                const newPos = currentPos + (gameState.gameSpeed * 0.5 * (deltaTime / 16.67));
-                midBackground.dataset.position = newPos % CONFIG.GAME_WIDTH;
-                midBackground.style.backgroundPosition = `-${newPos}px 0`;
-            }
-        }
-        
-        // ===== Event Listeners =====
-        function setupEventListeners() {
-            // Inicio del juego
-            DOM.startButton.addEventListener('click', startGame);
-            
-            // Reinicio y menú
-            DOM.restartButton.addEventListener('click', startGame);
-            DOM.mainMenuButton.addEventListener('click', showMainMenu);
-            
-            // Pausar/reanudar
-            DOM.resumeButton.addEventListener('click', resumeGame);
-            DOM.quitButton.addEventListener('click', showMainMenu);
-            
-            // Controles de teclado
-            document.addEventListener('keydown', (event) => {
-                if (event.code === 'Space' || event.key === 'ArrowUp') {
-                    event.preventDefault();
-                    
-                    if (!gameState.gameStarted && !gameState.gameOver) {
-                        startGame();
-                    } else if (gameState.gameStarted && !gameState.gameOver && !gameState.gamePaused) {
-                        jump();
-                    }
-                } else if (event.code === 'Escape') {
-                    event.preventDefault();
-                    
-                    if (gameState.gameStarted && !gameState.gameOver) {
-                        if (gameState.gamePaused) {
-                            resumeGame();
-                        } else {
-                            pauseGame();
-                        }
-                    }
-                }
-            });
-            
-            // Controles táctiles
-            DOM.gameContainer.addEventListener('touchstart', (event) => {
+        /* ===== EVENTOS ===== */
+        document.addEventListener('keydown', (event) => {
+            if (event.code === 'Space' || event.key === 'ArrowUp') {
                 event.preventDefault();
                 
-                if (!gameState.gameStarted && !gameState.gameOver) {
+                if (!gameStarted && !gameOver) {
                     startGame();
-                } else if (gameState.gameStarted && !gameState.gameOver && !gameState.gamePaused) {
+                } else if (gameStarted && !gameOver && !gamePaused) {
                     jump();
+                } else if (gamePaused) {
+                    resumeGame();
                 }
-            }, { passive: false });
-        }
+            } else if (event.key === 'ArrowRight' && gameStarted && !gameOver && !gamePaused) {
+                event.preventDefault();
+                dash();
+            } else if (event.code === 'Escape' || event.key === 'p' || event.key === 'P') {
+                event.preventDefault();
+                
+                if (gameStarted && !gameOver) {
+                    if (gamePaused) resumeGame();
+                    else pauseGame();
+                }
+            }
+        });
         
-        // ===== Inicialización =====
-        function init() {
-            // Ajustar dimensiones del contenedor
-            CONFIG.GAME_WIDTH = DOM.gameContainer.offsetWidth;
-            CONFIG.GAME_HEIGHT = DOM.gameContainer.offsetHeight;
-            CONFIG.GROUND_HEIGHT = DOM.ground.offsetHeight;
-            CONFIG.LILA_INITIAL_Y = CONFIG.GROUND_HEIGHT;
+        // Eventos táctiles
+        gameContainer.addEventListener('touchstart', (event) => {
+            event.preventDefault();
             
-            // Posicionar a Lila
-            DOM.lila.style.bottom = `${CONFIG.LILA_INITIAL_Y}px`;
-            
-            // Cargar puntuaciones altas
-            updateHighScoreDisplay();
-            
-            // Configurar eventos
-            setupEventListeners();
-            
-            // Mostrar pantalla de inicio
-            showElement(DOM.startScreen);
-        }
+            if (!gameStarted && !gameOver) {
+                startGame();
+            } else if (gamePaused) {
+                resumeGame();
+            }
+        }, { passive: false });
         
-        // Iniciar el juego cuando se carga la página
-        window.addEventListener('load', init);
+        // Eventos de botones en pantalla
+        startButton.addEventListener('click', startGame);
+        restartButton.addEventListener('click', resetGame);
+        resumeButton.addEventListener('click', resumeGame);
+        quitButton.addEventListener('click', resetGame);
+        pauseBtn.addEventListener('click', pauseGame);
+        
+        jumpBtn.addEventListener('click', () => {
+            if (gameStarted && !gameOver && !gamePaused) jump();
+        });
+        
+        dashBtn.addEventListener('click', () => {
+            if (gameStarted && !gameOver && !gamePaused) dash();
+        });
+        
+        // Controles táctiles
+        leftTouch.addEventListener('touchstart', (event) => {
+            event.preventDefault();
+            
+            if (gameStarted && !gameOver && !gamePaused) jump();
+        }, { passive: false });
+        
+        rightTouch.addEventListener('touchstart', (event) => {
+            event.preventDefault();
+            
+            if (gameStarted && !gameOver && !gamePaused) dash();
+        }, { passive: false });
+        
+        // Inicialización
+        updateLivesDisplay();
+        lilaY = LILA_INITIAL_Y;
+        lila.style.bottom = `${lilaY}px`;
+        lila.style.left = `${lilaX}px`;
+        lila.style.animationPlayState = 'paused';
+        updateScoreDisplay();
     </script>
 </body>
 </html>
