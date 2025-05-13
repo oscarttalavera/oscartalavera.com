@@ -91,16 +91,16 @@
         
         .mountain-bg {
             position: absolute;
-            bottom: 70px;
+            bottom: 150px; /* Ajustado para que esté más arriba */
             width: 1200px;
-            height: 150px;
+            height: 180px; /* Ligeramente más alto para mejor proporción */
             background-image: url('mountain_bg.png');
             background-repeat: repeat-x;
             background-position: 0 bottom;
             background-size: auto 100%;
             transform: translateZ(-10px) scale(1.1);
             z-index: 0;
-            opacity: 0.7;
+            opacity: 0.5; /* Reducido para dar sensación de profundidad */
         }
         
         .cloud {
@@ -1086,12 +1086,13 @@
                     elPoints = 10;
                 }
                 
+                // Asegurar que las recompensas no aparezcan demasiado altas
                 randomHeightOffset = Math.random() * 80 + 60;
                 element.style.bottom = `${GROUND_HEIGHT + randomHeightOffset}px`;
             } else if (category === 'powerups') {
                 elWidth = 50;
                 elHeight = 50;
-                randomHeightOffset = Math.random() * 100 + 100;
+                randomHeightOffset = Math.random() * 80 + 100; // Ajustado para no estar demasiado alto
                 element.style.bottom = `${GROUND_HEIGHT + randomHeightOffset}px`;
             } else if (category === 'effects') {
                 if (type === 'hit') {
@@ -1125,14 +1126,22 @@
             if (category !== 'effects' || type === 'hit') {
                 element.style.width = `${elWidth}px`;
                 element.style.height = `${elHeight}px`;
-                element.style.right = `-${elWidth}px`;
+                // Asegurar que los elementos aparezcan fuera de la pantalla pero no demasiado lejos
+                element.style.right = `-${elWidth + 10}px`;
             }
             
             element.dataset.points = elPoints;
             
-            if (category !== 'effects' || category === 'backgroundElements') {
+            // Asegurar que los obstáculos y recompensas se inserten antes del jugador para mantener
+            // el orden z-index correcto
+            if (category === 'obstacles' || category === 'rewards' || category === 'powerups') {
+                // Insertar antes de Lila para que Lila aparezca encima
+                gameContainer.insertBefore(element, lila);
+            } else if (category === 'backgroundElements') {
+                // Elementos de fondo deben ir detrás de todo
                 gameContainer.insertBefore(element, gameContainer.firstChild);
             } else {
+                // Efectos van por encima de todo
                 gameContainer.appendChild(element);
             }
             
@@ -1260,9 +1269,19 @@
         
         /* ===== COLISIONES ===== */
         function checkCollision(element1, element2) {
+            if (!element1 || !element2) return false;
+            
+            // Verificar si los elementos están realmente en el DOM
+            if (!element1.parentNode || !element2.parentNode) return false;
+            
             const rect1 = element1.getBoundingClientRect();
             const rect2 = element2.getBoundingClientRect();
             const gameRect = gameContainer.getBoundingClientRect();
+            
+            // Verificar que los rectángulos tengan dimensiones válidas
+            if (rect1.width === 0 || rect1.height === 0 || rect2.width === 0 || rect2.height === 0) {
+                return false;
+            }
             
             // Ajustar coordenadas al contenedor del juego
             const rect1Adj = {
@@ -1280,8 +1299,8 @@
             };
             
             // Tolerancias para colisiones más precisas
-            const lilaToleranceVertical = LILA_HEIGHT * 0.15;
-            const lilaToleranceHorizontal = LILA_WIDTH * 0.20;
+            const lilaToleranceVertical = LILA_HEIGHT * 0.20; // Aumentado de 0.15 a 0.20
+            const lilaToleranceHorizontal = LILA_WIDTH * 0.25; // Aumentado de 0.20 a 0.25
             
             const lilaEffectiveRect = {
                 top: rect1Adj.top + lilaToleranceVertical,
@@ -1290,7 +1309,12 @@
                 right: rect1Adj.right - lilaToleranceHorizontal,
             };
             
-            const itemTolerance = 2;
+            const itemTolerance = 5; // Aumentado de 2 a 5 para más tolerancia
+            
+            // Solo considerar colisiones con elementos visibles en la pantalla
+            if (rect2Adj.right < 0 || rect2Adj.left > GAME_WIDTH) {
+                return false;
+            }
             
             return !(
                 lilaEffectiveRect.right < rect2Adj.left + itemTolerance ||
@@ -1304,6 +1328,17 @@
             // Verificar colisiones con obstáculos
             for (let i = 0; i < activeObjects.obstacles.length; i++) {
                 const obstacle = activeObjects.obstacles[i];
+                
+                // Asegurarse de que el obstáculo está visible en la pantalla
+                const obstacleRect = obstacle.getBoundingClientRect();
+                const gameContainerRect = gameContainer.getBoundingClientRect();
+                const obstacleRight = obstacleRect.right - gameContainerRect.left;
+                const obstacleLeft = obstacleRect.left - gameContainerRect.left;
+                
+                // Ignorar obstáculos que no están visibles en la pantalla
+                if (obstacleRight < 0 || obstacleLeft > gameContainerRect.width) {
+                    continue;
+                }
                 
                 if (checkCollision(lila, obstacle)) {
                     if (hasShield) {
@@ -1341,6 +1376,16 @@
             for (let i = activeObjects.rewards.length - 1; i >= 0; i--) {
                 const reward = activeObjects.rewards[i];
                 
+                // Verificar si la recompensa está visible en pantalla
+                const rewardRect = reward.getBoundingClientRect();
+                const gameContainerRect = gameContainer.getBoundingClientRect();
+                
+                // Si la recompensa está completamente fuera de la pantalla, ignorar
+                if (rewardRect.right < gameContainerRect.left || 
+                    rewardRect.left > gameContainerRect.right) {
+                    continue;
+                }
+                
                 if (checkCollision(lila, reward) || 
                     (hasMagnet && isItemInMagnetRange(reward))) {
                     
@@ -1368,6 +1413,16 @@
             // Verificar colisiones con power-ups
             for (let i = activeObjects.powerups.length - 1; i >= 0; i--) {
                 const powerup = activeObjects.powerups[i];
+                
+                // Verificar si el power-up está visible en pantalla
+                const powerupRect = powerup.getBoundingClientRect();
+                const gameContainerRect = gameContainer.getBoundingClientRect();
+                
+                // Si el power-up está completamente fuera de la pantalla, ignorar
+                if (powerupRect.right < gameContainerRect.left || 
+                    powerupRect.left > gameContainerRect.right) {
+                    continue;
+                }
                 
                 if (checkCollision(lila, powerup) || 
                     (hasMagnet && isItemInMagnetRange(powerup))) {
@@ -1420,6 +1475,8 @@
         }
         
         function moveTowardsLila(item) {
+            if (!item || !item.parentNode) return;
+            
             const lilaRect = lila.getBoundingClientRect();
             const itemRect = item.getBoundingClientRect();
             const gameRect = gameContainer.getBoundingClientRect();
@@ -1436,16 +1493,27 @@
             
             // Normalizar
             const length = Math.sqrt(dirX * dirX + dirY * dirY);
+            
+            // Evitar división por cero
+            if (length < 1) return;
+            
             const normDirX = dirX / length;
             const normDirY = dirY / length;
             
-            // Velocidad de atracción basada en la distancia
-            const speed = Math.min(10, 300 / length);
+            // Velocidad de atracción basada en la distancia, pero con un mínimo para
+            // asegurarnos de que los objetos llegan rápidamente a Lila cuando están cerca
+            const speed = Math.max(3, Math.min(10, 300 / length));
             
-            // Mover el objeto
+            // Mover el objeto, usando coordenadas absolutas para mayor precisión
             const currentRight = parseFloat(item.style.right);
             const currentBottom = parseFloat(item.style.bottom);
             
+            // Evitar NaN o undefined
+            if (isNaN(currentRight) || isNaN(currentBottom)) {
+                return;
+            }
+            
+            // Actualizar posición con un movimiento suave
             item.style.right = `${currentRight - normDirX * speed}px`;
             item.style.bottom = `${currentBottom + normDirY * speed}px`;
         }
@@ -1486,7 +1554,7 @@
         function activateSlowMotion() {
             isSlowMotion = true;
             gameSpeedBeforeSlow = gameSpeed;
-            gameSpeed *= 0.5; // Reducir velocidad a la mitad
+            gameSpeed *= 0.7; // Reducir velocidad al 70% en lugar del 50%
             slowMotionTimeLeft = 5000; // 5 segundos
             
             // Añadir clase para efecto visual
@@ -1610,8 +1678,11 @@
                     element.style.right = `${currentRight}px`;
                     
                     // Eliminar elementos que salieron de la pantalla
-                    const elementWidth = parseFloat(element.style.width);
-                    if (currentRight > GAME_WIDTH + elementWidth + 50) {
+                    // Usamos margen adicional para asegurar que estén completamente fuera
+                    const elementWidth = parseFloat(element.style.width) || 0;
+                    const safetyMargin = 100; // Margen de seguridad adicional
+                    
+                    if (currentRight > GAME_WIDTH + elementWidth + safetyMargin) {
                         returnObjectToPool(element, category);
                     }
                 }
