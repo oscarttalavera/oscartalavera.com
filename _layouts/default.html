@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="/assets/css/post.css" />
   {% elsif page.layout == 'recipe' %}
   <link rel="stylesheet" href="/assets/css/recipe.css" />
+  {% elsif page.layout == 'car' or page.url contains '/coleccion' %}
+  <link rel="stylesheet" href="/assets/css/collection.css" />
   {% endif %}
   <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
