@@ -14,6 +14,9 @@ collections:
   recetas:
     output: true
     permalink: /recetas/:title/
+  autos:
+    output: true
+    permalink: /coleccion/:title/
 
 # Configuración por defecto para recetas
 defaults:
@@ -22,4 +25,10 @@ defaults:
       type: "recetas"
     values:
       layout: "recipe"
+      author: "Oscar Talavera"
+  - scope:
+      path: ""
+      type: "autos"
+    values:
+      layout: "car"
       author: "Oscar Talavera"
