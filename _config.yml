@@ -14,7 +14,7 @@ collections:
   recetas:
     output: true
     permalink: /recetas/:title/
-  autos:
+  coches:
     output: true
     permalink: /coleccion/:title/
 
@@ -28,7 +28,7 @@ defaults:
       author: "Oscar Talavera"
   - scope:
       path: ""
-      type: "autos"
+      type: "coches"
     values:
       layout: "car"
       author: "Oscar Talavera"
