@@ -13,7 +13,7 @@ color: Blanco
 escala: "1:64"
 material: Die-cast metal
 rareza: Común
-estado: "Blister"
+estado: "Suelto"
 condicion_pintura: 10/10
 fecha_adquisicion:
 lugar_compra:
