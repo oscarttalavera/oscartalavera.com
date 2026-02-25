@@ -13,16 +13,13 @@ rareza: Común
 estado: Perfecto
 fecha_adquisicion: 2021-08-15T00:00:00.000Z
 precio: 25
-imagen: https://static.wikia.nocookie.net/hotwheels/images/a/ab/2009_Corvette_Stingray.jpg/revision/latest?cb=20101026022347
+imagen: https://static.wikia.nocookie.net/hotwheels/images/a/ab/2009_Corvette_Stingray.jpg/
 description: |-
-  Debut series
-  2010 New Models
-  Produced
-  2010 - 2015
-  Designer
-  Greg Padginton
-  Number
-  R0936
+  Debut series: 2010 New Models
+  Produced: 2010 - 2015
+  Designer: Greg Padginton
+  Number: R0936
+enlaces:
+  - titulo: "Hot Wheels Wiki"
+    url: "https://hotwheels.fandom.com/wiki/%2709_Corvette_Stingray_Concept"
 ---
-
-https://hotwheels.fandom.com/wiki/%2709_Corvette_Stingray_Concept
