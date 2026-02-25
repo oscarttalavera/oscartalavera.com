@@ -121,7 +121,16 @@ permalink: /coleccion
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const cars = {{ site.coches | jsonify }};
+  const cars = [
+    {% for car in site.coches %}
+    {
+      "marca": {{ car.marca | jsonify | default: '""' }},
+      "año": {{ car.año | jsonify | default: '""' }},
+      "serie": {{ car.serie | jsonify | default: '""' }},
+      "rareza": {{ car.rareza | jsonify | default: '""' }}
+    }{% if forloop.last == false %},{% endif %}
+    {% endfor %}
+  ];
   const ui = {
     search: document.getElementById('searchInput'),
     brand: document.getElementById('brandFilter'),
