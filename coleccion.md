@@ -4,6 +4,9 @@ title: Mi Colección de Autos
 permalink: /coleccion
 ---
 
+<!-- Forzamos la carga del CSS por si falla el condicional en default.html -->
+<link rel="stylesheet" href="{{ site.baseurl }}/assets/css/collection.css">
+
 <div class="collection-wrapper">
   <!-- Hero Section -->
   <section class="collection-hero">
