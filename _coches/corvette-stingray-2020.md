@@ -25,3 +25,4 @@ description: |-
   R0936
 ---
 
+https://hotwheels.fandom.com/wiki/%2709_Corvette_Stingray_Concept
