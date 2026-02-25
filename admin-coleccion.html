@@ -472,6 +472,8 @@
                             <div class="car-meta">
                                 <span>{{ car.data.marca || 'Desconocida' }}</span>
                                 <span>•</span>
+                                <span>{{ car.data.fabricante || 'S/F' }}</span>
+                                <span>•</span>
                                 <span>{{ car.data.año || car.data.ano || 'S/A' }}</span>
                             </div>
                             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
@@ -495,30 +497,46 @@
                     <form @submit.prevent="saveCar" id="carForm">
                         <h4
                             style="margin-bottom: 1rem; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">
-                            Información Básica</h4>
+                            Identificación General</h4>
                         <div class="form-row">
                             <div class="form-group">
-                                <label>Nombre del Modelo *</label>
+                                <label>Nombre del Modelo (Mostrar) *</label>
                                 <input type="text" v-model="currentCar.nombre" class="form-control" required
-                                    placeholder="Ej: Corvette Stingray">
+                                    placeholder="Ej: Lamborghini Gallardo">
                             </div>
                             <div class="form-group">
-                                <label>Nombre Completo (modelo)</label>
-                                <input type="text" v-model="currentCar.modelo" class="form-control"
-                                    placeholder="Ej: 2020 Corvette Stingray">
+                                <label>Marca del Vehículo Real *</label>
+                                <input type="text" v-model="currentCar.marca" class="form-control" required
+                                    placeholder="Ej: Lamborghini">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label>Marca del Juguete *</label>
-                                <input type="text" v-model="currentCar.marca" class="form-control" required
+                                <label>Modelo del Vehículo Real</label>
+                                <input type="text" v-model="currentCar.modelo" class="form-control"
+                                    placeholder="Ej: Gallardo LP 570-4">
+                            </div>
+                            <div class="form-group">
+                                <label>Año del Vehículo Real</label>
+                                <input type="number" v-model="currentCar.año_modelo" class="form-control"
+                                    placeholder="Ej: 2010">
+                            </div>
+                        </div>
+
+                        <h4
+                            style="margin: 2rem 0 1rem; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">
+                            Identificación del Juguete</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Fabricante *</label>
+                                <input type="text" v-model="currentCar.fabricante" class="form-control" required
                                     placeholder="Ej: Hot Wheels">
                             </div>
                             <div class="form-group">
-                                <label>Año de Lanzamiento</label>
+                                <label>Año de Lanzamiento Juguete</label>
                                 <input type="number" v-model="currentCar.año" class="form-control"
-                                    placeholder="Ej: 2021">
+                                    placeholder="Ej: 2010">
                             </div>
                         </div>
 
@@ -526,59 +544,63 @@
                             <div class="form-group">
                                 <label>Serie</label>
                                 <input type="text" v-model="currentCar.serie" class="form-control"
-                                    placeholder="Ej: HW Exotics">
+                                    placeholder="Ej: 2011 New Models">
                             </div>
                             <div class="form-group">
                                 <label>Número en Colección</label>
                                 <input type="text" v-model="currentCar.numero_coleccion" class="form-control"
-                                    placeholder="Ej: 185/250">
+                                    placeholder="Ej: 009/244">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Toy Number</label>
+                            <input type="text" v-model="currentCar.toy_number" class="form-control"
+                                placeholder="Ej: R0936">
+                        </div>
+
+                        <h4
+                            style="margin: 2rem 0 1rem; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">
+                            Detalles Físicos</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Color</label>
+                                <input type="text" v-model="currentCar.color" class="form-control"
+                                    placeholder="Ej: Amarillo">
+                            </div>
+                            <div class="form-group">
+                                <label>Escala</label>
+                                <input type="text" v-model="currentCar.escala" class="form-control"
+                                    placeholder="Ej: 1:64">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label>Color</label>
-                                <input type="text" v-model="currentCar.color" class="form-control"
-                                    placeholder="Ej: Rojo">
+                                <label>Material</label>
+                                <input type="text" v-model="currentCar.material" class="form-control"
+                                    placeholder="Ej: Die-cast metal">
                             </div>
                             <div class="form-group">
-                                <label>Escala</label>
-                                <input type="text" v-model="currentCar.escala" class="form-control"
-                                    placeholder="Ej: 1:64" value="1:64">
+                                <label>Rareza</label>
+                                <input type="text" v-model="currentCar.rareza" class="form-control"
+                                    placeholder="Ej: Común">
                             </div>
                         </div>
 
                         <h4
                             style="margin: 2rem 0 1rem; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">
-                            Detalles Físicos y Adquisición</h4>
-
+                            Estado y Adquisición</h4>
                         <div class="form-row">
-                            <div class="form-group">
-                                <label>Fabricante Juguete</label>
-                                <input type="text" v-model="currentCar.fabricante" class="form-control"
-                                    placeholder="Ej: Mattel">
-                            </div>
                             <div class="form-group">
                                 <label>Estado del Artículo</label>
-                                <select v-model="currentCar.estado" class="form-control">
-                                    <option value="Perfecto">Perfecto / Mint</option>
-                                    <option value="Bueno">Bueno</option>
-                                    <option value="Regular">Regular</option>
-                                    <option value="Malo">Malo / Jugado</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Rareza</label>
-                                <input type="text" v-model="currentCar.rareza" class="form-control"
-                                    placeholder="Ej: Común, Treasure Hunt, Super">
+                                <input type="text" v-model="currentCar.estado" class="form-control"
+                                    placeholder="Ej: Mint, Blister, Loose">
                             </div>
                             <div class="form-group">
-                                <label>Precio Compra ($)</label>
-                                <input type="number" v-model="currentCar.precio" class="form-control"
-                                    placeholder="Ej: 25">
+                                <label>Condición Pintura</label>
+                                <input type="text" v-model="currentCar.condicion_pintura" class="form-control"
+                                    placeholder="Ej: 10/10">
                             </div>
                         </div>
 
@@ -593,19 +615,39 @@
                                     placeholder="Ej: Walmart">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label>Precio Compra ($)</label>
+                            <input type="number" v-model="currentCar.precio" class="form-control" placeholder="Ej: 25">
+                        </div>
+
+                        <h4
+                            style="margin: 2rem 0 1rem; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">
+                            Auto Real (Opcional)</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Motor</label>
+                                <input type="text" v-model="currentCar.auto_real.motor" class="form-control"
+                                    placeholder="Ej: 5.2L V10">
+                            </div>
+                            <div class="form-group">
+                                <label>Tipo</label>
+                                <input type="text" v-model="currentCar.auto_real.tipo" class="form-control"
+                                    placeholder="Ej: Superdeportivo">
+                            </div>
+                        </div>
 
                         <h4
                             style="margin: 2rem 0 1rem; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">
                             Contenido y Media</h4>
 
                         <div class="form-group">
-                            <label>Ruta Imagen Principal (Ej: /assets/img/coches/auto.jpg)</label>
+                            <label>Ruta o Link Imagen Principal</label>
                             <input type="text" v-model="currentCar.imagen" class="form-control">
                         </div>
 
                         <div class="form-group">
                             <label>Descripción Breve (Frontmatter)</label>
-                            <textarea v-model="currentCar.description" class="form-control" rows="2"></textarea>
+                            <textarea v-model="currentCar.descripcion" class="form-control" rows="2"></textarea>
                         </div>
 
                         <div class="form-group">
@@ -650,11 +692,13 @@
                 const currentFile = ref('');
 
                 const currentCar = reactive({
-                    nombre: '', modelo: '', marca: 'Hot Wheels', año: '', serie: '',
-                    color: '', numero_coleccion: '', escala: '1:64', fabricante: 'Mattel',
-                    material: 'Die-cast metal', rareza: 'Común', estado: 'Perfecto',
+                    nombre: '', marca: '', modelo: '', año_modelo: '',
+                    fabricante: 'Hot Wheels', año: '', serie: '', numero_coleccion: '', toy_number: '',
+                    color: '', escala: '1:64', material: 'Die-cast metal', rareza: 'Común',
+                    estado: 'Mint', condicion_pintura: '10/10',
                     fecha_adquisicion: '', lugar_compra: '', precio: null, imagen: '',
-                    description: '', content: ''
+                    descripcion: '', content: '',
+                    auto_real: { fabricante: '', año_modelo: '', motor: '', tipo: '' }
                 });
 
                 const notification = reactive({
@@ -797,10 +841,25 @@
 
                         // Copy data
                         Object.keys(currentCar).forEach(key => {
-                            if (key !== 'content') {
+                            if (key !== 'content' && key !== 'auto_real') {
                                 currentCar[key] = car.data[key] || '';
                             }
                         });
+
+                        // Handle nested object carefully
+                        if (car.data.auto_real) {
+                            currentCar.auto_real = {
+                                fabricante: car.data.auto_real.fabricante || '',
+                                año_modelo: car.data.auto_real.año_modelo || '',
+                                motor: car.data.auto_real.motor || '',
+                                tipo: car.data.auto_real.tipo || ''
+                            };
+                        } else {
+                            currentCar.auto_real = { fabricante: '', año_modelo: '', motor: '', tipo: '' };
+                        }
+
+                        // Default description handling if user used old field
+                        if (!currentCar.descripcion && car.data.description) currentCar.descripcion = car.data.description;
                         currentCar.content = car.content || '';
                     } else {
                         isEditing.value = false;
@@ -808,13 +867,16 @@
                         currentFile.value = '';
 
                         // Reset defaults
-                        Object.keys(currentCar).forEach(key => currentCar[key] = '');
-                        currentCar.marca = 'Hot Wheels';
+                        Object.keys(currentCar).forEach(key => {
+                            if (key !== 'auto_real') currentCar[key] = '';
+                        });
+                        currentCar.fabricante = 'Hot Wheels';
                         currentCar.escala = '1:64';
-                        currentCar.fabricante = 'Mattel';
                         currentCar.material = 'Die-cast metal';
                         currentCar.rareza = 'Común';
-                        currentCar.estado = 'Perfecto';
+                        currentCar.estado = 'Mint';
+                        currentCar.condicion_pintura = '10/10';
+                        currentCar.auto_real = { fabricante: '', año_modelo: '', motor: '', tipo: '' };
                     }
                     showModal.value = true;
                     document.body.style.overflow = 'hidden';
@@ -837,7 +899,21 @@
                         const dataToSave = { ...currentCar };
                         delete dataToSave.content;
 
-                        // Clean up empty fields
+                        // Clean up empty fields and nested auto_real
+                        const autoRealEmpty = Object.values(dataToSave.auto_real).every(val => val === '' || val === null);
+                        if (autoRealEmpty) {
+                            delete dataToSave.auto_real;
+                        } else {
+                            // If user typed some, clean the empty ones inside auto_real
+                            Object.keys(dataToSave.auto_real).forEach(k => {
+                                if (dataToSave.auto_real[k] === '' || dataToSave.auto_real[k] === null) delete dataToSave.auto_real[k];
+                            });
+                            // Make sure auto_real.fabricante mirrors real car `marca` closely if missing
+                            if (!dataToSave.auto_real.fabricante && dataToSave.marca) dataToSave.auto_real.fabricante = dataToSave.marca;
+                            if (!dataToSave.auto_real.año_modelo && dataToSave.año_modelo) dataToSave.auto_real.año_modelo = dataToSave.año_modelo;
+                        }
+
+                        // Remove main empty fields
                         Object.keys(dataToSave).forEach(k => {
                             if (dataToSave[k] === '' || dataToSave[k] === null) delete dataToSave[k];
                         });

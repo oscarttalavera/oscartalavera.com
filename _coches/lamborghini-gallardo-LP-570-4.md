@@ -1,16 +1,20 @@
 ---
 layout: car
 nombre: Lamborghini Gallardo LP 570-4 Superleggera
-modelo: Gallardo LP 570-4 Superleggera
 marca: Lamborghini
+modelo: Gallardo LP 570-4 Superleggera
+año_modelo: 2010
+fabricante: Hot Wheels
 año: 2010
 serie: 2011 New Models
-color: Amarillo "Giallo Midas"
 numero_coleccion: 009/244
+toy_number:
+color: Amarillo "Giallo Midas"
 escala: "1:64"
-fabricante: Hot Wheels
 material: Die-cast metal con detalles especiales
+rareza: Común
 estado: Mint
+condicion_pintura: 10/10
 fecha_adquisicion: 2019-12-20
 lugar_compra: Soriana
 precio: 25

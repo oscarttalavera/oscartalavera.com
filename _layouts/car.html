@@ -25,6 +25,7 @@ layout: default
     letter-spacing: -1px;
     background: linear-gradient(135deg, #fff 0%, #a0a5b0 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 1.5rem;
   }
@@ -328,20 +329,20 @@ layout: default
     <div class="car-info-sidebar">
 
       <div class="info-card glass-panel">
-        <h3>Ficha Técnica</h3>
+        <h3>Ficha Técnica (Juguete)</h3>
 
         <div class="detail-row">
-          <span class="detail-label">Modelo</span>
-          <span class="detail-value">{{ page.modelo | default: page.nombre }}</span>
+          <span class="detail-label">Fabricante</span>
+          <span class="detail-value">{{ page.fabricante | default: "Hot Wheels" }}</span>
         </div>
         <div class="detail-row">
           <span class="detail-label">Escala</span>
           <span class="detail-value">{{ page.escala | default: "1:64" }}</span>
         </div>
-        {% if page.numero_coleccion %}
+        {% if page.material %}
         <div class="detail-row">
-          <span class="detail-label"># Colección</span>
-          <span class="detail-value">{{ page.numero_coleccion }}</span>
+          <span class="detail-label">Material</span>
+          <span class="detail-value">{{ page.material }}</span>
         </div>
         {% endif %}
         {% if page.color %}
@@ -350,22 +351,50 @@ layout: default
           <span class="detail-value">{{ page.color }}</span>
         </div>
         {% endif %}
-        {% if page.fabricante and page.fabricante != page.marca %}
-        <div class="detail-row">
-          <span class="detail-label">Fabricante</span>
-          <span class="detail-value">{{ page.fabricante }}</span>
-        </div>
-        {% endif %}
         {% if page.pais_origen %}
         <div class="detail-row">
           <span class="detail-label">País Origen</span>
           <span class="detail-value">{{ page.pais_origen }}</span>
         </div>
         {% endif %}
+        {% if page.serie %}
+        <div class="detail-row">
+          <span class="detail-label">Serie</span>
+          <span class="detail-value">{{ page.serie }}</span>
+        </div>
+        {% endif %}
+        {% if page.numero_coleccion %}
+        <div class="detail-row">
+          <span class="detail-label"># Colección</span>
+          <span class="detail-value">{{ page.numero_coleccion }}</span>
+        </div>
+        {% endif %}
+        {% if page.toy_number %}
+        <div class="detail-row">
+          <span class="detail-label">Toy Number</span>
+          <span class="detail-value">{{ page.toy_number }}</span>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="info-card glass-panel">
+        <h3>Estado y Condición</h3>
+        {% if page.rareza %}
+        <div class="detail-row">
+          <span class="detail-label">Rareza</span>
+          <span class="detail-value">{{ page.rareza }}</span>
+        </div>
+        {% endif %}
         {% if page.estado %}
         <div class="detail-row">
           <span class="detail-label">Estado actual</span>
           <span class="detail-value">{{ page.estado }}</span>
+        </div>
+        {% endif %}
+        {% if page.condicion_pintura %}
+        <div class="detail-row">
+          <span class="detail-label">Pintura</span>
+          <span class="detail-value">{{ page.condicion_pintura }}</span>
         </div>
         {% endif %}
       </div>

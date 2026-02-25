@@ -1,21 +1,30 @@
 ---
 layout: car
+nombre: Porsche 917 LH
 marca: Porsche
 modelo: 917 LH
 año_modelo: 1970
-color: Blanco
 fabricante: "Hot Wheels"
 año: 2018
-numero_coleccion: "269/365"
 serie: "Legends of Speed 8/10"
+numero_coleccion: "269/365"
 toy_number: "FJY12"
+color: Blanco
 escala: "1:64"
-estado: "Blister"                   # Loose (Suelto), Blister (Cerrado), Mint
+material: Die-cast metal
+rareza: Común
+estado: "Blister"
 condicion_pintura: 10/10
-precio: 45
 fecha_adquisicion:
+lugar_compra:
+precio: 45
 imagen: https://static.wikia.nocookie.net/hotwheels/images/a/a8/Porsche917LHX6999.jpg
 descripcion:
+auto_real:
+  fabricante: Porsche
+  año_modelo: 1970
+  motor:
+  tipo: Carreras
 tags:
   - porsche
   - Le Mans
