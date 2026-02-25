@@ -14,7 +14,7 @@ estado: "Blister"                   # Loose (Suelto), Blister (Cerrado), Mint
 condicion_pintura: 10/10
 precio: 45
 fecha_adquisicion:
-imagen: https://hotwheels.fandom.com/wiki/Porsche_917_LH?file=Porsche917LHX6999.jpg
+imagen: https://static.wikia.nocookie.net/hotwheels/images/a/a8/Porsche917LHX6999.jpg
 descripcion:
 tags:
   - porsche
