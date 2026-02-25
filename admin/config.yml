@@ -1,0 +1,52 @@
+backend:
+  name: git-gateway
+  branch: main # Branch to update (optional; defaults to master)
+
+media_folder: "assets/img/coches" # Media files will be stored in the repo under this dir
+public_folder: "/assets/img/coches" # The src attribute for uploaded media will begin with /assets/img/coches
+
+collections:
+  - name: "coches" # Used in routes, e.g., /admin/collections/coches
+    label: "Colección de Autos" # Used in the UI
+    folder: "_coches" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template
+    fields: # The fields for each document, usually in front matter
+      - {label: "Layout", name: "layout", widget: "hidden", default: "car"}
+      - {label: "Nombre del Modelo", name: "nombre", widget: "string"}
+      - {label: "Marca", name: "marca", widget: "string"}
+      - {label: "Año", name: "año", widget: "number", value_type: "int"}
+      - {label: "Serie", name: "serie", widget: "string", required: false}
+      - {label: "Color", name: "color", widget: "string", required: false}
+      - {label: "Número de Colección", name: "numero_coleccion", widget: "string", required: false}
+      - {label: "Rareza", name: "rareza", widget: "select", options: ["Normal", "Treasure Hunt", "Super Treasure Hunt", "Chase", "Exclusivo", "Edición Especial"], required: false}
+      - {label: "Imagen Principal", name: "imagen", widget: "image", required: false}
+      - {label: "Galería de Imágenes", name: "imagenes", widget: "list", field: {label: "Imagen", name: "imagen", widget: "image"}, required: false}
+      - {label: "Modelo (Base)", name: "modelo", widget: "string", required: false}
+      - {label: "Escala", name: "escala", widget: "string", default: "1:64", required: false}
+      - {label: "Fabricante", name: "fabricante", widget: "string", default: "Hot Wheels", required: false}
+      - {label: "País de Origen", name: "pais_origen", widget: "string", required: false}
+      - {label: "Material", name: "material", widget: "string", required: false}
+      - {label: "Estado", name: "estado", widget: "select", options: ["Cerrado", "Abierto", "Modificado", "Dañado"], required: false}
+      - {label: "Fecha de Adquisición", name: "fecha_adquisicion", widget: "date", required: false}
+      - {label: "Lugar de Compra", name: "lugar_compra", widget: "string", required: false}
+      - {label: "Precio", name: "precio", widget: "number", value_type: "float", required: false}
+      - {label: "Descripción Corta", name: "description", widget: "text", required: false}
+      - label: "Auto Real"
+        name: "auto_real"
+        widget: "object"
+        required: false
+        fields:
+          - {label: "Fabricante Real", name: "fabricante", widget: "string", required: false}
+          - {label: "Año Modelo", name: "año_modelo", widget: "string", required: false}
+          - {label: "Motor", name: "motor", widget: "string", required: false}
+          - {label: "Tipo", name: "tipo", widget: "string", required: false}
+      - {label: "Etiquetas (Tags)", name: "tags", widget: "list", required: false}
+      - label: "Enlaces Relacionados"
+        name: "enlaces"
+        widget: "list"
+        required: false
+        fields:
+          - {label: "Título", name: "titulo", widget: "string"}
+          - {label: "URL", name: "url", widget: "string"}
+      - {label: "Notas de la Entrada (Cuerpo)", name: "body", widget: "markdown", required: false}

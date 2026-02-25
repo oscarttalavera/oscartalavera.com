@@ -4,295 +4,220 @@ title: Mi Colección de Autos
 permalink: /coleccion
 ---
 
-<section class="section">
-  <h1>Mi Colección de Autos a Escala</h1>
-  <p class="collection-intro">Una pasión que comenzó en la infancia y que sigue creciendo. Aquí documento mi colección de Hot Wheels y otros autos a escala, con detalles de cada modelo, año de adquisición y datos curiosos.</p>
-  
-  <!-- Estadísticas de la colección -->
-  <div class="collection-stats">
-    <div class="stat-card">
-      <div class="stat-number" id="totalCars">{{ site.coches.size }}</div>
-      <div class="stat-label">Total de Modelos</div>
+<div class="collection-wrapper">
+  <!-- Hero Section -->
+  <section class="collection-hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Mi Colección de Autos a Escala</h1>
+      <p class="hero-subtitle">Una pasión que comenzó en la infancia y sigue creciendo. Explora mi colección de modelos a escala, con detalles y curiosidades de cada pieza.</p>
     </div>
-    <div class="stat-card">
-      <div class="stat-number" id="totalBrands">0</div>
-      <div class="stat-label">Marcas</div>
+    
+    <!-- Estadísticas flotantes tipo Glassmorphism -->
+    <div class="collection-stats glass-panel">
+      <div class="stat-item">
+        <div class="stat-value" id="totalCars">{{ site.coches.size }}</div>
+        <div class="stat-label">Modelos</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="totalBrands">0</div>
+        <div class="stat-label">Marcas</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="totalSeries">0</div>
+        <div class="stat-label">Series</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="premiumCount">0</div>
+        <div class="stat-label">Ediciones Especiales</div>
+      </div>
     </div>
-    <div class="stat-card">
-      <div class="stat-number" id="totalSeries">0</div>
-      <div class="stat-label">Series</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number" id="newestYear">0</div>
-      <div class="stat-label">Año Más Reciente</div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section class="section">
-  <!-- Controles de búsqueda y filtros -->
-  <div class="collection-controls">
-    <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Buscar por nombre, modelo, serie..." class="search-input">
-      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="8"></circle>
-        <path d="M21 21l-4.35-4.35"></path>
-      </svg>
+  <!-- Barra de controles -->
+  <section class="controls-section glass-panel">
+    <div class="search-bar">
+      <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
+      <input type="text" id="searchInput" placeholder="Buscar modelo, tarjeta, serie, año...">
     </div>
     
-    <div class="view-toggle">
-      <button class="view-btn active" data-view="grid" title="Vista en cuadrícula">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="3" width="7" height="7"></rect>
-          <rect x="14" y="3" width="7" height="7"></rect>
-          <rect x="14" y="14" width="7" height="7"></rect>
-          <rect x="3" y="14" width="7" height="7"></rect>
-        </svg>
-      </button>
-      <button class="view-btn" data-view="list" title="Vista en lista">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="8" y1="6" x2="21" y2="6"></line>
-          <line x1="8" y1="12" x2="21" y2="12"></line>
-          <line x1="8" y1="18" x2="21" y2="18"></line>
-          <line x1="3" y1="6" x2="3" y2="6"></line>
-          <line x1="3" y1="12" x2="3" y2="12"></line>
-          <line x1="3" y1="18" x2="3" y2="18"></line>
-        </svg>
+    <div class="filters-wrap">
+      <div class="filter-box">
+        <select id="brandFilter" class="custom-select">
+          <option value="all">Marcas</option>
+        </select>
+      </div>
+      <div class="filter-box">
+        <select id="seriesFilter" class="custom-select">
+          <option value="all">Series</option>
+        </select>
+      </div>
+      <div class="filter-box">
+        <select id="yearFilter" class="custom-select">
+          <option value="all">Año</option>
+        </select>
+      </div>
+      <button id="clearFilters" class="btn-clear" title="Restablecer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path></svg>
       </button>
     </div>
+
+    <div class="view-toggles">
+      <button class="view-btn active" data-view="grid">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      </button>
+      <button class="view-btn" data-view="list">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- Contenedor Resultados -->
+  <div class="results-banner">
+    <span id="resultsCount">{{ site.coches.size }}</span> modelos encontrados
   </div>
-  
-  <!-- Filtros -->
-  <div class="filters-container">
-    <div class="filter-group">
-      <label for="brandFilter">Marca:</label>
-      <select id="brandFilter" class="filter-select">
-        <option value="all">Todas las marcas</option>
-      </select>
-    </div>
-    
-    <div class="filter-group">
-      <label for="yearFilter">Año:</label>
-      <select id="yearFilter" class="filter-select">
-        <option value="all">Todos los años</option>
-      </select>
-    </div>
-    
-    <div class="filter-group">
-      <label for="seriesFilter">Serie:</label>
-      <select id="seriesFilter" class="filter-select">
-        <option value="all">Todas las series</option>
-      </select>
-    </div>
-    
-    <div class="filter-group">
-      <label for="colorFilter">Color:</label>
-      <select id="colorFilter" class="filter-select">
-        <option value="all">Todos los colores</option>
-      </select>
-    </div>
-    
-    <button id="clearFilters" class="clear-filters-btn">Limpiar filtros</button>
-  </div>
-  
-  <!-- Resultados -->
-  <div class="results-info">
-    <span id="resultsCount">{{ site.coches.size }}</span> modelo(s) encontrado(s)
-  </div>
-  
-  <!-- Grid/Lista de autos -->
-  <div class="cars-container grid-view" id="carsContainer">
+
+  <!-- Contenedor de Tarjetas -->
+  <div class="cars-grid view-grid" id="carsContainer">
     {% for car in site.coches %}
-    <div class="car-card" 
+    <article class="car-item glow-card"
          data-brand="{{ car.marca | downcase }}" 
          data-year="{{ car.año }}" 
-         data-series="{{ car.serie | downcase }}" 
-         data-color="{{ car.color | downcase }}"
+         data-series="{{ car.serie | downcase }}"
+         data-rarity="{{ car.rareza | downcase }}"
          data-search="{{ car.nombre | downcase }} {{ car.modelo | downcase }} {{ car.serie | downcase }} {{ car.marca | downcase }}">
-      <a href="{{ car.url }}" class="car-link">
-        <div class="car-image" style="background-image: url('{{ car.imagen | default: '/assets/img/coches/default-car.jpg' }}');"></div>
-        <div class="car-info">
-          <h3 class="car-name">{{ car.nombre }}</h3>
-          <div class="car-meta">
-            <span class="car-brand">{{ car.marca }}</span>
-            <span class="car-year">{{ car.año }}</span>
-          </div>
-          <div class="car-series">{{ car.serie }}</div>
+      <a href="{{ site.baseurl }}{{ car.url }}" class="car-anchor">
+        <div class="car-img-box">
+          <img src="{{ site.baseurl }}{{ car.imagen | default: '/assets/img/coches/default-car.jpg' }}" alt="{{ car.nombre }}" loading="lazy">
           {% if car.rareza %}
-          <div class="car-rarity rarity-{{ car.rareza | downcase }}">{{ car.rareza }}</div>
+            <div class="car-badge rarity-badge" data-level="{{ car.rareza | downcase | replace: ' ', '-' }}">
+              {{ car.rareza }}
+            </div>
           {% endif %}
         </div>
-      </a>
-    </div>
-    {% endfor %}
-  </div>
-  
-  <!-- Lista view template (inicialmente oculta) -->
-  <div class="cars-list hidden" id="carsList">
-    {% for car in site.coches %}
-    <div class="car-list-item"
-         data-brand="{{ car.marca | downcase }}" 
-         data-year="{{ car.año }}" 
-         data-series="{{ car.serie | downcase }}" 
-         data-color="{{ car.color | downcase }}"
-         data-search="{{ car.nombre | downcase }} {{ car.modelo | downcase }} {{ car.serie | downcase }} {{ car.marca | downcase }}">
-      <a href="{{ car.url }}" class="car-list-link">
-        <div class="car-list-image" style="background-image: url('{{ car.imagen | default: '/assets/img/coches/default-car.jpg' }}');"></div>
-        <div class="car-list-content">
-          <h3 class="car-list-name">{{ car.nombre }}</h3>
-          <div class="car-list-details">
-            <span class="detail"><strong>Marca:</strong> {{ car.marca }}</span>
-            <span class="detail"><strong>Año:</strong> {{ car.año }}</span>
-            <span class="detail"><strong>Serie:</strong> {{ car.serie }}</span>
-            <span class="detail"><strong>Color:</strong> {{ car.color }}</span>
-            {% if car.numero_coleccion %}
-            <span class="detail"><strong>#:</strong> {{ car.numero_coleccion }}</span>
-            {% endif %}
+        <div class="car-details">
+          <div class="car-context">
+            <span class="brand-tag">{{ car.marca }}</span>
+            <span class="year-tag">{{ car.año }}</span>
           </div>
-          {% if car.rareza %}
-          <div class="car-rarity rarity-{{ car.rareza | downcase }}">{{ car.rareza }}</div>
-          {% endif %}
+          <h3 class="car-title-text">{{ car.nombre }}</h3>
+          <p class="car-series-text">{{ car.serie }} {% if car.numero_coleccion %} <span class="col-num">#{{ car.numero_coleccion }}</span>{% endif %}</p>
         </div>
+        <div class="hover-indicator">Ver Detalles ➝</div>
       </a>
-    </div>
+    </article>
     {% endfor %}
   </div>
-</section>
+
+  <!-- Estado Vacío -->
+  <div id="noResults" class="empty-state" style="display: none;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
+    <h3>No encontramos modelos</h3>
+    <p>Intenta cambiar los filtros o terminología.</p>
+  </div>
+</div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
   const cars = {{ site.coches | jsonify }};
-  const searchInput = document.getElementById('searchInput');
-  const brandFilter = document.getElementById('brandFilter');
-  const yearFilter = document.getElementById('yearFilter');
-  const seriesFilter = document.getElementById('seriesFilter');
-  const colorFilter = document.getElementById('colorFilter');
-  const clearFiltersBtn = document.getElementById('clearFilters');
-  const resultsCount = document.getElementById('resultsCount');
-  const carsContainer = document.getElementById('carsContainer');
-  const carsList = document.getElementById('carsList');
-  const viewBtns = document.querySelectorAll('.view-btn');
-  
-  let currentView = 'grid';
-  
-  // Inicializar filtros
-  function initializeFilters() {
-    const brands = [...new Set(cars.map(car => car.marca))].sort();
-    const years = [...new Set(cars.map(car => car.año))].sort((a, b) => b - a);
-    const series = [...new Set(cars.map(car => car.serie))].sort();
-    const colors = [...new Set(cars.map(car => car.color))].sort();
-    
-    brands.forEach(brand => {
-      const option = document.createElement('option');
-      option.value = brand.toLowerCase();
-      option.textContent = brand;
-      brandFilter.appendChild(option);
+  const ui = {
+    search: document.getElementById('searchInput'),
+    brand: document.getElementById('brandFilter'),
+    year: document.getElementById('yearFilter'),
+    series: document.getElementById('seriesFilter'),
+    clearBtn: document.getElementById('clearFilters'),
+    count: document.getElementById('resultsCount'),
+    container: document.getElementById('carsContainer'),
+    noResults: document.getElementById('noResults'),
+    viewBtns: document.querySelectorAll('.view-btn'),
+    items: document.querySelectorAll('.car-item')
+  };
+
+  const populateSelect = (selectElem, optionsMap) => {
+    const sorted = [...new Set(optionsMap.filter(Boolean))].sort();
+    sorted.forEach(val => {
+      const opt = document.createElement('option');
+      opt.value = val.toString().toLowerCase();
+      opt.textContent = val;
+      selectElem.appendChild(opt);
     });
+  };
+
+  const initData = () => {
+    const brands = cars.map(c => c.marca);
+    const years = cars.map(c => c.año).sort((a,b) => b - a);
+    const series = cars.map(c => c.serie);
     
-    years.forEach(year => {
-      const option = document.createElement('option');
-      option.value = year;
-      option.textContent = year;
-      yearFilter.appendChild(option);
+    populateSelect(ui.brand, brands);
+    
+    const uniqueYears = [...new Set(years.filter(Boolean))];
+    uniqueYears.forEach(y => {
+      const opt = document.createElement('option');
+      opt.value = y.toString();
+      opt.textContent = y;
+      ui.year.appendChild(opt);
     });
+
+    populateSelect(ui.series, series);
+
+    document.getElementById('totalBrands').innerText = [...new Set(brands.filter(Boolean))].length;
+    document.getElementById('totalSeries').innerText = [...new Set(series.filter(Boolean))].length;
     
-    series.forEach(serie => {
-      const option = document.createElement('option');
-      option.value = serie.toLowerCase();
-      option.textContent = serie;
-      seriesFilter.appendChild(option);
+    const premiumCount = cars.filter(c => c.rareza && c.rareza.toLowerCase() !== 'normal' && c.rareza.toLowerCase() !== 'común').length;
+    document.getElementById('premiumCount').innerText = premiumCount;
+  };
+
+  const applyFilters = () => {
+    const term = ui.search.value.toLowerCase().trim();
+    const b = ui.brand.value;
+    const y = ui.year.value;
+    const s = ui.series.value;
+    
+    let visible = 0;
+
+    ui.items.forEach(el => {
+      const ds = el.dataset;
+      const matchTerm = term === '' || ds.search.includes(term);
+      const matchB = b === 'all' || ds.brand === b;
+      const matchY = y === 'all' || ds.year === y;
+      const matchS = s === 'all' || ds.series === s;
+
+      if (matchTerm && matchB && matchY && matchS) {
+        el.style.display = '';
+        setTimeout(() => el.style.opacity = '1', 10);
+        visible++;
+      } else {
+        el.style.opacity = '0';
+        setTimeout(() => el.style.display = 'none', 300);
+      }
     });
-    
-    colors.forEach(color => {
-      const option = document.createElement('option');
-      option.value = color.toLowerCase();
-      option.textContent = color;
-      colorFilter.appendChild(option);
+
+    ui.count.innerText = visible;
+    ui.noResults.style.display = visible === 0 ? 'flex' : 'none';
+  };
+
+  ui.viewBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      ui.viewBtns.forEach(b => b.classList.remove('active'));
+      const t = e.currentTarget;
+      t.classList.add('active');
+      const v = t.dataset.view;
+      ui.container.className = `cars-grid view-${v}`;
     });
-    
-    // Actualizar estadísticas
-    document.getElementById('totalBrands').textContent = brands.length;
-    document.getElementById('totalSeries').textContent = series.length;
-    document.getElementById('newestYear').textContent = Math.max(...years);
-  }
-  
-  // Filtrar autos
-  function filterCars() {
-    const searchTerm = searchInput.value.toLowerCase();
-    const brandValue = brandFilter.value;
-    const yearValue = yearFilter.value;
-    const seriesValue = seriesFilter.value;
-    const colorValue = colorFilter.value;
-    
-    const container = currentView === 'grid' ? carsContainer : carsList;
-    const items = container.querySelectorAll(currentView === 'grid' ? '.car-card' : '.car-list-item');
-    
-    let visibleCount = 0;
-    
-    items.forEach(item => {
-      const searchData = item.dataset.search;
-      const brand = item.dataset.brand;
-      const year = item.dataset.year;
-      const series = item.dataset.series;
-      const color = item.dataset.color;
-      
-      const matchesSearch = searchData.includes(searchTerm);
-      const matchesBrand = brandValue === 'all' || brand === brandValue;
-      const matchesYear = yearValue === 'all' || year === yearValue;
-      const matchesSeries = seriesValue === 'all' || series === seriesValue;
-      const matchesColor = colorValue === 'all' || color === colorValue;
-      
-      const isVisible = matchesSearch && matchesBrand && matchesYear && matchesSeries && matchesColor;
-      
-      item.style.display = isVisible ? 'block' : 'none';
-      if (isVisible) visibleCount++;
-    });
-    
-    resultsCount.textContent = visibleCount;
-  }
-  
-  // Cambiar vista
-  function changeView(view) {
-    currentView = view;
-    
-    viewBtns.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.view === view);
-    });
-    
-    if (view === 'grid') {
-      carsContainer.classList.remove('hidden');
-      carsList.classList.add('hidden');
-    } else {
-      carsContainer.classList.add('hidden');
-      carsList.classList.remove('hidden');
-    }
-    
-    filterCars(); // Re-aplicar filtros en la nueva vista
-  }
-  
-  // Limpiar filtros
-  function clearFilters() {
-    searchInput.value = '';
-    brandFilter.value = 'all';
-    yearFilter.value = 'all';
-    seriesFilter.value = 'all';
-    colorFilter.value = 'all';
-    filterCars();
-  }
-  
-  // Event listeners
-  searchInput.addEventListener('input', filterCars);
-  brandFilter.addEventListener('change', filterCars);
-  yearFilter.addEventListener('change', filterCars);
-  seriesFilter.addEventListener('change', filterCars);
-  colorFilter.addEventListener('change', filterCars);
-  clearFiltersBtn.addEventListener('click', clearFilters);
-  
-  viewBtns.forEach(btn => {
-    btn.addEventListener('click', () => changeView(btn.dataset.view));
   });
+
+  ui.search.addEventListener('input', applyFilters);
+  ui.brand.addEventListener('change', applyFilters);
+  ui.year.addEventListener('change', applyFilters);
+  ui.series.addEventListener('change', applyFilters);
   
-  // Inicializar
-  initializeFilters();
+  ui.clearBtn.addEventListener('click', () => {
+    ui.search.value = '';
+    ui.brand.value = 'all';
+    ui.year.value = 'all';
+    ui.series.value = 'all';
+    applyFilters();
+  });
+
+  initData();
 });
 </script>
