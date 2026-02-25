@@ -15,7 +15,7 @@ fecha_adquisicion: 2019-12-20
 lugar_compra: Soriana
 precio: 25
 imagen: https://static.wikia.nocookie.net/hotwheels/images/e/e9/Lamborghini_gallardo_lp_570-4_superleggera.png
-description:
+descripcion:
 auto_real:
   fabricante: Lamborghini
   año_modelo: 2010
