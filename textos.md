@@ -33,11 +33,11 @@ permalink: /textos
         {% endif %}
       </div>
       {% if post.image %}
-      <div class="w-full h-[180px] bg-black grayscale overflow-hidden mt-8">
+      <div class="w-full h-[180px] bg-black overflow-hidden mt-8">
         <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('{{ post.image }}')"></div>
       </div>
       {% else %}
-      <div class="w-full h-[180px] bg-black grayscale overflow-hidden mt-8">
+      <div class="w-full h-[180px] bg-black overflow-hidden mt-8">
         <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('/assets/img/conocimiento.jpg')"></div>
       </div>
       {% endif %}
