@@ -181,7 +181,7 @@ title: Inicio
   justify-content: space-between;
   padding: 2.25rem 2rem 1.75rem;
   border: 1px solid rgba(255,255,255,0.08);
-  border-top: 2px solid rgba(255,255,255,0.12);
+  border-top: 2px solid rgba(255,255,255,1);
   overflow: hidden;
   cursor: default;
   will-change: transform, opacity;
@@ -195,7 +195,7 @@ title: Inicio
 .citation-card:hover {
   background-color: #fff;
   color: #000;
-  border-top-color: #000 !important;
+  border-top-color: #000;
 }
 .citation-card:hover .citation-icon,
 .citation-card:hover .citation-author,
@@ -229,9 +229,9 @@ title: Inicio
 
 .citation-text {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.8;
   letter-spacing: 0.01em;
   margin-bottom: 1.5rem;
@@ -283,15 +283,6 @@ title: Inicio
 
 <script>
 (function () {
-  /* Subtle accent-line opacities cycling per card on shuffle */
-  var ACCENTS = [
-    'rgba(255,255,255,0.08)',
-    'rgba(255,255,255,0.18)',
-    'rgba(255,255,255,0.30)',
-    'rgba(255,255,255,0.50)',
-    'rgba(255,255,255,0.70)',
-  ];
-
   function rand(min, max) {
     return Math.random() * (max - min) + min;
   }
@@ -304,13 +295,6 @@ title: Inicio
     return arr;
   }
 
-  /* Assign random accent-line brightness to each card */
-  function randomizeAccents(cards) {
-    cards.forEach(function (card) {
-      var accent = ACCENTS[Math.floor(Math.random() * ACCENTS.length)];
-      card.style.borderTopColor = accent;
-    });
-  }
 
   function scatterAndShuffle(cards, grid, callback) {
     /* Phase 1 — scatter-out with stagger */
