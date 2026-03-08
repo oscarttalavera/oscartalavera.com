@@ -68,62 +68,114 @@ title: Inicio
                     Definiendo la filosofía detrás del oficio y el esfuerzo.
                 </p>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
+<div id="citations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
 <div class="group border border-white/10 p-10 hover:bg-white hover:text-black transition-all duration-500">
 <span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">waves</span>
-<p class="text-2xl font-light italic leading-relaxed mb-8">"Ningún hombre puede cruzar el mismo río dos veces, porque no será el mismo río y él no será el mismo hombre."</p>
+<p class="text-base font-light italic leading-relaxed mb-8">"Ningún hombre puede cruzar el mismo río dos veces, porque no será el mismo río y él no será el mismo hombre."</p>
 <span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Heráclito</span>
 </div>
 
 <div class="group border border-white/10 p-10 bg-zinc-900 hover:bg-white hover:text-black transition-all duration-500">
 <span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">auto_awesome</span>
-<p class="text-2xl font-light italic leading-relaxed mb-8">"Always have something to look forward to."</p>
+<p class="text-base font-light italic leading-relaxed mb-8">"Always have something to look forward to."</p>
 <span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Autor desconocido</span>
 </div>
 
 <div class="group border border-white/10 p-10 hover:bg-white hover:text-black transition-all duration-500">
 <span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">psychology</span>
-<p class="text-2xl font-light italic leading-relaxed mb-8">"Cuando entiendes que toda opinión es una visión cargada de historia personal, entenderás que todo juicio es una confesión."</p>
+<p class="text-base font-light italic leading-relaxed mb-8">"Cuando entiendes que toda opinión es una visión cargada de historia personal, entenderás que todo juicio es una confesión."</p>
 <span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Nikola Tesla</span>
 </div>
 
 <div class="group border border-white/10 p-10 bg-zinc-900 hover:bg-white hover:text-black transition-all duration-500">
 <span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">restaurant</span>
-<p class="text-2xl font-light italic leading-relaxed mb-8">"Cooking is a feeling, baking is a science, grilling is an art."</p>
+<p class="text-base font-light italic leading-relaxed mb-8">"Cooking is a feeling, baking is a science, grilling is an art."</p>
 <span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Alguien en Reddit</span>
 </div>
 
 <div class="group border border-white/10 p-10 hover:bg-white hover:text-black transition-all duration-500">
 <span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">school</span>
-<p class="text-2xl font-light italic leading-relaxed mb-8">"Es imposible aprender lo que crees que ya sabes."</p>
+<p class="text-base font-light italic leading-relaxed mb-8">"Es imposible aprender lo que crees que ya sabes."</p>
 <span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Epicteto</span>
 </div>
 
 <div class="group border border-white/10 p-10 bg-zinc-900 hover:bg-white hover:text-black transition-all duration-500">
 <span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">payments</span>
-<p class="text-2xl font-light italic leading-relaxed mb-8">"La pobreza cobra intereses."</p>
+<p class="text-base font-light italic leading-relaxed mb-8">"La pobreza cobra intereses."</p>
 <span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Lo escuché en un podcast</span>
 </div>
 
 <div class="group border border-white/10 p-10 hover:bg-white hover:text-black transition-all duration-500">
 <span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">air</span>
-<p class="text-2xl font-light italic leading-relaxed mb-8">"Ningún viento es favorable para el que no sabe a dónde se dirige."</p>
+<p class="text-base font-light italic leading-relaxed mb-8">"Ningún viento es favorable para el que no sabe a dónde se dirige."</p>
 <span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Séneca</span>
 </div>
 
 <div class="group border border-white/10 p-10 bg-zinc-900 hover:bg-white hover:text-black transition-all duration-500">
 <span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">shield</span>
-<p class="text-2xl font-light italic leading-relaxed mb-8">"No toda batalla vale la pena. Ganar no siempre significa vencer al otro; a veces, la verdadera victoria es elegir no pelear."</p>
+<p class="text-base font-light italic leading-relaxed mb-8">"No toda batalla vale la pena. Ganar no siempre significa vencer al otro; a veces, la verdadera victoria es elegir no pelear."</p>
 <span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Pensador anónimo</span>
 </div>
 
 <div class="group border border-white/10 p-10 hover:bg-white hover:text-black transition-all duration-500">
 <span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">travel_explore</span>
-<p class="text-2xl font-light italic leading-relaxed mb-8">"Alguien de un país en desarrollo que puede viajar a un país de primer mundo es más rico que alguien de un país de primer mundo que no se puede permitir viajar a un país en desarrollo."</p>
+<p class="text-base font-light italic leading-relaxed mb-8">"Alguien de un país en desarrollo que puede viajar a un país de primer mundo es más rico que alguien de un país de primer mundo que no se puede permitir viajar a un país en desarrollo."</p>
 <span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">OT (Idea de regadera)</span>
 </div>
 </div>
 </section>
+
+<style>
+#citations-grid > div {
+  transition: opacity 0.5s ease;
+}
+#citations-grid.shuffling > div {
+  opacity: 0;
+}
+</style>
+
+<script>
+(function() {
+  function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function shuffleCitations() {
+    const grid = document.getElementById('citations-grid');
+    if (!grid) return;
+    const cards = Array.from(grid.children);
+
+    // Fade out
+    grid.classList.add('shuffling');
+
+    setTimeout(function() {
+      // Reorder DOM
+      shuffleArray(cards).forEach(function(card) {
+        grid.appendChild(card);
+      });
+      // Fade in
+      grid.classList.remove('shuffling');
+    }, 500);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initial shuffle so first load order is already random
+    const grid = document.getElementById('citations-grid');
+    if (!grid) return;
+    const cards = Array.from(grid.children);
+    shuffleArray(cards).forEach(function(card) {
+      grid.appendChild(card);
+    });
+
+    // Shuffle every 8 seconds
+    setInterval(shuffleCitations, 8000);
+  });
+})();
+</script>
 
 <!-- Proyectos / Negocios Section -->
 <section class="py-32 px-6 lg:px-24 bg-white text-black" id="proyectos">
