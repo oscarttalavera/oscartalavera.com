@@ -313,36 +313,54 @@ title: Inicio
   }
 
   function scatterAndShuffle(cards, grid, callback) {
-    /* Phase 1 — crisp scatter: tighter range, less rotation = monospace feel */
+    /* Phase 1 — scatter-out with stagger */
     cards.forEach(function (card, i) {
       var tx  = rand(-20, 20);
       var ty  = rand(-12, 12);
       var rot = rand(-3, 3);
+      card.style.transition = 'transform 0.4s ease-in-out, opacity 0.4s ease-in-out';
       card.style.transitionDelay = (i * 24) + 'ms';
       card.style.transform = 'translate(' + tx + 'px,' + ty + 'px) rotate(' + rot + 'deg)';
       card.classList.add('scattering');
     });
 
-    /* Phase 2 — settle: shorter wait, stagger resets for snappier resolve */
-    var wait = 480 + cards.length * 24;
+    /* Phase 2 — reorder DOM while everything is invisible */
+    var scatterDone = 480 + cards.length * 24;
     setTimeout(function () {
       shuffleArray(cards).forEach(function (card) { grid.appendChild(card); });
       randomizeAccents(Array.from(grid.children));
-      requestAnimationFrame(function () {
-        Array.from(grid.children).forEach(function (card, i) {
-          card.style.transitionDelay = (i * 18) + 'ms';
-          card.style.transform = '';
-          card.classList.remove('scattering');
-        });
-        /* clear delays after settle completes */
-        setTimeout(function () {
-          Array.from(grid.children).forEach(function (card) {
-            card.style.transitionDelay = '0ms';
-          });
-          if (callback) callback();
-        }, 400 + cards.length * 18);
+
+      /* Set all cards to a clean, consistent entry start state (no jitter) */
+      Array.from(grid.children).forEach(function (card) {
+        card.style.transition = 'none';
+        card.style.transitionDelay = '0ms';
+        card.style.transform = 'translateY(14px)';
+        /* keep opacity:0 via .scattering — class stays for now */
       });
-    }, wait);
+
+      /* Phase 3 — slide in with stagger, one rAF later so start state sticks */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          Array.from(grid.children).forEach(function (card, i) {
+            card.style.transition =
+              'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),' +
+              'opacity 0.45s ease-out';
+            card.style.transitionDelay = (i * 40) + 'ms';
+            card.style.transform = '';
+            card.classList.remove('scattering');
+          });
+          /* clean up after all cards settled */
+          var settleDone = 550 + cards.length * 40;
+          setTimeout(function () {
+            Array.from(grid.children).forEach(function (card) {
+              card.style.transition = '';
+              card.style.transitionDelay = '0ms';
+            });
+            if (callback) callback();
+          }, settleDone);
+        });
+      });
+    }, scatterDone);
   }
 
   var busy = false;
