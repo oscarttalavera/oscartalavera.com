@@ -8,9 +8,8 @@ title: Inicio
 <div class="flex flex-col items-center gap-10 max-w-4xl mx-auto opacity-0 animate-[fadeIn_1.5s_ease-out_forwards]">
 
 <div class="flex flex-col items-center gap-4 hover:scale-105 transition-transform duration-700 cursor-default hover:drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
-    <h1 class="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter text-white leading-none text-center drop-shadow-[0_0_30px_rgba(255,255,255,0.05)]">
-        Archivo<br/><span class="text-white/80">Personal</span>
-    </h1>
+    <img src="/assets/img/OT logo bco.png" alt="Logo" class="max-w-[200px] md:max-w-[300px] h-auto object-contain drop-shadow-[0_0_30px_rgba(255,255,255,0.05)]">
+    <h1 class="sr-only">Archivo Personal</h1>
     <span class="text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] text-zinc-500 mt-2 block text-center">
         Por Oscar Talavera
     </span>
