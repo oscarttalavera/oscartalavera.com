@@ -3,495 +3,161 @@ layout: custom
 title: Inicio
 ---
 
-<section class="section">
-  <h2>¿Qué hay aquí?</h2>
-  <p>Ideas, aficiones, hobbies, creaciones y experimentos. Un espacio personal en constante evolución.</p>
+<!-- Hero Section -->
+<section class="min-h-[85vh] flex flex-col justify-center px-6 lg:px-24 pt-24 pb-12" id="hero">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+<div class="lg:col-span-7 flex flex-col gap-8">
+<div class="inline-block border border-white/20 px-4 py-1 self-start">
+<span class="text-[10px] uppercase tracking-[0.4em]">Mechanical Engineer &amp; Athlete</span>
+</div>
+<h1 class="text-6xl md:text-8xl lg:text-9xl font-black leading-[0.85] tracking-tighter uppercase mb-2">
+                        Oscar<br/>Talavera
+                    </h1>
+<p class="text-lg md:text-xl max-w-xl leading-relaxed text-zinc-400 font-light">
+                        Engineering precision meets athletic discipline. A multifaceted approach to life through 
+                        <span class="text-white">mechanical design</span>, <span class="text-white">combat sports</span>, 
+                        and the curated pursuit of <span class="text-white">audiophile excellence</span>.
+                    </p>
+</div>
+<div class="lg:col-span-5 relative group">
+<div class="aspect-[4/5] bg-zinc-900 overflow-hidden border border-white/10">
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
+<div class="w-full h-full bg-cover bg-center grayscale contrast-125 transition-transform duration-700 group-hover:scale-105" data-alt="High contrast black and white portrait of a man in athletic gear" style="background-image: url('/assets/img/oscarotc-portrait.jpg')">
+</div>
+</div>
+<div class="absolute -bottom-6 -left-6 bg-white text-black p-6 hidden md:block">
+<span class="block text-3xl font-black italic">01</span>
+<span class="text-[10px] uppercase tracking-widest font-bold">The Profile</span>
+</div>
+</div>
+</div>
 </section>
 
-<section class="section bio-section">
-  <h2>Bio</h2>
-  <ul class="bio-list">
-    <li><strong>Ingeniero</strong> — Egresado del ITCH en 2018-19, con experiencia en las industrias aeroespacial y automotriz. Hoy lidero <a href="https://www.tritic3d.com" target="_blank" class="tritic-link">Tritic</a>, brindando soluciones creativas de ingeniería y fabricación.</li>
-    <li><strong>Hobbista del MMA</strong> — Aficionado a las artes marciales desde niño. Hoy disfruto el deporte del MMA, desde el sillón frente a la tele, hasta el tatami y la jaula.</li>
-    <li><strong>Home barista</strong> — Disfruto el café, pero creo que disfruto más de preparar café.</li>
-    <li><strong>Coleccionista</strong> — Mi colección favorita y más grande es de autos a escala (Hot Wheels sobre todo), pero tengo otras pequeñas colecciones como cuchillos-navajas, herramienta y cosas para cocinar.</li>
-    <li><strong>DJ y audiófilo</strong> — Fan de la música desde chavalito, fui productor en "mis tiempos" y DJ hasta la fecha. Me gusta escuchar mucha música y mejor si es en Hi-Fi.</li>  </ul>
+<!-- Marquee / Traits -->
+<div class="py-12 border-y border-white/10 overflow-hidden mt-20 relative">
+<style>
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+</style>
+<div class="animate-marquee gap-12">
+<span class="text-4xl md:text-6xl font-black uppercase tracking-tighter opacity-20">Home Barista</span>
+<span class="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white">Collector</span>
+<span class="text-4xl md:text-6xl font-black uppercase tracking-tighter opacity-20">DJ &amp; Audiophile</span>
+<span class="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white">MMA Athlete</span>
+<span class="text-4xl md:text-6xl font-black uppercase tracking-tighter opacity-20">Design Thinker</span>
+<span class="text-4xl md:text-6xl font-black uppercase tracking-tighter opacity-20">Home Barista</span>
+<span class="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white">Collector</span>
+<span class="text-4xl md:text-6xl font-black uppercase tracking-tighter opacity-20">DJ &amp; Audiophile</span>
+<span class="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white">MMA Athlete</span>
+<span class="text-4xl md:text-6xl font-black uppercase tracking-tighter opacity-20">Design Thinker</span>
+</div>
+</div>
+
+<!-- Citations Section -->
+<section class="py-32 px-6 lg:px-24" id="citations">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+<h2 class="text-4xl md:text-6xl font-black uppercase tracking-tighter">Citations &amp;<br/>Perspectives</h2>
+<div class="h-px bg-white/20 flex-grow mx-12 hidden lg:block mb-4"></div>
+<p class="text-zinc-500 text-sm max-w-xs uppercase tracking-widest leading-loose">
+                    Defining the philosophy behind the craft and the grind.
+                </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-0">
+<div class="group border border-white/10 p-10 hover:bg-white hover:text-black transition-all duration-500">
+<span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">architecture</span>
+<p class="text-2xl font-light italic leading-relaxed mb-8">"Engineering is the art of organizing design within the constraints of reality."</p>
+<span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">On Mechanical Design</span>
+</div>
+<div class="group border border-white/10 p-10 bg-zinc-900 hover:bg-white hover:text-black transition-all duration-500">
+<span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">sports_mma</span>
+<p class="text-2xl font-light italic leading-relaxed mb-8">"Discipline is the bridge between distant goals and tangible accomplishment."</p>
+<span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">On MMA Training</span>
+</div>
+<div class="group border border-white/10 p-10 hover:bg-white hover:text-black transition-all duration-500">
+<span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">coffee</span>
+<p class="text-2xl font-light italic leading-relaxed mb-8">"Precision in every pour, every strike, and every single beat."</p>
+<span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">On Craft &amp; Hobby</span>
+</div>
+</div>
 </section>
 
-<section class="section quotes-carousel-section">
-  <h2>Citas / Ideas random / Meditaciones / Reflexiones</h2>
-  <div class="quotes-carousel">
-    <div class="quotes-track">
-      <div class="quote-item">
-        <blockquote>
-          <p>Ningún hombre puede cruzar el mismo río dos veces, porque no será el mismo río y él no será el mismo hombre.</p>
-          <cite>— Heráclito</cite>
-        </blockquote>
-      </div>
-      <div class="quote-item">
-        <blockquote>
-          <p>Always have something to look forward to.</p>
-          <cite>— Autor desconocido</cite>
-        </blockquote>
-      </div>
-      <div class="quote-item">
-        <blockquote>
-          <p>Cuando entiendes que toda opinión es una visión cargada de historia personal, entenderás que todo juicio es una confesión.</p>
-          <cite>— Nikola Tesla</cite>
-        </blockquote>
-      </div>
-      <div class="quote-item">
-        <blockquote>
-          <p>Cooking is a feeling, baking is a science, grilling is an art.</p>
-          <cite>— Alguien en Reddit</cite>
-        </blockquote>
-      </div>
-      <div class="quote-item">
-        <blockquote>
-          <p>Es imposible aprender lo que crees que ya sabes.</p>
-          <cite>— Epicteto</cite>
-        </blockquote>
-      </div>
-      <div class="quote-item">
-        <blockquote>
-          <p>La pobreza cobra intereses.</p>
-          <cite>— Lo escuché en un podcast (creo)</cite>
-        </blockquote>
-      </div>
-      <div class="quote-item">
-        <blockquote>
-          <p>Ningún viento es favorable para el que no sabe a dónde se dirige.</p>
-          <cite>— Séneca</cite>
-        </blockquote>
-      </div>
-      <div class="quote-item">
-        <blockquote>
-          <p>No toda batalla vale la pena. Ganar no siempre significa vencer al otro; a veces, la verdadera victoria es elegir no pelear.</p>
-          <cite>– Pensador anónimo</cite>
-        </blockquote>
-      </div>
-      <div class="quote-item">
-        <blockquote>
-          <p>Alguien de un país en desarrollo que puede viajar a un país de primer mundo es más rico que alguien de un país de primer mundo que no se puede permitir viajar a un país en desarrollo.</p>
-          <cite>— OT (Idea de regadera)</cite>
-        </blockquote>
-      </div>
-    </div>
-    <div class="quotes-navigation">
-      <button class="carousel-nav prev" aria-label="Cita anterior">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-      </button>
-      <button class="carousel-nav next" aria-label="Siguiente cita">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </button>
-    </div>
-  </div>
-  <div class="carousel-dots"></div>
+<!-- Tritic3D Section -->
+<section class="py-32 px-6 lg:px-24 bg-white text-black" id="tritic3d">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+<div class="relative">
+<div class="aspect-square bg-zinc-200 overflow-hidden">
+<div class="w-full h-full bg-cover bg-center grayscale" data-alt="Industrial 3D printer working on a complex mechanical part" style="background-image: url('/assets/img/huevo-simulacion.jpg')">
+</div>
+</div>
+<div class="absolute top-10 -right-10 bg-black text-white p-8 hidden xl:block">
+<p class="text-5xl font-black">Tritic3D</p>
+</div>
+</div>
+<div class="flex flex-col gap-8">
+<h2 class="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">Professional<br/>Conversion</h2>
+<p class="text-lg leading-relaxed text-zinc-700">
+                        Advanced 3D printing solutions and mechanical design consulting. We convert complex conceptual ideas into tangible engineering realities with extreme precision.
+                    </p>
+<ul class="space-y-4 text-sm font-bold uppercase tracking-widest pl-0 ml-0 list-none">
+<li class="flex items-center gap-3"><span class="w-2 h-2 bg-black rounded-full"></span> Rapid Prototyping</li>
+<li class="flex items-center gap-3"><span class="w-2 h-2 bg-black rounded-full"></span> Mechanical Systems Design</li>
+<li class="flex items-center gap-3"><span class="w-2 h-2 bg-black rounded-full"></span> Custom Component Manufacturing</li>
+</ul>
+<a href="https://www.tritic3d.com" target="_blank" class="bg-black text-white px-10 py-5 self-start font-black uppercase tracking-widest hover:bg-zinc-800 transition-colors flex items-center gap-4">
+                        Visit Tritic3D <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+</div>
 </section>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const track = document.querySelector('.quotes-track');
-  const items = document.querySelectorAll('.quote-item');
-  const prevBtn = document.querySelector('.carousel-nav.prev');
-  const nextBtn = document.querySelector('.carousel-nav.next');
-  const dotsContainer = document.querySelector('.carousel-dots');
-  
-  let currentIndex = 0;
-  let autoplayInterval;
-  let isHovering = false;
-  
-  // Determinar cuántas citas mostrar según el ancho de pantalla
-  function getItemsPerView() {
-    if (window.innerWidth >= 1024) return 3;
-    if (window.innerWidth >= 768) return 2;
-    return 1;
-  }
-  
-  // Obtener el gap entre items desde CSS
-  function getGapSize() {
-    const styles = window.getComputedStyle(track);
-    const gap = styles.getPropertyValue('gap');
-    return parseInt(gap) || 32; // 32px es el valor por defecto (--spacing-md)
-  }
-  
-  // Crear indicadores de navegación
-  function createDots() {
-    dotsContainer.innerHTML = '';
-    const itemsPerView = getItemsPerView();
-    const totalPages = Math.ceil(items.length / itemsPerView);
-    
-    for (let i = 0; i < totalPages; i++) {
-      const dot = document.createElement('button');
-      dot.className = 'carousel-dot';
-      dot.setAttribute('aria-label', `Ir a página ${i + 1} de citas`);
-      if (i === 0) dot.classList.add('active');
-      dot.addEventListener('click', () => goToIndex(i * itemsPerView));
-      dotsContainer.appendChild(dot);
-    }
-  }
-  
-  // Actualizar indicadores activos
-  function updateDots() {
-    const dots = document.querySelectorAll('.carousel-dot');
-    const itemsPerView = getItemsPerView();
-    const currentPage = Math.floor(currentIndex / itemsPerView);
-    
-    dots.forEach((dot, index) => {
-      dot.classList.toggle('active', index === currentPage);
-    });
-  }
-  
-  // Calcular el desplazamiento correcto incluyendo gaps
-  function calculateOffset(index) {
-    const itemWidth = items[0].offsetWidth;
-    const gap = getGapSize();
-    
-    // Calculamos el offset como: (ancho del item + gap) * índice
-    return index * (itemWidth + gap);
-  }
-  
-  // Navegar a un índice específico
-  function goToIndex(index) {
-    const itemsPerView = getItemsPerView();
-    const maxIndex = Math.max(0, items.length - itemsPerView);
-    currentIndex = Math.max(0, Math.min(index, maxIndex));
-    
-    const offset = calculateOffset(currentIndex);
-    
-    track.style.transform = `translateX(-${offset}px)`;
-    updateDots();
-  }
-  
-  // Navegación siguiente
-  function next() {
-    const itemsPerView = getItemsPerView();
-    const maxIndex = Math.max(0, items.length - itemsPerView);
-    
-    if (currentIndex >= maxIndex) {
-      goToIndex(0); // Volver al inicio
-    } else {
-      goToIndex(currentIndex + itemsPerView);
-    }
-  }
-  
-  // Navegación anterior
-  function prev() {
-    const itemsPerView = getItemsPerView();
-    
-    if (currentIndex <= 0) {
-      goToIndex(Math.max(0, items.length - itemsPerView)); // Ir al final
-    } else {
-      goToIndex(currentIndex - itemsPerView);
-    }
-  }
-  
-  // Autoplay
-  function startAutoplay() {
-    if (!isHovering) {
-      autoplayInterval = setInterval(next, 5000);
-    }
-  }
-  
-  function stopAutoplay() {
-    clearInterval(autoplayInterval);
-  }
-  
-  // Event listeners
-  nextBtn.addEventListener('click', () => {
-    next();
-    stopAutoplay();
-    startAutoplay();
-  });
-  
-  prevBtn.addEventListener('click', () => {
-    prev();
-    stopAutoplay();
-    startAutoplay();
-  });
-  
-  // Pausar autoplay en hover
-  const carousel = document.querySelector('.quotes-carousel');
-  carousel.addEventListener('mouseenter', () => {
-    isHovering = true;
-    stopAutoplay();
-  });
-  
-  carousel.addEventListener('mouseleave', () => {
-    isHovering = false;
-    startAutoplay();
-  });
-  
-  // Soporte táctil para móviles
-  let touchStartX = 0;
-  let touchEndX = 0;
-  
-  track.addEventListener('touchstart', e => {
-    touchStartX = e.changedTouches[0].screenX;
-  }, false);
-  
-  track.addEventListener('touchend', e => {
-    touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
-  }, false);
-  
-  function handleSwipe() {
-    const swipeThreshold = 50;
-    const diff = touchStartX - touchEndX;
-    
-    if (Math.abs(diff) > swipeThreshold) {
-      if (diff > 0) {
-        next(); // Swipe left
-      } else {
-        prev(); // Swipe right
-      }
-      stopAutoplay();
-      startAutoplay();
-    }
-  }
-  
-  // Manejar redimensionamiento de ventana
-  let resizeTimeout;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      createDots();
-      goToIndex(currentIndex); // Mantener el índice actual pero recalcular posición
-    }, 250);
-  });
-  
-  // Inicializar
-  createDots();
-  startAutoplay();
-});
-</script>
+<!-- Blog Section -->
+<section class="py-32 px-6 lg:px-24 bg-black" id="blog">
+<div class="flex justify-between items-end mb-16">
+<div>
+<span class="text-[10px] uppercase tracking-[0.5em] text-white/40 block mb-4 italic">Latest Musings</span>
+<h2 class="text-5xl md:text-7xl font-black uppercase tracking-tighter">Recent Posts</h2>
+</div>
+<a class="text-xs font-bold uppercase tracking-widest border-b border-white pb-1 hover:text-white/60 transition-colors" href="/textos">View All Posts</a>
+</div>
 
-<section class="section tritic-section">
-  <div class="tritic-card">
-    <div class="tritic-content">
-      <h3>Tritic</h3>
-      <p>Soluciones creativas de ingeniería y fabricación. Transformando ideas en realidad tangible.</p>
-      <a href="https://www.tritic3d.com" target="_blank" class="tritic-cta">Visitar Tritic →</a>
-    </div>
-  </div>
-</section>
-
-<section class="section recent-posts-section">
-  <div class="section-header">
-    <h2>Textos recientes</h2>
-    <a href="/textos" class="ver-todos">Ver todos →</a>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-px bg-white/10 border border-white/10">
+{% for post in site.posts limit:2 %}
+<article class="relative bg-black p-8 lg:p-12 hover:bg-zinc-900 transition-colors group cursor-pointer {% if forloop.index == 2 %}border-t lg:border-t-0 lg:border-l border-white/10{% endif %}">
+  <div class="flex justify-between items-start mb-12 relative z-10">
+    <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-500">{{ post.date | date: "%b %d, %Y" }} {% if post.tags.size > 0 %}/ {{ post.tags[0] }}{% endif %}</span>
+    <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity">north_east</span>
   </div>
   
-  <div class="posts-carousel-container">
-    <div class="posts-carousel">
-      <div class="posts-track">
-        {% for post in site.posts limit:5 %}
-        <article class="post-card-modern">
-          <a href="{{ post.url }}" class="post-card-link">
-            <div class="post-card-image" style="background-image: url('{{ post.image }}');">
-              <div class="post-card-overlay"></div>
-            </div>
-            <div class="post-card-content">
-              <div class="post-meta">
-                <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" }}</time>
-                {% if post.tags.size > 0 %}
-                <span class="post-category">{{ post.tags[0] }}</span>
-                {% endif %}
-              </div>
-              <h3 class="post-title">{{ post.title }}</h3>
-              {% if post.description %}
-              <p class="post-excerpt">{{ post.description | truncatewords: 15 }}</p>
-              {% elsif post.excerpt %}
-              <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 15 }}</p>
-              {% endif %}
-              <div class="post-footer">
-                <span class="read-more">Leer más →</span>
-              </div>
-            </div>
-          </a>
-        </article>
-        {% endfor %}
-      </div>
+  <h3 class="text-3xl font-bold mb-6 group-hover:underline decoration-1 underline-offset-8 relative z-10">{{ post.title }}</h3>
+  
+  <p class="text-zinc-400 font-light leading-relaxed mb-8 relative z-10">
+    {% if post.description %}
+      {{ post.description | truncatewords: 20 }}
+    {% elsif post.excerpt %}
+      {{ post.excerpt | strip_html | truncatewords: 20 }}
+    {% endif %}
+  </p>
+  
+  {% if post.image %}
+  <div class="w-full h-[200px] bg-zinc-800 grayscale overflow-hidden relative z-10">
+    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('{{ post.image }}')">
     </div>
-    
-    <button class="carousel-nav posts-prev" aria-label="Post anterior">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="15 18 9 12 15 6"></polyline>
-      </svg>
-    </button>
-    <button class="carousel-nav posts-next" aria-label="Siguiente post">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="9 18 15 12 9 6"></polyline>
-      </svg>
-    </button>
   </div>
-  
-  <div class="carousel-indicators"></div>
+  {% else %}
+  <div class="w-full h-[200px] bg-zinc-800 grayscale overflow-hidden relative z-10">
+    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('/assets/img/conocimiento.jpg')">
+    </div>
+  </div>
+  {% endif %}
+  <a href="{{ post.url }}" class="absolute inset-0 z-20"><span class="sr-only">Read Post</span></a>
+</article>
+{% endfor %}
+</div>
 </section>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const track = document.querySelector('.posts-track');
-  const cards = document.querySelectorAll('.post-card-modern');
-  const prevBtn = document.querySelector('.posts-prev');
-  const nextBtn = document.querySelector('.posts-next');
-  const indicatorsContainer = document.querySelector('.carousel-indicators');
-  
-  let currentIndex = 0;
-  let autoplayInterval;
-  let isHovering = false;
-  
-  // Determinar cuántos posts mostrar según el ancho de pantalla
-  function getItemsPerView() {
-    if (window.innerWidth >= 1200) return 3;
-    if (window.innerWidth >= 768) return 2;
-    return 1;
-  }
-  
-  // Crear indicadores
-  function createIndicators() {
-    indicatorsContainer.innerHTML = '';
-    const itemsPerView = getItemsPerView();
-    const totalPages = Math.ceil(cards.length / itemsPerView);
-    
-    for (let i = 0; i < totalPages; i++) {
-      const indicator = document.createElement('button');
-      indicator.className = 'carousel-indicator';
-      indicator.setAttribute('aria-label', `Ir a página ${i + 1}`);
-      if (i === 0) indicator.classList.add('active');
-      indicator.addEventListener('click', () => goToIndex(i * itemsPerView));
-      indicatorsContainer.appendChild(indicator);
-    }
-  }
-  
-  // Actualizar indicadores
-  function updateIndicators() {
-    const indicators = document.querySelectorAll('.carousel-indicator');
-    const itemsPerView = getItemsPerView();
-    const currentPage = Math.floor(currentIndex / itemsPerView);
-    
-    indicators.forEach((indicator, index) => {
-      indicator.classList.toggle('active', index === currentPage);
-    });
-  }
-  
-  // Navegar a un índice específico
-  function goToIndex(index) {
-    const itemsPerView = getItemsPerView();
-    const maxIndex = Math.max(0, cards.length - itemsPerView);
-    currentIndex = Math.max(0, Math.min(index, maxIndex));
-    
-    const cardWidth = cards[0].offsetWidth;
-    const containerStyles = window.getComputedStyle(track.parentElement);
-    const gap = parseInt(containerStyles.gap) || 32;
-    const offset = currentIndex * (cardWidth + gap);
-    
-    track.style.transform = `translateX(-${offset}px)`;
-    updateIndicators();
-  }
-  
-  // Navegación
-  function next() {
-    const itemsPerView = getItemsPerView();
-    const maxIndex = Math.max(0, cards.length - itemsPerView);
-    
-    if (currentIndex >= maxIndex) {
-      goToIndex(0);
-    } else {
-      goToIndex(currentIndex + itemsPerView);
-    }
-  }
-  
-  function prev() {
-    const itemsPerView = getItemsPerView();
-    
-    if (currentIndex <= 0) {
-      goToIndex(Math.max(0, cards.length - itemsPerView));
-    } else {
-      goToIndex(Math.max(0, currentIndex - itemsPerView));
-    }
-  }
-  
-  // Event listeners
-  nextBtn.addEventListener('click', () => {
-    next();
-    stopAutoplay();
-    startAutoplay();
-  });
-  
-  prevBtn.addEventListener('click', () => {
-    prev();
-    stopAutoplay();
-    startAutoplay();
-  });
-  
-  // Autoplay
-  function startAutoplay() {
-    if (!isHovering) {
-      autoplayInterval = setInterval(next, 6000);
-    }
-  }
-  
-  function stopAutoplay() {
-    clearInterval(autoplayInterval);
-  }
-  
-  // Pausar en hover
-  const carousel = document.querySelector('.posts-carousel-container');
-  carousel.addEventListener('mouseenter', () => {
-    isHovering = true;
-    stopAutoplay();
-  });
-  
-  carousel.addEventListener('mouseleave', () => {
-    isHovering = false;
-    startAutoplay();
-  });
-  
-  // Soporte táctil
-  let touchStartX = 0;
-  let touchEndX = 0;
-  
-  track.addEventListener('touchstart', e => {
-    touchStartX = e.changedTouches[0].screenX;
-  }, false);
-  
-  track.addEventListener('touchend', e => {
-    touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
-  }, false);
-  
-  function handleSwipe() {
-    const swipeThreshold = 50;
-    const diff = touchStartX - touchEndX;
-    
-    if (Math.abs(diff) > swipeThreshold) {
-      if (diff > 0) {
-        next();
-      } else {
-        prev();
-      }
-      stopAutoplay();
-      startAutoplay();
-    }
-  }
-  
-  // Resize handler
-  let resizeTimeout;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      createIndicators();
-      goToIndex(currentIndex);
-    }, 250);
-  });
-  
-  // Inicializar
-  createIndicators();
-  startAutoplay();
-});
-</script>

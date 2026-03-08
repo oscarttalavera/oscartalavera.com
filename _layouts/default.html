@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark">
 
 <head>
   <meta charset="UTF-8" />
@@ -14,13 +14,63 @@
   <link rel="stylesheet" href="/assets/css/collection.css" />
   {% endif %}
   <link rel="icon" href="/assets/img/OT logo ngo.png" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  
+  <script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#ffffff",
+                    "background-light": "#ffffff",
+                    "background-dark": "#000000",
+                },
+                fontFamily: {
+                    "display": ["Inter", "sans-serif"]
+                },
+                borderRadius: {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+                },
+            },
+        },
+    }
+  </script>
+  <style>
+    body {
+        background-color: #000000;
+        color: #ffffff;
+        font-family: 'Inter', sans-serif;
+    }
+    .custom-border {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .custom-border-bold {
+        border: 1px solid rgba(255, 255, 255, 1);
+    }
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #000;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #333;
+    }
+  </style>
 </head>
 
-<body>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display selection:bg-primary selection:text-black">
   {% include header.html %}
 
-  <main class="content">
+  <main class="relative">
     {{ content }}
   </main>
 
