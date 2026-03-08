@@ -179,7 +179,7 @@ title: Inicio
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 2.25rem 2rem 1.75rem;
+  padding: 2.5rem 2.25rem 2rem;
   border: 1px solid rgba(255,255,255,0.08);
   border-top: 2px solid rgba(255,255,255,1);
   overflow: hidden;
@@ -229,12 +229,12 @@ title: Inicio
 
 .citation-text {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 0.9rem;
+  font-size: 1.05rem;
   font-style: normal;
-  font-weight: 500;
-  line-height: 1.8;
-  letter-spacing: 0.01em;
-  margin-bottom: 1.5rem;
+  font-weight: 600;
+  line-height: 1.85;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.75rem;
   color: inherit;
 }
 
@@ -263,11 +263,11 @@ title: Inicio
 
 .citation-author {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
   font-weight: 700;
-  opacity: 0.4;
+  opacity: 0.5;
   color: inherit;
   transition: opacity 0.3s ease;
 }
