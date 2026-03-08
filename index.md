@@ -62,94 +62,232 @@ title: Inicio
 <!-- Citations Section -->
 <section class="py-32 px-6 lg:px-24" id="citations">
 <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-<h2 class="text-4xl md:text-6xl font-black uppercase tracking-tighter">Citas e<br/>Ideas</h2>
-<div class="h-px bg-white/20 flex-grow mx-12 hidden lg:block mb-4"></div>
-<p class="text-zinc-500 text-sm max-w-xs uppercase tracking-widest leading-loose">
-                    Definiendo la filosofía detrás del oficio y el esfuerzo.
-                </p>
+  <h2 class="text-4xl md:text-6xl font-black uppercase tracking-tighter">Citas e<br/>Ideas</h2>
+  <div class="h-px bg-white/20 flex-grow mx-12 hidden lg:block mb-4"></div>
+  <p class="text-zinc-500 text-sm max-w-xs uppercase tracking-widest leading-loose">
+    Definiendo la filosofía detrás del oficio y el esfuerzo.
+  </p>
 </div>
-<div id="citations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
-<div class="citation-card group border border-white/10 p-10 hover:bg-white hover:text-black">
-<span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">waves</span>
-<p class="text-base font-light italic leading-relaxed mb-8">"Ningún hombre puede cruzar el mismo río dos veces, porque no será el mismo río y él no será el mismo hombre."</p>
-<span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Heráclito</span>
-</div>
+<div id="citations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 
-<div class="citation-card group border border-white/10 p-10 hover:bg-white hover:text-black">
-<span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">auto_awesome</span>
-<p class="text-base font-light italic leading-relaxed mb-8">"Always have something to look forward to."</p>
-<span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Autor desconocido</span>
-</div>
+  <div class="citation-card" data-icon="waves">
+    <div class="citation-body">
+      <span class="citation-deco">&ldquo;</span>
+      <p class="citation-text">Ningún hombre puede cruzar el mismo río dos veces, porque no será el mismo río y él no será el mismo hombre.</p>
+    </div>
+    <footer class="citation-foot">
+      <span class="material-symbols-outlined citation-icon">waves</span>
+      <span class="citation-author">Heráclito</span>
+    </footer>
+  </div>
 
-<div class="citation-card group border border-white/10 p-10 hover:bg-white hover:text-black">
-<span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">psychology</span>
-<p class="text-base font-light italic leading-relaxed mb-8">"Cuando entiendes que toda opinión es una visión cargada de historia personal, entenderás que todo juicio es una confesión."</p>
-<span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Nikola Tesla</span>
-</div>
+  <div class="citation-card" data-icon="auto_awesome">
+    <div class="citation-body">
+      <span class="citation-deco">&ldquo;</span>
+      <p class="citation-text">Always have something to look forward to.</p>
+    </div>
+    <footer class="citation-foot">
+      <span class="material-symbols-outlined citation-icon">auto_awesome</span>
+      <span class="citation-author">Autor desconocido</span>
+    </footer>
+  </div>
 
-<div class="citation-card group border border-white/10 p-10 hover:bg-white hover:text-black">
-<span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">restaurant</span>
-<p class="text-base font-light italic leading-relaxed mb-8">"Cooking is a feeling, baking is a science, grilling is an art."</p>
-<span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Alguien en Reddit</span>
-</div>
+  <div class="citation-card" data-icon="psychology">
+    <div class="citation-body">
+      <span class="citation-deco">&ldquo;</span>
+      <p class="citation-text">Cuando entiendes que toda opinión es una visión cargada de historia personal, entenderás que todo juicio es una confesión.</p>
+    </div>
+    <footer class="citation-foot">
+      <span class="material-symbols-outlined citation-icon">psychology</span>
+      <span class="citation-author">Nikola Tesla</span>
+    </footer>
+  </div>
 
-<div class="citation-card group border border-white/10 p-10 hover:bg-white hover:text-black">
-<span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">school</span>
-<p class="text-base font-light italic leading-relaxed mb-8">"Es imposible aprender lo que crees que ya sabes."</p>
-<span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Epicteto</span>
-</div>
+  <div class="citation-card" data-icon="restaurant">
+    <div class="citation-body">
+      <span class="citation-deco">&ldquo;</span>
+      <p class="citation-text">Cooking is a feeling, baking is a science, grilling is an art.</p>
+    </div>
+    <footer class="citation-foot">
+      <span class="material-symbols-outlined citation-icon">restaurant</span>
+      <span class="citation-author">Alguien en Reddit</span>
+    </footer>
+  </div>
 
-<div class="citation-card group border border-white/10 p-10 hover:bg-white hover:text-black">
-<span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">payments</span>
-<p class="text-base font-light italic leading-relaxed mb-8">"La pobreza cobra intereses."</p>
-<span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Lo escuché en un podcast</span>
-</div>
+  <div class="citation-card" data-icon="school">
+    <div class="citation-body">
+      <span class="citation-deco">&ldquo;</span>
+      <p class="citation-text">Es imposible aprender lo que crees que ya sabes.</p>
+    </div>
+    <footer class="citation-foot">
+      <span class="material-symbols-outlined citation-icon">school</span>
+      <span class="citation-author">Epicteto</span>
+    </footer>
+  </div>
 
-<div class="citation-card group border border-white/10 p-10 hover:bg-white hover:text-black">
-<span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">air</span>
-<p class="text-base font-light italic leading-relaxed mb-8">"Ningún viento es favorable para el que no sabe a dónde se dirige."</p>
-<span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Séneca</span>
-</div>
+  <div class="citation-card" data-icon="payments">
+    <div class="citation-body">
+      <span class="citation-deco">&ldquo;</span>
+      <p class="citation-text">La pobreza cobra intereses.</p>
+    </div>
+    <footer class="citation-foot">
+      <span class="material-symbols-outlined citation-icon">payments</span>
+      <span class="citation-author">Lo escuché en un podcast</span>
+    </footer>
+  </div>
 
-<div class="citation-card group border border-white/10 p-10 hover:bg-white hover:text-black">
-<span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">shield</span>
-<p class="text-base font-light italic leading-relaxed mb-8">"No toda batalla vale la pena. Ganar no siempre significa vencer al otro; a veces, la verdadera victoria es elegir no pelear."</p>
-<span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Pensador anónimo</span>
-</div>
+  <div class="citation-card" data-icon="air">
+    <div class="citation-body">
+      <span class="citation-deco">&ldquo;</span>
+      <p class="citation-text">Ningún viento es favorable para el que no sabe a dónde se dirige.</p>
+    </div>
+    <footer class="citation-foot">
+      <span class="material-symbols-outlined citation-icon">air</span>
+      <span class="citation-author">Séneca</span>
+    </footer>
+  </div>
 
-<div class="citation-card group border border-white/10 p-10 hover:bg-white hover:text-black">
-<span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">travel_explore</span>
-<p class="text-base font-light italic leading-relaxed mb-8">"Alguien de un país en desarrollo que puede viajar a un país de primer mundo es más rico que alguien de un país de primer mundo que no se puede permitir viajar a un país en desarrollo."</p>
-<span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">OT (Idea de regadera)</span>
-</div>
+  <div class="citation-card" data-icon="shield">
+    <div class="citation-body">
+      <span class="citation-deco">&ldquo;</span>
+      <p class="citation-text">No toda batalla vale la pena. Ganar no siempre significa vencer al otro; a veces, la verdadera victoria es elegir no pelear.</p>
+    </div>
+    <footer class="citation-foot">
+      <span class="material-symbols-outlined citation-icon">shield</span>
+      <span class="citation-author">Pensador anónimo</span>
+    </footer>
+  </div>
+
+  <div class="citation-card" data-icon="travel_explore">
+    <div class="citation-body">
+      <span class="citation-deco">&ldquo;</span>
+      <p class="citation-text">Alguien de un país en desarrollo que puede viajar a un país de primer mundo es más rico que alguien de un país de primer mundo que no se puede permitir viajar a un país en desarrollo.</p>
+    </div>
+    <footer class="citation-foot">
+      <span class="material-symbols-outlined citation-icon">travel_explore</span>
+      <span class="citation-author">OT (Idea de regadera)</span>
+    </footer>
+  </div>
+
 </div>
 </section>
 
 <style>
-/* Base card style — backgrounds assigned by JS */
+/* ── Citation card ─────────────────────────────── */
 .citation-card {
-  will-change: transform, opacity, background-color;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2.25rem 2rem 1.75rem;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-top: 2px solid rgba(255,255,255,0.12); /* accent line — JS tweaks opacity */
+  overflow: hidden;
+  cursor: default;
+  will-change: transform, opacity;
   transition:
     transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
     opacity   0.55s cubic-bezier(0.4, 0, 0.2, 1),
-    background-color 0.5s ease;
+    border-top-color 0.6s ease,
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
-/* Hover always overrides to white regardless of current bg */
 .citation-card:hover {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-  transition: background-color 0.5s ease, color 0.5s ease;
+  background-color: #fff;
+  color: #000;
+  border-top-color: #000 !important;
 }
-/* Scattered state — JS adds inline transform per card */
+.citation-card:hover .citation-icon,
+.citation-card:hover .citation-author,
+.citation-card:hover .citation-deco {
+  color: #000;
+  opacity: 1;
+}
+
+/* giant decorative open-quote */
+.citation-deco {
+  position: absolute;
+  top: -0.5rem;
+  left: 1.25rem;
+  font-size: 7rem;
+  line-height: 1;
+  font-family: Georgia, serif;
+  color: rgba(255,255,255,0.06);
+  pointer-events: none;
+  user-select: none;
+  transition: color 0.4s ease;
+}
+.citation-card:hover .citation-deco {
+  color: rgba(0,0,0,0.06);
+}
+
+.citation-body {
+  position: relative;
+  padding-top: 2rem;
+  flex: 1;
+}
+
+.citation-text {
+  font-size: 0.9rem;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.75;
+  margin-bottom: 1.5rem;
+  color: inherit;
+}
+
+.citation-foot {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  transition: border-color 0.4s ease;
+}
+.citation-card:hover .citation-foot {
+  border-top-color: rgba(0,0,0,0.12);
+}
+
+.citation-icon {
+  font-size: 1rem;
+  opacity: 0.35;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  color: inherit;
+}
+.citation-card:hover .citation-icon {
+  opacity: 0.7;
+  transform: scale(1.15);
+}
+
+.citation-author {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  font-weight: 700;
+  opacity: 0.45;
+  color: inherit;
+  transition: opacity 0.4s ease;
+}
+.citation-card:hover .citation-author {
+  opacity: 0.7;
+}
+
+/* scatter state */
 .citation-card.scattering {
   opacity: 0;
 }
 </style>
 
 <script>
-(function() {
-  var BG_DARK = '#18181b';  /* zinc-900 */
-  var BG_NONE = 'transparent';
+(function () {
+  /* Subtle accent-line opacities cycling per card on shuffle */
+  var ACCENTS = [
+    'rgba(255,255,255,0.08)',
+    'rgba(255,255,255,0.18)',
+    'rgba(255,255,255,0.30)',
+    'rgba(255,255,255,0.50)',
+    'rgba(255,255,255,0.70)',
+  ];
 
   function rand(min, max) {
     return Math.random() * (max - min) + min;
@@ -158,58 +296,44 @@ title: Inicio
   function shuffleArray(arr) {
     for (var i = arr.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
-      var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
     }
     return arr;
   }
 
-  /* Assign roughly half the cards a dark background, rest transparent */
-  function randomizeBackgrounds(cards) {
-    var indices = cards.map(function(_, i) { return i; });
-    shuffleArray(indices);
-    var half = Math.floor(cards.length / 2);
-    cards.forEach(function(card, i) {
-      card.style.backgroundColor = indices.indexOf(i) < half ? BG_DARK : BG_NONE;
+  /* Assign random accent-line brightness to each card */
+  function randomizeAccents(cards) {
+    cards.forEach(function (card) {
+      var accent = ACCENTS[Math.floor(Math.random() * ACCENTS.length)];
+      card.style.borderTopColor = accent;
     });
   }
 
   function scatterAndShuffle(cards, grid, callback) {
-    /* Phase 1: scatter — each card gets a random offset + slight rotation */
-    cards.forEach(function(card, i) {
-      var tx = rand(-28, 28);
-      var ty = rand(-18, 18);
-      var rot = rand(-4, 4);
-      var delay = i * 35; /* stagger in ms */
-      card.style.transitionDelay = delay + 'ms';
+    /* Phase 1 — scatter with staggered random offsets */
+    cards.forEach(function (card, i) {
+      var tx  = rand(-32, 32);
+      var ty  = rand(-20, 20);
+      var rot = rand(-5, 5);
+      card.style.transitionDelay = (i * 32) + 'ms';
       card.style.transform = 'translate(' + tx + 'px,' + ty + 'px) rotate(' + rot + 'deg)';
       card.classList.add('scattering');
     });
 
-    /* Phase 2: settle — reorder DOM, reset transforms, new backgrounds */
-    var settleDuration = 600 + cards.length * 35;
-    setTimeout(function() {
-      /* Remove stagger delays before settling */
-      cards.forEach(function(card) {
-        card.style.transitionDelay = '0ms';
-      });
-
-      /* Shuffle the DOM order */
-      shuffleArray(cards).forEach(function(card) {
-        grid.appendChild(card);
-      });
-
-      /* Randomize backgrounds for new layout */
-      randomizeBackgrounds(Array.from(grid.children));
-
-      /* Reset transforms → cards snap back into place */
-      requestAnimationFrame(function() {
-        Array.from(grid.children).forEach(function(card) {
+    /* Phase 2 — settle: new order + new accents */
+    var wait = 640 + cards.length * 32;
+    setTimeout(function () {
+      cards.forEach(function (card) { card.style.transitionDelay = '0ms'; });
+      shuffleArray(cards).forEach(function (card) { grid.appendChild(card); });
+      randomizeAccents(Array.from(grid.children));
+      requestAnimationFrame(function () {
+        Array.from(grid.children).forEach(function (card) {
           card.style.transform = '';
           card.classList.remove('scattering');
         });
         if (callback) callback();
       });
-    }, settleDuration);
+    }, wait);
   }
 
   var busy = false;
@@ -219,27 +343,20 @@ title: Inicio
     busy = true;
     var grid = document.getElementById('citations-grid');
     if (!grid) { busy = false; return; }
-    var cards = Array.from(grid.children);
-    scatterAndShuffle(cards, grid, function() {
-      busy = false;
-    });
+    scatterAndShuffle(Array.from(grid.children), grid, function () { busy = false; });
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     var grid = document.getElementById('citations-grid');
     if (!grid) return;
-
-    /* Assign initial random backgrounds */
-    randomizeBackgrounds(Array.from(grid.children));
-
-    /* Initial shuffle (silent, no animation) */
+    /* Silent initial shuffle + accent assignment */
     var cards = Array.from(grid.children);
-    shuffleArray(cards).forEach(function(card) { grid.appendChild(card); });
-
-    /* Animated shuffle every 8 seconds */
+    shuffleArray(cards).forEach(function (c) { grid.appendChild(c); });
+    randomizeAccents(Array.from(grid.children));
+    /* Animated shuffle every 8 s */
     setInterval(shuffleCitations, 8000);
   });
-})();
+}());
 </script>
 
 <!-- Proyectos / Negocios Section -->
