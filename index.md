@@ -186,7 +186,7 @@ title: Inicio
 <div class="relative w-full">
     <div id="posts-slider" class="flex transition-transform duration-500 ease-in-out gap-6" style="transform: translateX(0);">
         {% for post in site.posts limit:6 %}
-        <article class="min-w-full md:min-w-[calc(33.333%-16px)] relative bg-zinc-900 border border-white/10 p-8 lg:p-12 hover:bg-zinc-800 transition-colors group cursor-pointer flex-shrink-0 flex flex-col justify-between">
+        <article class="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex-none relative bg-zinc-900 border border-white/10 p-8 lg:p-12 hover:bg-zinc-800 transition-colors group cursor-pointer flex-shrink-0 flex flex-col justify-between">
           <div>
               <div class="flex justify-between items-start mb-12 relative z-10">
                 <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-500">{{ post.date | date: "%b %d, %Y" }} {% if post.tags.size > 0 %}/ {{ post.tags[0] }}{% endif %}</span>
