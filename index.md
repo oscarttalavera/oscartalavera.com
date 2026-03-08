@@ -6,14 +6,22 @@ title: Inicio
 <!-- Hero Section -->
 <section class="min-h-[85vh] flex flex-col justify-center items-center px-6 lg:px-24 pt-24 pb-12 text-center" id="hero">
 <div class="flex flex-col items-center gap-10 max-w-4xl mx-auto opacity-0 animate-[fadeIn_1.5s_ease-out_forwards]">
-<img alt="Oscar Talavera Logo" class="w-full max-w-[500px] md:max-w-[700px] h-auto mb-2 drop-shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:scale-105 transition-transform duration-700" src="/assets/img/OT logo bco.png"/>
+
+<div class="flex flex-col items-center gap-4 hover:scale-105 transition-transform duration-700 cursor-default hover:drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+    <h1 class="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter text-white leading-none text-center drop-shadow-[0_0_30px_rgba(255,255,255,0.05)]">
+        Archivo<br/><span class="text-white/80">Personal</span>
+    </h1>
+    <span class="text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] text-zinc-500 mt-2 block text-center">
+        Por Oscar Talavera
+    </span>
+</div>
 
 <div class="h-px bg-white/20 w-1/3 my-2"></div>
 
 <p class="text-xl md:text-2xl leading-relaxed text-zinc-400 font-light max-w-2xl px-4">
-                        La precisión de la ingeniería se encuentra con la disciplina atlética. Un enfoque multifacético de la vida a través del 
-                        <span class="text-white font-medium">diseño mecánico</span>, <span class="text-white font-medium">deportes de combate</span>, 
-                        y la búsqueda curada de la <span class="text-white font-medium">excelencia audiófila</span>.
+                        Un espacio digital dedicado a la documentación del diseño, la exploración de ideas y el registro meticuloso de objetos. 
+                        Una colección de proyectos y reflexiones que combinan la <span class="text-white font-medium">precisión de la ingeniería</span> 
+                        con la <span class="text-white font-medium">historia</span> de cada pieza.
 </p>
 </div>
 </section>
@@ -118,22 +126,40 @@ title: Inicio
 </div>
 </section>
 
-<!-- Tritic3D Section -->
-<section class="py-32 px-6 lg:px-24 bg-white text-black" id="tritic3d">
-<div class="flex flex-col gap-8 max-w-4xl">
-<h2 class="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-[-16px]">Tritic</h2>
-<h3 class="text-3xl md:text-5xl font-bold uppercase tracking-tighter leading-none text-zinc-500">Conversión<br/>Profesional</h3>
-<p class="text-lg leading-relaxed text-zinc-700">
-                        Soluciones avanzadas de impresión 3D y consultoría de diseño mecánico. Convertimos ideas conceptuales complejas en realidades tangibles de ingeniería con precisión extrema.
-                    </p>
-<ul class="space-y-4 text-sm font-bold uppercase tracking-widest pl-0 ml-0 list-none">
-<li class="flex items-center gap-3"><span class="w-2 h-2 bg-black rounded-full"></span> Prototipado Rápido</li>
-<li class="flex items-center gap-3"><span class="w-2 h-2 bg-black rounded-full"></span> Diseño de Sistemas Mecánicos</li>
-<li class="flex items-center gap-3"><span class="w-2 h-2 bg-black rounded-full"></span> Fabricación de Componentes Personalizados</li>
-</ul>
-<a href="https://www.tritic3d.com" target="_blank" class="bg-black text-white px-10 py-5 self-start font-black uppercase tracking-widest hover:bg-zinc-800 transition-colors flex items-center gap-4">
-                        Visitar Tritic3D <span class="material-symbols-outlined">arrow_forward</span>
-</a>
+<!-- Proyectos / Negocios Section -->
+<section class="py-32 px-6 lg:px-24 bg-white text-black" id="proyectos">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24">
+    <!-- Tritic3D -->
+    <div class="flex flex-col gap-8 h-full">
+        <h2 class="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">Tritic</h2>
+        <p class="text-lg leading-relaxed text-zinc-700">
+            Soluciones avanzadas de fabricación personalizada y consultoría de diseño mecánico. Convertimos ideas conceptuales complejas en realidades tangibles de ingeniería con precisión.
+        </p>
+        <ul class="space-y-4 text-sm font-bold uppercase tracking-widest pl-0 ml-0 list-none">
+            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-black rounded-full"></span> Prototipado Rápido</li>
+            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-black rounded-full"></span> Diseño de Sistemas Mecánicos</li>
+            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-black rounded-full"></span> Maquinado CNC</li>
+        </ul>
+        <a href="https://www.tritic3d.com" target="_blank" class="bg-black text-white px-10 py-5 self-start font-black uppercase tracking-widest hover:bg-zinc-800 transition-colors flex items-center gap-4 mt-auto">
+            Visitar Tritic <span class="material-symbols-outlined">arrow_forward</span>
+        </a>
+    </div>
+
+    <!-- BuenVeneno -->
+    <div class="flex flex-col gap-8 h-full">
+        <h2 class="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">BuenVeneno</h2>
+        <p class="text-lg leading-relaxed text-zinc-700">
+            Agencia de diseño especializada en web. Creamos experiencias digitales a la medida centradas en la estética, el diseño de vanguardia y la funcionalidad.
+        </p>
+        <ul class="space-y-4 text-sm font-bold uppercase tracking-widest pl-0 ml-0 list-none">
+            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-black rounded-full"></span> Diseño Web / UI</li>
+            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-black rounded-full"></span> Desarrollo a Medida</li>
+            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-black rounded-full"></span> Identidad Visual</li>
+        </ul>
+        <a href="https://buenveneno.mx" target="_blank" class="bg-black text-white px-10 py-5 self-start font-black uppercase tracking-widest hover:bg-zinc-800 transition-colors flex items-center gap-4 mt-auto">
+            Visitar BuenVeneno <span class="material-symbols-outlined">arrow_forward</span>
+        </a>
+    </div>
 </div>
 </section>
 
@@ -160,7 +186,7 @@ title: Inicio
 <div class="relative w-full">
     <div id="posts-slider" class="flex transition-transform duration-500 ease-in-out gap-6" style="transform: translateX(0);">
         {% for post in site.posts limit:6 %}
-        <article class="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] relative bg-zinc-900 border border-white/10 p-8 lg:p-12 hover:bg-zinc-800 transition-colors group cursor-pointer flex-shrink-0 flex flex-col justify-between">
+        <article class="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[30%] relative bg-zinc-900 border border-white/10 p-8 lg:p-12 hover:bg-zinc-800 transition-colors group cursor-pointer flex-shrink-0 flex flex-col justify-between">
           <div>
               <div class="flex justify-between items-start mb-12 relative z-10">
                 <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-500">{{ post.date | date: "%b %d, %Y" }} {% if post.tags.size > 0 %}/ {{ post.tags[0] }}{% endif %}</span>
