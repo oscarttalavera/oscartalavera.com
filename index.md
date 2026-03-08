@@ -69,55 +69,55 @@ title: Inicio
                 </p>
 </div>
 <div id="citations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
-<div class="group border border-white/10 p-10 hover:bg-white hover:text-black transition-all duration-500">
+<div class="citation-card group border border-white/10 p-10 hover:bg-white hover:text-black">
 <span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">waves</span>
 <p class="text-base font-light italic leading-relaxed mb-8">"Ningún hombre puede cruzar el mismo río dos veces, porque no será el mismo río y él no será el mismo hombre."</p>
 <span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Heráclito</span>
 </div>
 
-<div class="group border border-white/10 p-10 bg-zinc-900 hover:bg-white hover:text-black transition-all duration-500">
+<div class="citation-card group border border-white/10 p-10 hover:bg-white hover:text-black">
 <span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">auto_awesome</span>
 <p class="text-base font-light italic leading-relaxed mb-8">"Always have something to look forward to."</p>
 <span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Autor desconocido</span>
 </div>
 
-<div class="group border border-white/10 p-10 hover:bg-white hover:text-black transition-all duration-500">
+<div class="citation-card group border border-white/10 p-10 hover:bg-white hover:text-black">
 <span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">psychology</span>
 <p class="text-base font-light italic leading-relaxed mb-8">"Cuando entiendes que toda opinión es una visión cargada de historia personal, entenderás que todo juicio es una confesión."</p>
 <span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Nikola Tesla</span>
 </div>
 
-<div class="group border border-white/10 p-10 bg-zinc-900 hover:bg-white hover:text-black transition-all duration-500">
+<div class="citation-card group border border-white/10 p-10 hover:bg-white hover:text-black">
 <span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">restaurant</span>
 <p class="text-base font-light italic leading-relaxed mb-8">"Cooking is a feeling, baking is a science, grilling is an art."</p>
 <span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Alguien en Reddit</span>
 </div>
 
-<div class="group border border-white/10 p-10 hover:bg-white hover:text-black transition-all duration-500">
+<div class="citation-card group border border-white/10 p-10 hover:bg-white hover:text-black">
 <span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">school</span>
 <p class="text-base font-light italic leading-relaxed mb-8">"Es imposible aprender lo que crees que ya sabes."</p>
 <span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Epicteto</span>
 </div>
 
-<div class="group border border-white/10 p-10 bg-zinc-900 hover:bg-white hover:text-black transition-all duration-500">
+<div class="citation-card group border border-white/10 p-10 hover:bg-white hover:text-black">
 <span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">payments</span>
 <p class="text-base font-light italic leading-relaxed mb-8">"La pobreza cobra intereses."</p>
 <span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Lo escuché en un podcast</span>
 </div>
 
-<div class="group border border-white/10 p-10 hover:bg-white hover:text-black transition-all duration-500">
+<div class="citation-card group border border-white/10 p-10 hover:bg-white hover:text-black">
 <span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">air</span>
 <p class="text-base font-light italic leading-relaxed mb-8">"Ningún viento es favorable para el que no sabe a dónde se dirige."</p>
 <span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Séneca</span>
 </div>
 
-<div class="group border border-white/10 p-10 bg-zinc-900 hover:bg-white hover:text-black transition-all duration-500">
+<div class="citation-card group border border-white/10 p-10 hover:bg-white hover:text-black">
 <span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">shield</span>
 <p class="text-base font-light italic leading-relaxed mb-8">"No toda batalla vale la pena. Ganar no siempre significa vencer al otro; a veces, la verdadera victoria es elegir no pelear."</p>
 <span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">Pensador anónimo</span>
 </div>
 
-<div class="group border border-white/10 p-10 hover:bg-white hover:text-black transition-all duration-500">
+<div class="citation-card group border border-white/10 p-10 hover:bg-white hover:text-black">
 <span class="material-symbols-outlined text-4xl mb-8 group-hover:scale-110 transition-transform">travel_explore</span>
 <p class="text-base font-light italic leading-relaxed mb-8">"Alguien de un país en desarrollo que puede viajar a un país de primer mundo es más rico que alguien de un país de primer mundo que no se puede permitir viajar a un país en desarrollo."</p>
 <span class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">OT (Idea de regadera)</span>
@@ -126,52 +126,117 @@ title: Inicio
 </section>
 
 <style>
-#citations-grid > div {
-  transition: opacity 0.5s ease;
+/* Base card style — backgrounds assigned by JS */
+.citation-card {
+  will-change: transform, opacity, background-color;
+  transition:
+    transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity   0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.5s ease;
 }
-#citations-grid.shuffling > div {
+/* Hover always overrides to white regardless of current bg */
+.citation-card:hover {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+/* Scattered state — JS adds inline transform per card */
+.citation-card.scattering {
   opacity: 0;
 }
 </style>
 
 <script>
 (function() {
+  var BG_DARK = '#18181b';  /* zinc-900 */
+  var BG_NONE = 'transparent';
+
+  function rand(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
   function shuffleArray(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
     }
     return arr;
   }
 
-  function shuffleCitations() {
-    const grid = document.getElementById('citations-grid');
-    if (!grid) return;
-    const cards = Array.from(grid.children);
+  /* Assign roughly half the cards a dark background, rest transparent */
+  function randomizeBackgrounds(cards) {
+    var indices = cards.map(function(_, i) { return i; });
+    shuffleArray(indices);
+    var half = Math.floor(cards.length / 2);
+    cards.forEach(function(card, i) {
+      card.style.backgroundColor = indices.indexOf(i) < half ? BG_DARK : BG_NONE;
+    });
+  }
 
-    // Fade out
-    grid.classList.add('shuffling');
+  function scatterAndShuffle(cards, grid, callback) {
+    /* Phase 1: scatter — each card gets a random offset + slight rotation */
+    cards.forEach(function(card, i) {
+      var tx = rand(-28, 28);
+      var ty = rand(-18, 18);
+      var rot = rand(-4, 4);
+      var delay = i * 35; /* stagger in ms */
+      card.style.transitionDelay = delay + 'ms';
+      card.style.transform = 'translate(' + tx + 'px,' + ty + 'px) rotate(' + rot + 'deg)';
+      card.classList.add('scattering');
+    });
 
+    /* Phase 2: settle — reorder DOM, reset transforms, new backgrounds */
+    var settleDuration = 600 + cards.length * 35;
     setTimeout(function() {
-      // Reorder DOM
+      /* Remove stagger delays before settling */
+      cards.forEach(function(card) {
+        card.style.transitionDelay = '0ms';
+      });
+
+      /* Shuffle the DOM order */
       shuffleArray(cards).forEach(function(card) {
         grid.appendChild(card);
       });
-      // Fade in
-      grid.classList.remove('shuffling');
-    }, 500);
+
+      /* Randomize backgrounds for new layout */
+      randomizeBackgrounds(Array.from(grid.children));
+
+      /* Reset transforms → cards snap back into place */
+      requestAnimationFrame(function() {
+        Array.from(grid.children).forEach(function(card) {
+          card.style.transform = '';
+          card.classList.remove('scattering');
+        });
+        if (callback) callback();
+      });
+    }, settleDuration);
+  }
+
+  var busy = false;
+
+  function shuffleCitations() {
+    if (busy) return;
+    busy = true;
+    var grid = document.getElementById('citations-grid');
+    if (!grid) { busy = false; return; }
+    var cards = Array.from(grid.children);
+    scatterAndShuffle(cards, grid, function() {
+      busy = false;
+    });
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    // Initial shuffle so first load order is already random
-    const grid = document.getElementById('citations-grid');
+    var grid = document.getElementById('citations-grid');
     if (!grid) return;
-    const cards = Array.from(grid.children);
-    shuffleArray(cards).forEach(function(card) {
-      grid.appendChild(card);
-    });
 
-    // Shuffle every 8 seconds
+    /* Assign initial random backgrounds */
+    randomizeBackgrounds(Array.from(grid.children));
+
+    /* Initial shuffle (silent, no animation) */
+    var cards = Array.from(grid.children);
+    shuffleArray(cards).forEach(function(card) { grid.appendChild(card); });
+
+    /* Animated shuffle every 8 seconds */
     setInterval(shuffleCitations, 8000);
   });
 })();
