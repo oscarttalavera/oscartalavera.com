@@ -131,7 +131,7 @@ title: Inicio
 <div class="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24">
     <!-- Tritic3D -->
     <div class="flex flex-col gap-8 h-full">
-        <h2 class="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">Tritic</h2>
+        <h2 class="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none text-black">Tritic</h2>
         <p class="text-lg leading-relaxed text-zinc-700">
             Soluciones avanzadas de fabricación personalizada y consultoría de diseño mecánico. Convertimos ideas conceptuales complejas en realidades tangibles de ingeniería con precisión.
         </p>
@@ -147,7 +147,7 @@ title: Inicio
 
     <!-- BuenVeneno -->
     <div class="flex flex-col gap-8 h-full">
-        <h2 class="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">BuenVeneno</h2>
+        <h2 class="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none text-black">BuenVeneno</h2>
         <p class="text-lg leading-relaxed text-zinc-700">
             Agencia de diseño especializada en web. Creamos experiencias digitales a la medida centradas en la estética, el diseño de vanguardia y la funcionalidad.
         </p>
@@ -186,7 +186,7 @@ title: Inicio
 <div class="relative w-full">
     <div id="posts-slider" class="flex transition-transform duration-500 ease-in-out gap-6" style="transform: translateX(0);">
         {% for post in site.posts limit:6 %}
-        <article class="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[30%] relative bg-zinc-900 border border-white/10 p-8 lg:p-12 hover:bg-zinc-800 transition-colors group cursor-pointer flex-shrink-0 flex flex-col justify-between">
+        <article class="min-w-full md:min-w-[calc(33.333%-16px)] relative bg-zinc-900 border border-white/10 p-8 lg:p-12 hover:bg-zinc-800 transition-colors group cursor-pointer flex-shrink-0 flex flex-col justify-between">
           <div>
               <div class="flex justify-between items-start mb-12 relative z-10">
                 <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-500">{{ post.date | date: "%b %d, %Y" }} {% if post.tags.size > 0 %}/ {{ post.tags[0] }}{% endif %}</span>
