@@ -181,16 +181,16 @@ title: Inicio
   justify-content: space-between;
   padding: 2.25rem 2rem 1.75rem;
   border: 1px solid rgba(255,255,255,0.08);
-  border-top: 2px solid rgba(255,255,255,0.12); /* accent line — JS tweaks opacity */
+  border-top: 2px solid rgba(255,255,255,0.12);
   overflow: hidden;
   cursor: default;
   will-change: transform, opacity;
   transition:
-    transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity   0.55s cubic-bezier(0.4, 0, 0.2, 1),
-    border-top-color 0.6s ease,
-    background-color 0.4s ease,
-    color 0.4s ease;
+    transform 0.4s ease-in-out,
+    opacity   0.4s ease-in-out,
+    border-top-color 0.5s ease,
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 .citation-card:hover {
   background-color: #fff;
@@ -211,14 +211,14 @@ title: Inicio
   left: 1.25rem;
   font-size: 7rem;
   line-height: 1;
-  font-family: Georgia, serif;
-  color: rgba(255,255,255,0.06);
+  font-family: 'Courier New', Courier, monospace;
+  color: rgba(255,255,255,0.12);
   pointer-events: none;
   user-select: none;
-  transition: color 0.4s ease;
+  transition: color 0.3s ease;
 }
 .citation-card:hover .citation-deco {
-  color: rgba(0,0,0,0.06);
+  color: rgba(0,0,0,0.12);
 }
 
 .citation-body {
@@ -228,10 +228,12 @@ title: Inicio
 }
 
 .citation-text {
-  font-size: 0.9rem;
-  font-style: italic;
-  font-weight: 300;
-  line-height: 1.75;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.82rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
   margin-bottom: 1.5rem;
   color: inherit;
 }
@@ -242,34 +244,35 @@ title: Inicio
   gap: 0.75rem;
   padding-top: 1.25rem;
   border-top: 1px solid rgba(255,255,255,0.08);
-  transition: border-color 0.4s ease;
+  transition: border-color 0.3s ease;
 }
 .citation-card:hover .citation-foot {
   border-top-color: rgba(0,0,0,0.12);
 }
 
 .citation-icon {
-  font-size: 1rem;
-  opacity: 0.35;
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  font-size: 0.9rem;
+  opacity: 0.3;
+  transition: opacity 0.3s ease, transform 0.3s ease;
   color: inherit;
 }
 .citation-card:hover .citation-icon {
-  opacity: 0.7;
-  transform: scale(1.15);
+  opacity: 0.6;
+  transform: scale(1.1);
 }
 
 .citation-author {
-  font-size: 0.625rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.6rem;
   text-transform: uppercase;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.22em;
   font-weight: 700;
-  opacity: 0.45;
+  opacity: 0.4;
   color: inherit;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.3s ease;
 }
 .citation-card:hover .citation-author {
-  opacity: 0.7;
+  opacity: 0.65;
 }
 
 /* scatter state */
@@ -310,28 +313,34 @@ title: Inicio
   }
 
   function scatterAndShuffle(cards, grid, callback) {
-    /* Phase 1 — scatter with staggered random offsets */
+    /* Phase 1 — crisp scatter: tighter range, less rotation = monospace feel */
     cards.forEach(function (card, i) {
-      var tx  = rand(-32, 32);
-      var ty  = rand(-20, 20);
-      var rot = rand(-5, 5);
-      card.style.transitionDelay = (i * 32) + 'ms';
+      var tx  = rand(-20, 20);
+      var ty  = rand(-12, 12);
+      var rot = rand(-3, 3);
+      card.style.transitionDelay = (i * 24) + 'ms';
       card.style.transform = 'translate(' + tx + 'px,' + ty + 'px) rotate(' + rot + 'deg)';
       card.classList.add('scattering');
     });
 
-    /* Phase 2 — settle: new order + new accents */
-    var wait = 640 + cards.length * 32;
+    /* Phase 2 — settle: shorter wait, stagger resets for snappier resolve */
+    var wait = 480 + cards.length * 24;
     setTimeout(function () {
-      cards.forEach(function (card) { card.style.transitionDelay = '0ms'; });
       shuffleArray(cards).forEach(function (card) { grid.appendChild(card); });
       randomizeAccents(Array.from(grid.children));
       requestAnimationFrame(function () {
-        Array.from(grid.children).forEach(function (card) {
+        Array.from(grid.children).forEach(function (card, i) {
+          card.style.transitionDelay = (i * 18) + 'ms';
           card.style.transform = '';
           card.classList.remove('scattering');
         });
-        if (callback) callback();
+        /* clear delays after settle completes */
+        setTimeout(function () {
+          Array.from(grid.children).forEach(function (card) {
+            card.style.transitionDelay = '0ms';
+          });
+          if (callback) callback();
+        }, 400 + cards.length * 18);
       });
     }, wait);
   }
