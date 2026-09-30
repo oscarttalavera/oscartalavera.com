@@ -39,13 +39,13 @@
   </script>
 
   <!-- Estilos del sitio: van después de Tailwind para que las utilidades sigan mandando -->
-  <link rel="stylesheet" href="/assets/css/style.css" />
+  <link rel="stylesheet" href="/assets/css/style.css?v={{ site.time | date: '%s' }}" />
   {% if page.layout == 'post' %}
-  <link rel="stylesheet" href="/assets/css/post.css" />
+  <link rel="stylesheet" href="/assets/css/post.css?v={{ site.time | date: '%s' }}" />
   {% elsif page.layout == 'recipe' %}
-  <link rel="stylesheet" href="/assets/css/recipe.css" />
+  <link rel="stylesheet" href="/assets/css/recipe.css?v={{ site.time | date: '%s' }}" />
   {% elsif page.layout == 'car' %}
-  <link rel="stylesheet" href="/assets/css/collection.css" />
+  <link rel="stylesheet" href="/assets/css/collection.css?v={{ site.time | date: '%s' }}" />
   {% endif %}
 </head>
 
