@@ -2,7 +2,7 @@
 layout: recipe
 title: Tacos de Sarape
 description: Deliciosos tacos con carne, tocino y queso gratinado, jugosos y llenos de sabor.
-image: /assets/img/recetas/tacos-de-sarape.jpg
+image: /assets/img/recetas/tacos-de-sarape.png
 tiempo_prep: 15 minutos
 tiempo_coccion: 25 minutos
 dificultad: Media
