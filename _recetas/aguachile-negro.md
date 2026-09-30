@@ -39,7 +39,7 @@ instrucciones:
   - "Corta la media cebolla morada en juliana delgada y mézclala con los camarones en el limón."
   - "Tatema el chile habanero y los tres dientes de ajo pelados en un comal o sartén seco, hasta que estén ligeramente ennegrecidos por todos lados."
   - "Corta la media piña en cubos de 1-2 cm."
-  - "Una vez tatemados, despieza el habanero y retira las semillas. Ten cuidado al manipularlo; usa guantes si es posible."
+  - "Una vez tatemados, depezona el habanero y retira las semillas. Ten cuidado al manipularlo; usa guantes si es posible."
   - "Licúa los chiles, el ajo, la salsa de soya, el Tajín y el clamato hasta obtener una salsa homogénea."
   - "Vacía la salsa sobre los camarones con la cebolla y mezcla."
   - "Integra los cubos de piña."
