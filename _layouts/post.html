@@ -2,24 +2,37 @@
 layout: default
 ---
 
+<div class="page-shell">
 <article class="post">
+  <div class="post-back">
+    <a href="/textos" class="back-link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      Textos
+    </a>
+  </div>
+
   <header class="post-header">
-    <h1 class="post-title">{{ page.title }}</h1>
     <div class="post-meta">
-      <span class="post-date">{{ page.date | date: "%d %b %Y" }}</span>
+      <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%d %b %Y" }}</time>
       {% if page.tags.size > 0 %}
       <span class="post-tags">
         {% for tag in page.tags %}
-        <span class="tag">{{ tag }}</span>
+        <span class="chip">{{ tag }}</span>
         {% endfor %}
       </span>
       {% endif %}
     </div>
-    
+
+    <h1 class="post-title">{{ page.title }}</h1>
+
+    {% if page.description %}
+    <p class="post-lead">{{ page.description }}</p>
+    {% endif %}
+
     {% if page.audio %}
     <!-- Botón trigger para el audio -->
-    <button class="audio-trigger-btn" id="audioTriggerBtn">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <button type="button" class="btn-outline audio-trigger-btn" id="audioTriggerBtn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <path d="M9 18V5l12-2v13"></path>
         <circle cx="6" cy="18" r="3"></circle>
         <circle cx="18" cy="16" r="3"></circle>
@@ -28,64 +41,118 @@ layout: default
     </button>
     {% endif %}
   </header>
-  
+
   {% if page.image %}
-  <div class="post-featured-image">
+  <figure class="post-featured-image">
     <img src="{{ page.image }}" alt="{{ page.title }}">
-  </div>
+  </figure>
   {% endif %}
-  
-  <div class="post-content">
+
+  <div class="post-body">
     {{ content }}
   </div>
-  
+
   {% if page.author %}
   <div class="author-section">
     <div class="author-avatar">
-      <img src="/assets/img/avatar.jpg" alt="{{ page.author }}">
+      <img src="/assets/img/oscarotc-portrait.jpg" alt="{{ page.author }}">
     </div>
     <div class="author-info">
-      <h4 class="author-name">{{ page.author }}</h4>
+      <h2 class="author-name">{{ page.author }}</h2>
       <p class="author-bio">Ingeniero, artemarcialista, home barista, dj y escritor con la ayuda de IA.</p>
     </div>
   </div>
   {% endif %}
-  
+
   <footer class="post-footer">
-    <a href="/textos" class="back-link">← Volver a todos los textos</a>
+    <a href="/textos" class="back-link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      Volver a todos los textos
+    </a>
   </footer>
 </article>
 
+<!-- Textos relacionados: primero por etiquetas en común, y si faltan, los más recientes -->
+{% assign related_count = 0 %}
+{% capture related_cards %}
+  {% for post in site.posts %}
+    {% if post.url != page.url and related_count < 3 %}
+      {% assign shared = 0 %}
+      {% for tag in post.tags %}
+        {% if page.tags contains tag %}{% assign shared = shared | plus: 1 %}{% endif %}
+      {% endfor %}
+      {% if shared > 0 %}
+        {% assign related_count = related_count | plus: 1 %}
+        <a class="related-card" href="{{ post.url }}">
+          <div class="related-card-thumb" style="background-image: url('{{ post.image | default: '/assets/img/conocimiento.jpg' }}');"></div>
+          <div class="related-card-body">
+            <h3 class="related-card-title">{{ post.title }}</h3>
+            <p class="related-card-date">{{ post.date | date: "%d %b %Y" }}</p>
+          </div>
+        </a>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+  {% for post in site.posts %}
+    {% if post.url != page.url and related_count < 3 %}
+      {% assign shared = 0 %}
+      {% for tag in post.tags %}
+        {% if page.tags contains tag %}{% assign shared = shared | plus: 1 %}{% endif %}
+      {% endfor %}
+      {% if shared == 0 %}
+        {% assign related_count = related_count | plus: 1 %}
+        <a class="related-card" href="{{ post.url }}">
+          <div class="related-card-thumb" style="background-image: url('{{ post.image | default: '/assets/img/conocimiento.jpg' }}');"></div>
+          <div class="related-card-body">
+            <h3 class="related-card-title">{{ post.title }}</h3>
+            <p class="related-card-date">{{ post.date | date: "%d %b %Y" }}</p>
+          </div>
+        </a>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endcapture %}
+
+{% if related_count > 0 %}
+<section class="related-posts" aria-labelledby="related-title">
+  <h2 id="related-title">Textos relacionados</h2>
+  <div class="related-posts-grid">
+    {{ related_cards }}
+  </div>
+</section>
+{% endif %}
+</div>
+
 <!-- Sticky Audio Player -->
 {% if page.audio %}
-<div class="audio-sticky-container" id="audioStickyContainer">
+<div class="audio-sticky-container" id="audioStickyContainer" role="region" aria-label="Reproductor de audio">
   <div class="audio-sticky-player">
-    <audio id="audio-{{ page.id | slugify }}" class="audio-element">
+    <audio id="audio-{{ page.id | slugify }}" class="audio-element" preload="metadata">
       <source src="{{ page.audio.file }}" type="audio/mpeg">
     </audio>
-    
-    <button class="play-pause-minimal" aria-label="Play/Pause">
-      <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+
+    <button type="button" class="play-pause-minimal" aria-label="Reproducir / pausar">
+      <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M8 5v14l11-7z"/>
       </svg>
-      <svg class="pause-icon" style="display: none;" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <svg class="pause-icon" style="display: none;" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
       </svg>
     </button>
-    
+
     <div class="audio-info-minimal">
       <span class="audio-title-mini">{{ page.audio.title | truncate: 40 }}</span>
       <div class="progress-minimal">
         <div class="progress-filled-minimal"></div>
       </div>
     </div>
-    
+
     <span class="time-minimal">
       <span class="current-time">0:00</span> / <span class="duration">{{ page.audio.duration }}</span>
     </span>
-    
-    <button class="close-audio-btn" aria-label="Cerrar reproductor">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+    <button type="button" class="close-audio-btn" aria-label="Cerrar reproductor">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <line x1="18" y1="6" x2="6" y2="18"></line>
         <line x1="6" y1="6" x2="18" y2="18"></line>
       </svg>
@@ -94,63 +161,13 @@ layout: default
 </div>
 {% endif %}
 
-<!-- Related posts section (mantener como está) -->
-<section class="related-posts">
-  <h3>Textos relacionados</h3>
-  <div class="related-posts-grid">
-    {% assign maxRelated = 3 %}
-    {% assign minCommonTags = 1 %}
-    {% assign maxRelatedCounter = 0 %}
-    
-    {% for post in site.posts %}
-      {% assign sameTagCount = 0 %}
-      {% for tag in post.tags %}
-        {% if post.url != page.url %}
-          {% if page.tags contains tag %}
-            {% assign sameTagCount = sameTagCount | plus: 1 %}
-          {% endif %}
-        {% endif %}
-      {% endfor %}
-      
-      {% if sameTagCount >= minCommonTags and maxRelatedCounter < maxRelated %}
-        <div class="post-item">
-          <a href="{{ post.url }}">
-            <div class="post-thumb" style="background-image: url('{{ post.image }}');"></div>
-            <div class="post-content">
-              <h2>{{ post.title }}</h2>
-              <p class="date">{{ post.date | date: "%d %b %Y" }}</p>
-            </div>
-          </a>
-        </div>
-        {% assign maxRelatedCounter = maxRelatedCounter | plus: 1 %}
-      {% endif %}
-    {% endfor %}
-    
-    {% if maxRelatedCounter == 0 %}
-      {% for post in site.posts limit:3 %}
-        {% if post.url != page.url %}
-          <div class="post-item">
-            <a href="{{ post.url }}">
-              <div class="post-thumb" style="background-image: url('{{ post.image }}');"></div>
-              <div class="post-content">
-                <h2>{{ post.title }}</h2>
-                <p class="date">{{ post.date | date: "%d %b %Y" }}</p>
-              </div>
-            </a>
-          </div>
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-  </div>
-</section>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const audioContainer = document.getElementById('audioStickyContainer');
   const triggerBtn = document.getElementById('audioTriggerBtn');
-  
+
   if (!audioContainer || !triggerBtn) return;
-  
+
   const audio = audioContainer.querySelector('audio');
   const playPauseBtn = audioContainer.querySelector('.play-pause-minimal');
   const playIcon = audioContainer.querySelector('.play-icon');
@@ -160,68 +177,64 @@ document.addEventListener('DOMContentLoaded', function() {
   const currentTimeDisplay = audioContainer.querySelector('.current-time');
   const durationDisplay = audioContainer.querySelector('.duration');
   const closeBtn = audioContainer.querySelector('.close-audio-btn');
-  
-  // Show player when trigger is clicked
-  triggerBtn.addEventListener('click', () => {
-    audioContainer.classList.add('visible');
-    audio.play();
-    playIcon.style.display = 'none';
-    pauseIcon.style.display = 'block';
-  });
-  
-  // Close player
-  closeBtn.addEventListener('click', () => {
-    audioContainer.classList.remove('visible');
-    audio.pause();
-    audio.currentTime = 0;
-    playIcon.style.display = 'block';
-    pauseIcon.style.display = 'none';
-  });
-  
-  // Play/Pause toggle
-  playPauseBtn.addEventListener('click', () => {
-    if (audio.paused) {
-      audio.play();
-      playIcon.style.display = 'none';
-      pauseIcon.style.display = 'block';
-    } else {
-      audio.pause();
-      playIcon.style.display = 'block';
-      pauseIcon.style.display = 'none';
-    }
-  });
-  
-  // Update progress bar
-  audio.addEventListener('timeupdate', () => {
-    const progress = (audio.currentTime / audio.duration) * 100;
-    progressFilled.style.width = `${progress}%`;
-    currentTimeDisplay.textContent = formatTime(audio.currentTime);
-  });
-  
-  // Seek functionality
-  progressBar.addEventListener('click', (e) => {
-    const rect = progressBar.getBoundingClientRect();
-    const pos = (e.clientX - rect.left) / rect.width;
-    audio.currentTime = pos * audio.duration;
-  });
-  
-  // Load metadata
-  audio.addEventListener('loadedmetadata', () => {
-    durationDisplay.textContent = formatTime(audio.duration);
-  });
-  
-  // Reset on end
-  audio.addEventListener('ended', () => {
-    playIcon.style.display = 'block';
-    pauseIcon.style.display = 'none';
-    progressFilled.style.width = '0%';
-  });
-  
+
   function formatTime(seconds) {
-    if (isNaN(seconds)) return '0:00';
+    if (!isFinite(seconds)) return '0:00';
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = Math.floor(seconds % 60);
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   }
+
+  /* Los iconos siempre reflejan el estado real del <audio> */
+  function syncIcons() {
+    playIcon.style.display = audio.paused ? 'block' : 'none';
+    pauseIcon.style.display = audio.paused ? 'none' : 'block';
+  }
+  audio.addEventListener('play', syncIcons);
+  audio.addEventListener('pause', syncIcons);
+
+  triggerBtn.addEventListener('click', () => {
+    audioContainer.classList.add('visible');
+    audio.play().catch(syncIcons);
+  });
+
+  closeBtn.addEventListener('click', () => {
+    audioContainer.classList.remove('visible');
+    audio.pause();
+    audio.currentTime = 0;
+    progressFilled.style.width = '0%';
+    currentTimeDisplay.textContent = '0:00';
+    triggerBtn.focus();
+  });
+
+  playPauseBtn.addEventListener('click', () => {
+    if (audio.paused) audio.play().catch(syncIcons);
+    else audio.pause();
+  });
+
+  audio.addEventListener('timeupdate', () => {
+    if (audio.duration) progressFilled.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+    currentTimeDisplay.textContent = formatTime(audio.currentTime);
+  });
+
+  progressBar.addEventListener('click', (e) => {
+    if (!audio.duration) return;
+    const rect = progressBar.getBoundingClientRect();
+    audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+  });
+
+  audio.addEventListener('loadedmetadata', () => {
+    durationDisplay.textContent = formatTime(audio.duration);
+  });
+
+  audio.addEventListener('ended', () => {
+    progressFilled.style.width = '0%';
+    currentTimeDisplay.textContent = '0:00';
+    syncIcons();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && audioContainer.classList.contains('visible')) closeBtn.click();
+  });
 });
 </script>

@@ -44,8 +44,10 @@ Para ejecutar este sitio en tu máquina local:
 ## 🎨 Personalización
 
 Los estilos principales se encuentran modularizados en `assets/css/`:
-* `style.css`: Estilos globales.
-* `post.css`, `recipe.css`, `collection.css`: Estilos específicos por layout.
+* `style.css`: Estilos globales (tokens, menú, accesibilidad, contenedor de páginas de lectura).
+* `post.css`, `recipe.css`, `collection.css`: Estilos específicos por layout (`post`, `recipe` y `car`).
+
+El maquetado de las páginas de listado (inicio, textos, recetario, colección) usa Tailwind por CDN directamente en cada `.md`.
 
 ## 📄 Licencia
 

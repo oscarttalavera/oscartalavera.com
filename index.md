@@ -33,7 +33,7 @@ title: Inicio
 </style>
 
 <!-- Marquee / Traits -->
-<div class="py-12 border-y border-white/10 overflow-hidden mt-20 relative">
+<div class="py-10 md:py-12 border-y border-white/10 overflow-hidden mt-8 md:mt-20 relative" aria-hidden="true">
 <style>
 @keyframes marquee {
   0% { transform: translateX(0); }
@@ -44,8 +44,14 @@ title: Inicio
   width: max-content;
   animation: marquee 25s linear infinite;
 }
+/* padding en vez de gap: así el ciclo mide exactamente la mitad y no da salto al reiniciar */
+.animate-marquee > span {
+  flex: none;
+  padding-right: 3rem;
+  white-space: nowrap;
+}
 </style>
-<div class="animate-marquee gap-12">
+<div class="animate-marquee">
 <span class="text-4xl md:text-6xl font-black uppercase tracking-tighter opacity-20">Home Barista</span>
 <span class="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white">Coleccionista</span>
 <span class="text-4xl md:text-6xl font-black uppercase tracking-tighter opacity-20">DJ y Audiófilo</span>
@@ -60,8 +66,8 @@ title: Inicio
 </div>
 
 <!-- Citations Section -->
-<section class="py-32 px-6 lg:px-24" id="citations">
-<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+<section class="py-20 md:py-32 px-6 lg:px-24" id="citations">
+<div class="flex flex-col md:flex-row justify-between md:items-end mb-12 md:mb-16 gap-6">
   <h2 class="text-4xl md:text-6xl font-black uppercase tracking-tighter">Citas e<br/>Ideas</h2>
   <div class="h-px bg-white/20 flex-grow mx-12 hidden lg:block mb-4"></div>
   <p class="text-zinc-500 text-sm max-w-xs uppercase tracking-widest leading-loose">
@@ -312,7 +318,6 @@ title: Inicio
     var scatterDone = 480 + cards.length * 24;
     setTimeout(function () {
       shuffleArray(cards).forEach(function (card) { grid.appendChild(card); });
-      randomizeAccents(Array.from(grid.children));
 
       /* Set all cards to a clean, consistent entry start state (no jitter) */
       Array.from(grid.children).forEach(function (card) {
@@ -322,38 +327,38 @@ title: Inicio
         /* keep opacity:0 via .scattering — class stays for now */
       });
 
-      /* Phase 3 — slide in with stagger, one rAF later so start state sticks */
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-          Array.from(grid.children).forEach(function (card, i) {
-            card.style.transition =
-              'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),' +
-              'opacity 0.45s ease-out';
-            card.style.transitionDelay = (i * 40) + 'ms';
-            card.style.transform = '';
-            card.classList.remove('scattering');
-          });
-          /* clean up after all cards settled */
-          var settleDone = 550 + cards.length * 40;
-          setTimeout(function () {
-            Array.from(grid.children).forEach(function (card) {
-              card.style.transition = '';
-              card.style.transitionDelay = '0ms';
-            });
-            if (callback) callback();
-          }, settleDone);
-        });
+      /* Phase 3 — slide in with stagger; el reflow fuerza a que el estado inicial quede aplicado */
+      void grid.offsetWidth;
+      Array.from(grid.children).forEach(function (card, i) {
+        card.style.transition =
+          'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),' +
+          'opacity 0.45s ease-out';
+        card.style.transitionDelay = (i * 40) + 'ms';
+        card.style.transform = '';
+        card.classList.remove('scattering');
       });
+      /* clean up after all cards settled */
+      var settleDone = 550 + cards.length * 40;
+      setTimeout(function () {
+        Array.from(grid.children).forEach(function (card) {
+          card.style.transition = '';
+          card.style.transitionDelay = '0ms';
+        });
+        if (callback) callback();
+      }, settleDone);
     }, scatterDone);
   }
 
   var busy = false;
 
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
   function shuffleCitations() {
-    if (busy) return;
+    if (busy || document.hidden || reduceMotion.matches) return;
     busy = true;
     var grid = document.getElementById('citations-grid');
-    if (!grid) { busy = false; return; }
+    /* No barajar mientras alguien está leyendo/tocando una cita */
+    if (!grid || grid.matches(':hover') || grid.contains(document.activeElement)) { busy = false; return; }
     scatterAndShuffle(Array.from(grid.children), grid, function () { busy = false; });
   }
 
@@ -363,7 +368,6 @@ title: Inicio
     /* Silent initial shuffle + accent assignment */
     var cards = Array.from(grid.children);
     shuffleArray(cards).forEach(function (c) { grid.appendChild(c); });
-    randomizeAccents(Array.from(grid.children));
     /* Animated shuffle every 8 s */
     setInterval(shuffleCitations, 8000);
   });
@@ -371,7 +375,7 @@ title: Inicio
 </script>
 
 <!-- Proyectos / Negocios Section -->
-<section class="py-32 px-6 lg:px-24 bg-white text-black" id="proyectos">
+<section class="py-20 md:py-32 px-6 lg:px-24 bg-white text-black" id="proyectos">
 <div class="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24">
     <!-- Tritic3D -->
     <div class="flex flex-col gap-8 h-full">
@@ -408,19 +412,19 @@ title: Inicio
 </section>
 
 <!-- Blog Section -->
-<section class="py-32 px-6 lg:px-24 bg-black overflow-hidden" id="blog">
-<div class="flex justify-between items-end mb-16">
+<section class="py-20 md:py-32 px-6 lg:px-24 bg-black overflow-hidden" id="blog">
+<div class="flex flex-wrap justify-between items-end mb-12 md:mb-16 gap-6">
 <div>
 <span class="text-[10px] uppercase tracking-[0.5em] text-white/40 block mb-4 italic">Últimas Reflexiones</span>
 <h2 class="text-5xl md:text-7xl font-black uppercase tracking-tighter">Textos</h2>
 </div>
 <div class="flex items-center gap-6">
     <div class="flex gap-2">
-        <button id="prev-post" class="w-12 h-12 border border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-colors" aria-label="Anterior">
-            <span class="material-symbols-outlined">arrow_back</span>
+        <button id="prev-post" type="button" class="slider-btn w-12 h-12 border border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-colors" aria-label="Anterior">
+            <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
         </button>
-        <button id="next-post" class="w-12 h-12 border border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-colors" aria-label="Siguiente">
-            <span class="material-symbols-outlined">arrow_forward</span>
+        <button id="next-post" type="button" class="slider-btn w-12 h-12 border border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-colors" aria-label="Siguiente">
+            <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
         </button>
     </div>
     <a class="text-xs font-bold uppercase tracking-widest border-b border-white pb-1 hover:text-white/60 transition-colors hidden md:block" href="/textos">Ver Todos</a>
@@ -428,17 +432,18 @@ title: Inicio
 </div>
 
 <div class="relative w-full">
-    <div id="posts-slider" class="flex transition-transform duration-500 ease-in-out gap-6" style="transform: translateX(0);">
+    <div id="posts-slider" class="flex gap-6" style="transform: translateX(0); touch-action: pan-y;">
         {% for post in site.posts limit:6 %}
-        <article class="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex-none relative bg-zinc-900 border border-white/10 p-8 lg:p-12 hover:bg-zinc-800 transition-colors group cursor-pointer flex-shrink-0 flex flex-col justify-between">
+        {% assign cover = post.image | default: '/assets/img/conocimiento.jpg' %}
+        <article class="post-slide w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex-none relative bg-zinc-900 border border-white/10 p-8 lg:p-12 hover:bg-zinc-800 transition-colors group flex flex-col justify-between">
           <div>
-              <div class="flex justify-between items-start mb-12 relative z-10">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-500">{{ post.date | date: "%b %d, %Y" }} {% if post.tags.size > 0 %}/ {{ post.tags[0] }}{% endif %}</span>
-                <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity">north_east</span>
+              <div class="flex justify-between items-start mb-8 md:mb-12 relative z-10">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-500">{{ post.date | date: "%d %b %Y" }}{% if post.tags.size > 0 %} / {{ post.tags[0] }}{% endif %}</span>
+                <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true">north_east</span>
               </div>
-              
-              <h3 class="text-3xl font-bold mb-6 group-hover:underline decoration-1 underline-offset-8 relative z-10">{{ post.title }}</h3>
-              
+
+              <h3 class="text-2xl md:text-3xl font-bold mb-6 group-hover:underline decoration-1 underline-offset-8 relative z-10">{{ post.title }}</h3>
+
               <p class="text-zinc-400 font-light leading-relaxed mb-8 relative z-10">
                 {% if post.description %}
                   {{ post.description | truncatewords: 20 }}
@@ -447,19 +452,11 @@ title: Inicio
                 {% endif %}
               </p>
           </div>
-          
-          {% if post.image %}
-          <div class="w-full h-[200px] bg-black grayscale overflow-hidden relative z-10 mt-auto">
-            <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('{{ post.image }}')">
-            </div>
+
+          <div class="w-full h-[200px] bg-black grayscale group-hover:grayscale-0 transition-[filter] duration-500 overflow-hidden relative z-10 mt-auto">
+            <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('{{ cover }}')"></div>
           </div>
-          {% else %}
-          <div class="w-full h-[200px] bg-black grayscale overflow-hidden relative z-10 mt-auto">
-            <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('/assets/img/conocimiento.jpg')">
-            </div>
-          </div>
-          {% endif %}
-          <a href="{{ post.url }}" class="absolute inset-0 z-20"><span class="sr-only">Leer Publicación</span></a>
+          <a href="{{ post.url }}" class="absolute inset-0 z-20" draggable="false"><span class="sr-only">Leer: {{ post.title }}</span></a>
         </article>
         {% endfor %}
     </div>
@@ -469,52 +466,66 @@ title: Inicio
 </div>
 </section>
 
+<style>
+#posts-slider { transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+#posts-slider.dragging { transition: none; cursor: grabbing; }
+.slider-btn:disabled { opacity: 0.25; cursor: default; pointer-events: none; }
+</style>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const slider = document.getElementById('posts-slider');
     const prevBtn = document.getElementById('prev-post');
     const nextBtn = document.getElementById('next-post');
-    
-    if(!slider || !prevBtn || !nextBtn) return;
-    
-    let currentIndex = 0;
-    
-    function updateSlider() {
-        if(slider.children.length === 0) return;
-        const item = slider.children[0];
-        const gap = 24; // gap-6 is 24px
-        const itemWidth = item.offsetWidth;
-        const offset = currentIndex * (itemWidth + gap);
-        slider.style.transform = `translateX(-${offset}px)`;
+    if (!slider || !prevBtn || !nextBtn) return;
+
+    const slides = Array.from(slider.children);
+    const GAP = 24; // gap-6
+    let index = 0;
+
+    const step = () => slides[0].offsetWidth + GAP;
+    const visibleCount = () => Math.max(1, Math.floor((slider.parentElement.offsetWidth + GAP) / step()));
+    const maxIndex = () => Math.max(0, slides.length - visibleCount());
+
+    function render() {
+        index = Math.min(Math.max(index, 0), maxIndex());
+        slider.style.transform = `translateX(${-index * step()}px)`;
+        prevBtn.disabled = index === 0;
+        nextBtn.disabled = index >= maxIndex();
     }
-    
-    function getMaxIndex() {
-        if(slider.children.length === 0) return 0;
-        const containerWidth = slider.parentElement.offsetWidth;
-        const itemWidth = slider.children[0].offsetWidth;
-        const visibleCount = Math.floor((containerWidth + 24) / (itemWidth + 24)) || 1;
-        return Math.max(0, slider.children.length - visibleCount);
-    }
-    
-    nextBtn.addEventListener('click', () => {
-        const maxIndex = getMaxIndex();
-        if(currentIndex < maxIndex) {
-            currentIndex++;
-            updateSlider();
+
+    nextBtn.addEventListener('click', () => { index++; render(); });
+    prevBtn.addEventListener('click', () => { index--; render(); });
+    window.addEventListener('resize', render);
+
+    /* Swipe / arrastre */
+    let startX = null, startY = 0, dx = 0, moved = false;
+    slider.addEventListener('pointerdown', e => {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        startX = e.clientX; startY = e.clientY; dx = 0; moved = false;
+    });
+    slider.addEventListener('pointermove', e => {
+        if (startX === null) return;
+        dx = e.clientX - startX;
+        if (!moved && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(e.clientY - startY)) {
+            moved = true;
+            slider.classList.add('dragging');
+            slider.setPointerCapture(e.pointerId);
         }
+        if (moved) slider.style.transform = `translateX(${-index * step() + dx}px)`;
     });
-    
-    prevBtn.addEventListener('click', () => {
-        if(currentIndex > 0) {
-            currentIndex--;
-            updateSlider();
-        }
-    });
-    
-    window.addEventListener('resize', () => {
-        const maxIndex = getMaxIndex();
-        if(currentIndex > maxIndex) currentIndex = maxIndex;
-        updateSlider();
-    });
+    const endDrag = () => {
+        if (startX === null) return;
+        slider.classList.remove('dragging');
+        if (moved && Math.abs(dx) > step() / 5) index += dx < 0 ? 1 : -1;
+        startX = null;
+        render();
+    };
+    slider.addEventListener('pointerup', endDrag);
+    slider.addEventListener('pointercancel', endDrag);
+    /* Si hubo arrastre, no abrir el post al soltar */
+    slider.addEventListener('click', e => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+
+    render();
 });
 </script>

@@ -1,2 +1,7 @@
-<meta name="description" content="{% if page.description %}{{ page.description }}{% elsif page.excerpt %}{{ page.excerpt | strip_html | truncate: 160 }}{% else %}Sitio personal de Oscar Talavera - Ideas, textos y proyectos{% endif %}">
-<title>{% if page.title %}{{ page.title }} | Oscar Talavera{% else %}Oscar Talavera{% endif %}</title>
+{% assign page_title = page.title | default: page.nombre %}
+<meta name="description" content="{% if page.description %}{{ page.description | strip_html | escape }}{% elsif page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 | escape }}{% else %}Sitio personal de Oscar Talavera - Ideas, textos y proyectos{% endif %}">
+<title>{% if page_title and page_title != 'Inicio' %}{{ page_title }} | Oscar Talavera{% else %}Oscar Talavera{% endif %}</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="{% if page_title and page_title != 'Inicio' %}{{ page_title | escape }}{% else %}Oscar Talavera{% endif %}">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+{% if page.image %}<meta property="og:image" content="{{ site.url }}{{ page.image }}">{% endif %}

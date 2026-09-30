@@ -2,100 +2,114 @@
 layout: default
 ---
 
+<div class="page-shell">
 <article class="recipe">
-  <header class="recipe-header">
-    <h1 class="recipe-title">{{ page.title }}</h1>
-    <div class="recipe-meta">
-      <div class="recipe-meta-item">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-        <span>Preparación: {{ page.tiempo_prep }}</span>
-      </div>
-      <div class="recipe-meta-item">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-        <span>Cocción: {{ page.tiempo_coccion }}</span>
-      </div>
-      <div class="recipe-meta-item">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-        <span>Dificultad: {{ page.dificultad }}</span>
-      </div>
-      <div class="recipe-meta-item">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-        <span>Porciones: {{ page.porciones }}</span>
-      </div>
-    </div>
-  </header>
-  
-  {% if page.image %}
-  <div class="recipe-featured-image">
-    <img src="{{ page.image }}" alt="{{ page.title }}">
+  <div class="recipe-back">
+    <a href="/recetas" class="back-link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      Recetario
+    </a>
   </div>
-  {% endif %}
-  
-  <div class="recipe-content">
-    {% if page.description %}
-    <div class="recipe-section">
-      <p>{{ page.description }}</p>
+
+  <header class="recipe-header">
+    {% if page.categories.size > 0 %}
+    <div class="recipe-cats">
+      {% for category in page.categories limit:4 %}<span class="chip">{{ category }}</span>{% endfor %}
     </div>
     {% endif %}
-    
-    <div class="recipe-section">
+    <h1 class="recipe-title">{{ page.title }}</h1>
+    {% if page.description %}
+    <p class="recipe-lead">{{ page.description }}</p>
+    {% endif %}
+  </header>
+
+  <dl class="recipe-meta">
+    {% if page.tiempo_prep %}
+    <div class="recipe-meta-item">
+      <dt>Preparación</dt>
+      <dd>{{ page.tiempo_prep }}</dd>
+    </div>
+    {% endif %}
+    {% if page.tiempo_coccion %}
+    <div class="recipe-meta-item">
+      <dt>Cocción</dt>
+      <dd>{{ page.tiempo_coccion }}</dd>
+    </div>
+    {% endif %}
+    {% if page.dificultad %}
+    <div class="recipe-meta-item">
+      <dt>Dificultad</dt>
+      <dd>{{ page.dificultad }}</dd>
+    </div>
+    {% endif %}
+    {% if page.porciones %}
+    <div class="recipe-meta-item">
+      <dt>Porciones</dt>
+      <dd>{{ page.porciones }}</dd>
+    </div>
+    {% endif %}
+  </dl>
+
+  {% if page.image %}
+  <figure class="recipe-featured-image">
+    <img src="{{ page.image }}" alt="{{ page.title }}">
+  </figure>
+  {% endif %}
+
+  <div class="recipe-content">
+    <section class="recipe-section">
       <h2>Ingredientes</h2>
-      <div class="recipe-ingredients">
-        <ul>
-          {% for ingrediente in page.ingredientes %}
-          <li>
-            <span class="ingredient-name">{{ ingrediente.nombre }}</span>
-            <span class="ingredient-amount">{{ ingrediente.cantidad }}</span>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
-    
-    <div class="recipe-section">
+      <ul class="recipe-ingredients">
+        {% for ingrediente in page.ingredientes %}
+        <li>
+          <span class="ingredient-name">{{ ingrediente.nombre }}</span>
+          {% if ingrediente.cantidad %}<span class="ingredient-amount">{{ ingrediente.cantidad }}</span>{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="recipe-section">
       <h2>Preparación</h2>
-      <div class="recipe-instructions">
-        <ol>
-          {% for paso in page.instrucciones %}
-          <li>{{ paso }}</li>
-          {% endfor %}
-        </ol>
-      </div>
-    </div>
-    
+      <ol class="recipe-instructions">
+        {% for paso in page.instrucciones %}
+        <li>{{ paso }}</li>
+        {% endfor %}
+      </ol>
+    </section>
+
     {% if page.notas %}
-    <div class="recipe-section">
+    <section class="recipe-section">
       <h2>Notas</h2>
       <div class="recipe-notes">
         {{ page.notas | markdownify }}
       </div>
-    </div>
+    </section>
     {% endif %}
-    
+
     {% if page.fuente %}
-    <div class="recipe-source">
-      <p>Fuente: {% if page.fuente_url %}<a href="{{ page.fuente_url }}" target="_blank" rel="noopener noreferrer">{{ page.fuente }}</a>{% else %}{{ page.fuente }}{% endif %}</p>
-    </div>
+    <p class="recipe-source">Fuente: {% if page.fuente_url %}<a href="{{ page.fuente_url }}" target="_blank" rel="noopener noreferrer">{{ page.fuente }}</a>{% else %}{{ page.fuente }}{% endif %}</p>
     {% endif %}
   </div>
-  
+
   <footer class="recipe-footer">
     <a href="/recetas" class="back-link">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
       Volver al recetario
     </a>
-    
+
     <div class="share-buttons">
-      <button class="print-button" onclick="window.print()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+      <button type="button" class="btn-outline" onclick="window.print()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
         Imprimir
       </button>
-      <a href="https://twitter.com/intent/tweet?text={{ page.title | url_encode }}&url={{ site.url }}{{ page.url | url_encode }}" target="_blank" rel="noopener noreferrer" class="share-button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+      <a href="https://twitter.com/intent/tweet?text={{ page.title | url_encode }}&url={{ site.url | append: page.url | url_encode }}" target="_blank" rel="noopener noreferrer" class="share-button" aria-label="Compartir en X">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
       </a>
-      <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url | url_encode }}" target="_blank" rel="noopener noreferrer" class="share-button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+      <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url | append: page.url | url_encode }}" target="_blank" rel="noopener noreferrer" class="share-button" aria-label="Compartir en Facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
       </a>
     </div>
   </footer>
 </article>
+</div>

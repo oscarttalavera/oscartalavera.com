@@ -1,21 +1,20 @@
-<nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-max max-w-[90vw]" id="main-nav">
-  <div class="bg-black/80 backdrop-blur-md border border-white/20 px-8 py-3 rounded-full flex items-center justify-center gap-12">
-    <div class="flex items-center gap-2">
-      <a href="/#hero">
-        <img alt="Oscar Talavera Logo" class="h-6 w-auto" src="/assets/img/OT logo bco.png"/>
-      </a>
-    </div>
+{% assign path = page.url %}
+<nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-max max-w-[calc(100vw-2rem)]" id="main-nav" aria-label="Principal">
+  <div class="bg-black/80 backdrop-blur-md border border-white/20 px-6 md:px-8 py-3 rounded-full flex items-center justify-center gap-8 md:gap-12">
+    <a href="/#hero" class="flex items-center" aria-label="Oscar Talavera — inicio">
+      <img alt="" class="h-6 w-auto" src="/assets/img/OT logo bco.png"/>
+    </a>
 
     <!-- Desktop links -->
     <div class="hidden md:flex items-center gap-8">
-      <a class="text-xs uppercase tracking-[0.2em] hover:text-primary/60 transition-colors" href="/#citations">Ideas</a>
-      <a class="text-xs uppercase tracking-[0.2em] hover:text-primary/60 transition-colors" href="/textos">Textos</a>
-      <a class="text-xs uppercase tracking-[0.2em] hover:text-primary/60 transition-colors" href="/coleccion">Colección</a>
-      <a class="text-xs uppercase tracking-[0.2em] hover:text-primary/60 transition-colors" href="/recetas">Recetario</a>
+      <a class="nav-link" href="/#citations">Ideas</a>
+      <a class="nav-link" href="/textos"{% if path == '/textos' or page.layout == 'post' %} aria-current="page"{% endif %}>Textos</a>
+      <a class="nav-link" href="/coleccion"{% if path contains '/coleccion' %} aria-current="page"{% endif %}>Colección</a>
+      <a class="nav-link" href="/recetas"{% if path contains '/recetas' %} aria-current="page"{% endif %}>Recetario</a>
     </div>
 
     <!-- Mobile hamburger button -->
-    <button id="nav-toggle" class="md:hidden flex flex-col justify-center items-center gap-[5px] w-6 h-6" aria-label="Abrir menú">
+    <button id="nav-toggle" class="md:hidden flex flex-col justify-center items-center gap-[5px] w-8 h-8 -mr-1" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
       <span class="block w-5 h-[1.5px] bg-white transition-all duration-300" id="ham-1"></span>
       <span class="block w-5 h-[1.5px] bg-white transition-all duration-300" id="ham-2"></span>
       <span class="block w-5 h-[1.5px] bg-white transition-all duration-300" id="ham-3"></span>
@@ -23,18 +22,19 @@
   </div>
 
   <!-- Mobile dropdown menu -->
-  <div id="mobile-menu" class="md:hidden hidden mt-2 bg-black/80 backdrop-blur-md border border-white/20 rounded-2xl overflow-hidden">
-    <div class="flex flex-col py-2">
-      <a class="text-xs uppercase tracking-[0.2em] px-8 py-3 hover:bg-white/10 transition-colors" href="/#citations">Ideas</a>
-      <a class="text-xs uppercase tracking-[0.2em] px-8 py-3 hover:bg-white/10 transition-colors" href="/textos">Textos</a>
-      <a class="text-xs uppercase tracking-[0.2em] px-8 py-3 hover:bg-white/10 transition-colors" href="/coleccion">Colección</a>
-      <a class="text-xs uppercase tracking-[0.2em] px-8 py-3 hover:bg-white/10 transition-colors" href="/recetas">Recetario</a>
+  <div id="mobile-menu" class="md:hidden hidden mt-2 bg-black/90 backdrop-blur-md border border-white/20 rounded-2xl overflow-hidden">
+    <div class="py-2">
+      <a class="mobile-link" href="/#citations">Ideas</a>
+      <a class="mobile-link" href="/textos"{% if path == '/textos' or page.layout == 'post' %} aria-current="page"{% endif %}>Textos</a>
+      <a class="mobile-link" href="/coleccion"{% if path contains '/coleccion' %} aria-current="page"{% endif %}>Colección</a>
+      <a class="mobile-link" href="/recetas"{% if path contains '/recetas' %} aria-current="page"{% endif %}>Recetario</a>
     </div>
   </div>
 </nav>
 
 <script>
   (function() {
+    var nav    = document.getElementById('main-nav');
     var toggle = document.getElementById('nav-toggle');
     var menu   = document.getElementById('mobile-menu');
     var h1 = document.getElementById('ham-1');
@@ -42,37 +42,36 @@
     var h3 = document.getElementById('ham-3');
     var open = false;
 
-    function openMenu() {
-      menu.classList.remove('hidden');
-      h1.style.transform = 'translateY(6.5px) rotate(45deg)';
-      h2.style.opacity   = '0';
-      h3.style.transform = 'translateY(-6.5px) rotate(-45deg)';
-      open = true;
-    }
-
-    function closeMenu() {
-      menu.classList.add('hidden');
-      h1.style.transform = '';
-      h2.style.opacity   = '1';
-      h3.style.transform = '';
-      open = false;
+    function setOpen(state) {
+      open = state;
+      menu.classList.toggle('hidden', !state);
+      h1.style.transform = state ? 'translateY(6.5px) rotate(45deg)' : '';
+      h2.style.opacity   = state ? '0' : '1';
+      h3.style.transform = state ? 'translateY(-6.5px) rotate(-45deg)' : '';
+      toggle.setAttribute('aria-expanded', state ? 'true' : 'false');
+      toggle.setAttribute('aria-label', state ? 'Cerrar menú' : 'Abrir menú');
     }
 
     toggle.addEventListener('click', function(e) {
       e.stopPropagation();
-      open ? closeMenu() : openMenu();
+      setOpen(!open);
     });
 
-    // Close when clicking a link inside the mobile menu
     menu.querySelectorAll('a').forEach(function(a) {
-      a.addEventListener('click', closeMenu);
+      a.addEventListener('click', function() { setOpen(false); });
     });
 
-    // Close when clicking outside
     document.addEventListener('click', function(e) {
-      if (open && !document.getElementById('main-nav').contains(e.target)) {
-        closeMenu();
-      }
+      if (open && !nav.contains(e.target)) setOpen(false);
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && open) { setOpen(false); toggle.focus(); }
+    });
+
+    // Si la ventana crece hasta escritorio, el menú móvil no debe quedarse abierto
+    window.matchMedia('(min-width: 768px)').addEventListener('change', function(e) {
+      if (e.matches && open) setOpen(false);
     });
   })();
 </script>

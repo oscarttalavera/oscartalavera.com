@@ -1,256 +1,17 @@
 ---
 layout: default
 ---
-<!-- Incluimos los estilos de la colección -->
-<link rel="stylesheet" href="{{ site.baseurl }}/assets/css/collection.css">
 
-<style>
-  /* Estilos Específicos para Single Car (Extensión de collection.css) */
-  .car-single-wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-    color: var(--text-main);
-    animation: heroFadeIn 0.8s ease-out forwards;
-  }
+{% assign notes = page.description | default: page.descripcion %}
+{% assign hero_image = page.imagenes[0] | default: page.imagen %}
 
-  .car-header {
-    margin-bottom: 3rem;
-    text-align: center;
-  }
+<div class="page-shell">
+<div class="car-page">
 
-  .car-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 800;
-    letter-spacing: -1px;
-    background: linear-gradient(135deg, #fff 0%, #a0a5b0 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 1.5rem;
-  }
-
-  .car-pills {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.75rem;
-  }
-
-  .car-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    background: var(--card-glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 30px;
-    backdrop-filter: blur(10px);
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text-muted);
-  }
-
-  .car-pill svg {
-    color: var(--neon-green);
-    width: 18px;
-    height: 18px;
-  }
-
-  .car-main-content {
-    display: grid;
-    grid-template-columns: 1fr 350px;
-    gap: 2rem;
-    margin-bottom: 3rem;
-  }
-
-  .car-gallery {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .gallery-main {
-    width: 100%;
-    aspect-ratio: 16/10;
-    border-radius: 16px;
-    overflow: hidden;
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid var(--glass-border);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  }
-
-  .gallery-main img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-
-  .gallery-main:hover img {
-    transform: scale(1.05);
-  }
-
-  .gallery-thumbs {
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-  }
-
-  .thumb-item {
-    width: 100px;
-    height: 70px;
-    border-radius: 8px;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: var(--transition-smooth);
-    object-fit: cover;
-    flex-shrink: 0;
-  }
-
-  .thumb-item.active,
-  .thumb-item:hover {
-    border-color: var(--neon-green);
-    transform: translateY(-2px);
-  }
-
-  .car-info-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .info-card {
-    padding: 1.5rem;
-  }
-
-  .info-card h3 {
-    font-size: 1.25rem;
-    color: #fff;
-    margin-bottom: 1.25rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .info-card h3::before {
-    content: '';
-    display: block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--neon-green);
-    box-shadow: 0 0 10px var(--neon-green-dim);
-  }
-
-  .detail-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--glass-border);
-    font-size: 0.95rem;
-  }
-
-  .detail-row:last-child {
-    border-bottom: none;
-  }
-
-  .detail-label {
-    color: var(--text-muted);
-  }
-
-  .detail-value {
-    font-weight: 600;
-    color: var(--text-main);
-    text-align: right;
-    max-width: 60%;
-  }
-
-  .car-notes {
-    margin-top: 2rem;
-    padding: 2rem;
-    line-height: 1.8;
-    font-size: 1.05rem;
-  }
-
-  .car-notes p {
-    margin-bottom: 1rem;
-  }
-
-  .tag-cloud {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1rem;
-  }
-
-  .tag-pill {
-    padding: 4px 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-  }
-
-  .related-section {
-    margin-top: 4rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--glass-border);
-  }
-
-  .related-section h2 {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    color: #fff;
-  }
-
-  .actions-nav {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 3rem;
-    padding: 1rem;
-  }
-
-  .btn-glass {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--glass-border);
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-    transition: var(--transition-smooth);
-  }
-
-  .btn-glass:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--neon-green);
-    box-shadow: 0 5px 15px rgba(0, 255, 65, 0.1);
-    transform: translateY(-2px);
-  }
-
-  @media (max-width: 900px) {
-    .car-main-content {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
-
-<div class="car-single-wrapper">
-
-  <div class="actions-nav" style="margin-top: 0; margin-bottom: 2rem; padding: 0;">
-    <a href="{{ site.baseurl }}/coleccion" class="btn-glass">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" stroke-width="2">
-        <line x1="19" y1="12" x2="5" y2="12"></line>
-        <polyline points="12 19 5 12 12 5"></polyline>
-      </svg>
-      Volver a la Colección
+  <div class="car-back">
+    <a href="{{ site.baseurl }}/coleccion" class="back-link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      Colección
     </a>
   </div>
 
@@ -258,264 +19,167 @@ layout: default
     <h1 class="car-title">{{ page.nombre }}</h1>
 
     <div class="car-pills">
-      <div class="car-pill">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M7 10v12"></path>
-          <path
-            d="M15 5.88L14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z">
-          </path>
-        </svg>
-        <span>{{ page.marca }}</span>
-      </div>
-      <div class="car-pill">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <polyline points="12 6 12 12 16 14"></polyline>
-        </svg>
-        <span>{{ page.año }}</span>
-      </div>
-      <div class="car-pill">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <bookmark></bookmark>
-        </svg>
-        <span>{{ page.serie }}</span>
-      </div>
-      {% if page.rareza %}
-      <div class="car-pill rarity-pill-{{ page.rareza | downcase | replace: ' ', '-' }}">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polygon
-            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-          </polygon>
-        </svg>
-        <span>{{ page.rareza }}</span>
-      </div>
+      {% if page.marca %}<span class="car-pill">{{ page.marca }}</span>{% endif %}
+      {% if page.año %}<span class="car-pill">{{ page.año }}</span>{% endif %}
+      {% if page.serie %}<span class="car-pill">{{ page.serie }}</span>{% endif %}
+      {% if page.rareza and page.rareza != 'Normal' and page.rareza != 'Común' %}
+      <span class="car-pill {% if page.rareza contains 'Treasure' or page.rareza contains 'Super' %}is-rare-green{% elsif page.rareza contains 'Chase' %}is-rare-orange{% elsif page.rareza contains 'Especial' or page.rareza contains 'Exclusiv' %}is-rare-yellow{% endif %}">{{ page.rareza }}</span>
       {% endif %}
     </div>
   </header>
 
-  <div class="car-main-content">
+  <div class="car-main">
 
-    <!-- Lado Izquierdo: Galería y Notas -->
+    <!-- Lado izquierdo: galería y notas -->
     <div class="car-left">
-      {% if page.imagenes or page.imagen %}
+      {% if hero_image %}
       <div class="car-gallery">
-        <div class="gallery-main relative">
-          <img src="{{ site.baseurl }}{{ page.imagenes[0] | default: page.imagen }}" alt="{{ page.nombre }}"
-            id="mainImage">
+        <div class="gallery-main">
+          <span class="material-symbols-outlined car-thumb-fallback" aria-hidden="true">directions_car</span>
+          <img src="{{ site.baseurl }}{{ hero_image }}" alt="{{ page.nombre }}" id="mainImage" referrerpolicy="no-referrer">
         </div>
 
         {% if page.imagenes.size > 1 %}
         <div class="gallery-thumbs">
           {% for img in page.imagenes %}
-          <img src="{{ site.baseurl }}{{ img }}" alt="{{ page.nombre }}"
-            class="thumb-item {% if forloop.first %}active{% endif %}"
-            onclick="changeMainImage(this, '{{ site.baseurl }}{{ img }}')">
+          <img src="{{ site.baseurl }}{{ img }}" alt="{{ page.nombre }} — vista {{ forloop.index }}"
+            class="thumb-item{% if forloop.first %} active{% endif %}" referrerpolicy="no-referrer"
+            role="button" tabindex="0" data-src="{{ site.baseurl }}{{ img }}">
           {% endfor %}
         </div>
         {% endif %}
       </div>
       {% endif %}
 
-      {% if page.description or content != "" %}
-      <div class="car-notes glass-panel">
-        <h3><strong>Notas Adicionales</strong></h3>
-        {% if page.description %}<p>{{ page.description }}</p>{% endif %}
+      {% assign body = content | strip %}
+      {% if notes or body != "" %}
+      <div class="car-notes">
+        {% if notes %}<p>{{ notes }}</p>{% endif %}
         {{ content }}
       </div>
       {% endif %}
     </div>
 
-    <!-- Lado Derecho: Metadatos -->
-    <div class="car-info-sidebar">
+    <!-- Lado derecho: metadatos -->
+    <aside class="car-info-sidebar">
 
-      <div class="info-card glass-panel">
-        <h3>Ficha Técnica (Juguete)</h3>
+      <section class="info-card">
+        <h2>Ficha técnica</h2>
+        <div class="detail-row"><span class="detail-label">Fabricante</span><span class="detail-value">{{ page.fabricante | default: "Hot Wheels" }}</span></div>
+        <div class="detail-row"><span class="detail-label">Escala</span><span class="detail-value">{{ page.escala | default: "1:64" }}</span></div>
+        {% if page.material %}<div class="detail-row"><span class="detail-label">Material</span><span class="detail-value">{{ page.material }}</span></div>{% endif %}
+        {% if page.color %}<div class="detail-row"><span class="detail-label">Color</span><span class="detail-value">{{ page.color }}</span></div>{% endif %}
+        {% if page.pais_origen %}<div class="detail-row"><span class="detail-label">País de origen</span><span class="detail-value">{{ page.pais_origen }}</span></div>{% endif %}
+        {% if page.serie %}<div class="detail-row"><span class="detail-label">Serie</span><span class="detail-value">{{ page.serie }}</span></div>{% endif %}
+        {% if page.numero_coleccion %}<div class="detail-row"><span class="detail-label"># Colección</span><span class="detail-value">{{ page.numero_coleccion }}</span></div>{% endif %}
+        {% if page.toy_number %}<div class="detail-row"><span class="detail-label">Toy number</span><span class="detail-value">{{ page.toy_number }}</span></div>{% endif %}
+      </section>
 
-        <div class="detail-row">
-          <span class="detail-label">Fabricante</span>
-          <span class="detail-value">{{ page.fabricante | default: "Hot Wheels" }}</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Escala</span>
-          <span class="detail-value">{{ page.escala | default: "1:64" }}</span>
-        </div>
-        {% if page.material %}
-        <div class="detail-row">
-          <span class="detail-label">Material</span>
-          <span class="detail-value">{{ page.material }}</span>
-        </div>
-        {% endif %}
-        {% if page.color %}
-        <div class="detail-row">
-          <span class="detail-label">Color</span>
-          <span class="detail-value">{{ page.color }}</span>
-        </div>
-        {% endif %}
-        {% if page.pais_origen %}
-        <div class="detail-row">
-          <span class="detail-label">País Origen</span>
-          <span class="detail-value">{{ page.pais_origen }}</span>
-        </div>
-        {% endif %}
-        {% if page.serie %}
-        <div class="detail-row">
-          <span class="detail-label">Serie</span>
-          <span class="detail-value">{{ page.serie }}</span>
-        </div>
-        {% endif %}
-        {% if page.numero_coleccion %}
-        <div class="detail-row">
-          <span class="detail-label"># Colección</span>
-          <span class="detail-value">{{ page.numero_coleccion }}</span>
-        </div>
-        {% endif %}
-        {% if page.toy_number %}
-        <div class="detail-row">
-          <span class="detail-label">Toy Number</span>
-          <span class="detail-value">{{ page.toy_number }}</span>
-        </div>
-        {% endif %}
-      </div>
-
-      <div class="info-card glass-panel">
-        <h3>Estado y Condición</h3>
-        {% if page.rareza %}
-        <div class="detail-row">
-          <span class="detail-label">Rareza</span>
-          <span class="detail-value">{{ page.rareza }}</span>
-        </div>
-        {% endif %}
-        {% if page.estado %}
-        <div class="detail-row">
-          <span class="detail-label">Estado actual</span>
-          <span class="detail-value">{{ page.estado }}</span>
-        </div>
-        {% endif %}
-        {% if page.condicion_pintura %}
-        <div class="detail-row">
-          <span class="detail-label">Pintura</span>
-          <span class="detail-value">{{ page.condicion_pintura }}</span>
-        </div>
-        {% endif %}
-      </div>
+      {% if page.rareza or page.estado or page.condicion_pintura %}
+      <section class="info-card">
+        <h2>Estado y condición</h2>
+        {% if page.rareza %}<div class="detail-row"><span class="detail-label">Rareza</span><span class="detail-value">{{ page.rareza }}</span></div>{% endif %}
+        {% if page.estado %}<div class="detail-row"><span class="detail-label">Estado actual</span><span class="detail-value">{{ page.estado }}</span></div>{% endif %}
+        {% if page.condicion_pintura %}<div class="detail-row"><span class="detail-label">Pintura</span><span class="detail-value">{{ page.condicion_pintura }}</span></div>{% endif %}
+      </section>
+      {% endif %}
 
       {% if page.fecha_adquisicion or page.lugar_compra or page.precio %}
-      <div class="info-card glass-panel">
-        <h3>Adquisición</h3>
-        {% if page.fecha_adquisicion %}
-        <div class="detail-row">
-          <span class="detail-label">Fecha</span>
-          <span class="detail-value">{{ page.fecha_adquisicion | date: "%d %b %Y" }}</span>
-        </div>
-        {% endif %}
-        {% if page.lugar_compra %}
-        <div class="detail-row">
-          <span class="detail-label">Lugar</span>
-          <span class="detail-value">{{ page.lugar_compra }}</span>
-        </div>
-        {% endif %}
-        {% if page.precio %}
-        <div class="detail-row">
-          <span class="detail-label">Precio</span>
-          <span class="detail-value">${{ page.precio }}</span>
-        </div>
-        {% endif %}
-      </div>
+      <section class="info-card">
+        <h2>Adquisición</h2>
+        {% if page.fecha_adquisicion %}<div class="detail-row"><span class="detail-label">Fecha</span><span class="detail-value">{{ page.fecha_adquisicion | date: "%d %b %Y" }}</span></div>{% endif %}
+        {% if page.lugar_compra %}<div class="detail-row"><span class="detail-label">Lugar</span><span class="detail-value">{{ page.lugar_compra }}</span></div>{% endif %}
+        {% if page.precio %}<div class="detail-row"><span class="detail-label">Precio</span><span class="detail-value">${{ page.precio }}</span></div>{% endif %}
+      </section>
       {% endif %}
 
-      {% if page.auto_real %}
-      <div class="info-card glass-panel">
-        <h3>Datos del Auto Real</h3>
-        {% if page.auto_real.fabricante %}
-        <div class="detail-row">
-          <span class="detail-label">Fabricante</span>
-          <span class="detail-value">{{ page.auto_real.fabricante }}</span>
-        </div>
-        {% endif %}
-        {% if page.auto_real.año_modelo %}
-        <div class="detail-row">
-          <span class="detail-label">Año</span>
-          <span class="detail-value">{{ page.auto_real.año_modelo }}</span>
-        </div>
-        {% endif %}
-        {% if page.auto_real.motor %}
-        <div class="detail-row">
-          <span class="detail-label">Motor</span>
-          <span class="detail-value">{{ page.auto_real.motor }}</span>
-        </div>
-        {% endif %}
-      </div>
+      {% if page.auto_real.fabricante or page.auto_real.año_modelo or page.auto_real.motor %}
+      <section class="info-card">
+        <h2>Auto real</h2>
+        {% if page.auto_real.fabricante %}<div class="detail-row"><span class="detail-label">Fabricante</span><span class="detail-value">{{ page.auto_real.fabricante }}</span></div>{% endif %}
+        {% if page.auto_real.año_modelo %}<div class="detail-row"><span class="detail-label">Año</span><span class="detail-value">{{ page.auto_real.año_modelo }}</span></div>{% endif %}
+        {% if page.auto_real.motor %}<div class="detail-row"><span class="detail-label">Motor</span><span class="detail-value">{{ page.auto_real.motor }}</span></div>{% endif %}
+      </section>
       {% endif %}
 
-      {% if page.tags %}
-      <div class="info-card glass-panel">
-        <h3>Etiquetas</h3>
+      {% if page.tags.size > 0 %}
+      <section class="info-card">
+        <h2>Etiquetas</h2>
         <div class="tag-cloud">
-          {% for tag in page.tags %}
-          <span class="tag-pill">{{ tag }}</span>
-          {% endfor %}
+          {% for tag in page.tags %}<span class="chip">{{ tag }}</span>{% endfor %}
         </div>
-      </div>
+      </section>
       {% endif %}
 
-      {% if page.enlaces %}
-      <div class="info-card glass-panel">
-        <h3>Enlaces</h3>
-        <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
+      {% if page.enlaces.size > 0 %}
+      <section class="info-card">
+        <h2>Enlaces</h2>
+        <div class="car-links">
           {% for enlace in page.enlaces %}
-          <a href="{{ enlace.url }}" target="_blank"
-            style="color: var(--neon-green); text-decoration: none; display: flex; align-items: center; gap: 5px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2">
+          <a href="{{ enlace.url }}" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15 3 21 3 21 9"></polyline>
               <line x1="10" y1="14" x2="21" y2="3"></line>
             </svg>
-            {{ enlace.titulo }}
+            {{ enlace.titulo | default: enlace.url }}
           </a>
           {% endfor %}
         </div>
-      </div>
+      </section>
       {% endif %}
 
-    </div>
+    </aside>
   </div>
 
-  <!-- Related section -->
-  <section class="related-section">
-    <h2>Modelos Similares</h2>
-    <div class="cars-grid view-grid" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));">
-      {% assign same_series = site.coches | where: "serie", page.serie | where_exp: "item", "item.url != page.url" |
-      limit: 4 %}
-      {% if same_series.size == 0 %}
-      {% assign same_series = site.coches | where: "marca", page.marca | where_exp: "item", "item.url != page.url" |
-      limit: 4 %}
-      {% endif %}
+  <!-- Modelos similares -->
+  {% assign similar = site.coches | where: "serie", page.serie | where_exp: "item", "item.url != page.url" | slice: 0, 4 %}
+  {% if similar.size == 0 %}
+  {% assign similar = site.coches | where: "marca", page.marca | where_exp: "item", "item.url != page.url" | slice: 0, 4 %}
+  {% endif %}
 
-      {% for car in same_series %}
-      <article class="glow-card">
-        <a href="{{ site.baseurl }}{{ car.url }}" class="car-anchor">
-          <div class="car-img-box" style="height: 150px;">
-            <img src="{{ site.baseurl }}{{ car.imagen | default: '/assets/img/coches/default-car.jpg' }}"
-              alt="{{ car.nombre }}">
-          </div>
-          <div class="car-details" style="padding: 1rem;">
-            <h3 class="car-title-text" style="font-size: 1rem;">{{ car.nombre }}</h3>
-            <p class="car-series-text" style="font-size: 0.8rem;">{{ car.marca }}</p>
-          </div>
-        </a>
-      </article>
+  {% if similar.size > 0 %}
+  <section class="related-section" aria-labelledby="similar-title">
+    <h2 id="similar-title">Modelos similares</h2>
+    <div class="car-related-grid">
+      {% for car in similar %}
+      <a class="car-related-card" href="{{ site.baseurl }}{{ car.url }}">
+        <div class="car-related-thumb">
+          <span class="material-symbols-outlined car-thumb-fallback" aria-hidden="true">directions_car</span>
+          {% if car.imagen %}<img src="{{ car.imagen }}" alt="{{ car.nombre }}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">{% endif %}
+        </div>
+        <div class="car-related-body">
+          <h3>{{ car.nombre }}</h3>
+          <p>{{ car.marca }}</p>
+        </div>
+      </a>
       {% endfor %}
     </div>
   </section>
+  {% endif %}
 
+</div>
 </div>
 
 <script>
-  function changeMainImage(element, src) {
-    document.getElementById('mainImage').src = src;
-    const thumbs = document.querySelectorAll('.thumb-item');
-    thumbs.forEach(el => el.classList.remove('active'));
-    element.classList.add('active');
+document.addEventListener('DOMContentLoaded', function () {
+  var main = document.getElementById('mainImage');
+  var thumbs = document.querySelectorAll('.thumb-item');
+  if (!main) return;
+
+  function select(el) {
+    main.src = el.dataset.src;
+    thumbs.forEach(function (t) { t.classList.toggle('active', t === el); });
   }
+
+  thumbs.forEach(function (t) {
+    t.addEventListener('click', function () { select(t); });
+    t.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(t); }
+    });
+  });
+
+  /* Si la imagen externa no carga, dejamos el recuadro limpio en vez del icono roto */
+  main.addEventListener('error', function () { main.style.visibility = 'hidden'; });
+});
 </script>
